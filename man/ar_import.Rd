@@ -2,31 +2,55 @@
 % Please edit documentation in R/import.R
 \name{ar_import}
 \alias{ar_import}
-\title{Import R data into associatoR object}
+\title{Import association data into associatoR object}
 \usage{
-ar_import(data)
+ar_import(
+  data,
+  part_id,
+  part_attr = c(),
+  cue_type = c("single", "multiple"),
+  cue_single = NULL,
+  cue_text = NULL,
+  cue_attr = c(),
+  resp_text,
+  resp_attr = c()
+)
 }
 \arguments{
-\item{data}{a \code{data.frame} or \code{tibble} object containing the association data.}
+\item{data}{a \code{data.frame} or \code{tibble} containing the association data.}
 
-\item{participant_labels}{a \code{character} vector ... .}
+\item{part_id}{a \code{character} scalar of the variable name in \code{data} identifying individual participants.}
+
+\item{part_attr}{a \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
+
+\item{cue_type}{one of \code{c("single", "multiple")}; if \code{cue_type = "single"}, the parameter \code{cue_single} must be specified, if \code{cue_type = "multiple"}, the parameter \code{cue_id} must be specified.}
+
+\item{cue_single}{a \code{character} scalar to specify a cue that was used for all responses.}
+
+\item{cue_text}{a \code{character} scalar of the variable name in \code{data} identifying individual cues.}
+
+\item{cue_attr}{a \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.}
+
+\item{resp_text}{a \code{character} scalar of the variable name in \code{data} identifying individual responses.}
+
+\item{resp_attr}{a \code{character} vector containing all additional variable names in \code{data} that are attributes of responses.}
 }
 \value{
-The function returns the \code{associatoR} object, which contains a list with the following elements, each a \code{tibble}:
+Returns an \code{associatoR} object containing a list of \code{tibble}s:
 \describe{
- \item{participant}{Index of the element in \code{text} where match was found. Formatted as a factor with the number of levels matching the original number of documents.}
- \item{cues}{Label of the SDG found in document.}
- \item{responses}{The name of the ensemble system that produced the match.}
- \item{hit}{Index of hit for the Ensemble model.}
+ \item{participants}{}
+ \item{cues}{}
+ \item{responses}{}
+ \item{targets}{}
 }
 }
 \description{
-\code{ar_import} processes R data and generates an associatoR object
+\code{ar_import} processes tabular association data into an associatoR object
 }
 \examples{
 
-# run sdg detection
-data <- ar_impot(ai_asso)
+# import association data object
+ar_obj <- ar_import(ai_asso)
 
 }
 \references{
