@@ -2,3 +2,4 @@
 
 export(ar_embed)
 export(ar_import)
+export(ar_normalize)
