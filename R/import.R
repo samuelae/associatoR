@@ -15,18 +15,21 @@
 #'
 #' @return Returns an \code{associatoR} object containing a list of \code{tibble}s:
 #' \describe{
-#'  \item{participants}{}
-#'  \item{cues}{}
-#'  \item{responses}{}
-#'  \item{targets}{}
+#'  \item{participants}{A tibble of all participants including \code{part_id}, and potentially additional participant-specific attributes \code{part_*}.}
+#'  \item{cues}{A tibble of all cues including \code{cue_id}, \code{cue_text} and potentially additional cue-specific attributes \code{cue_*}.}
+#'  \item{responses}{A tibble of all responses including \code{resp_id}, \code{resp_text} and potentially additional response-specific attributes \code{resp_*}.}
 #' }
 #'
-#' @references Aeschbach, S., Mata, R., Wulff, D. U. (2024). associatoR. psyArXiv
+#' @references Aeschbach, S., Mata, R., Wulff, D. U. (in progress). associatoR. psyArXiv
 #'
 #' @examples
 #'
 #' # import association data object
-#' ar_obj <- ar_import(ai_asso)
+#' ar_obj <- ar_import(data = ai_asso, part_id = "id",
+#'                     part_attr = c("age", "gender", "use", "expertise"),
+#'                     cue_type = "single", cue_single = "AI",
+#'                     resp_text = "association_correct",
+#'                     resp_attr = c("association", "trial"))
 #'
 #' @export
 
