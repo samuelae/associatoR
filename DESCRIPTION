@@ -1,0 +1,31 @@
+Package: associatoR
+Type: Package
+Title: Analyzing association data
+Description: Association data is a promsing way to reveal the contents of mental representations. blah. See Aeschbach, Mata, & Wulff (2024)
+Version: 0.1.0
+Authors@R: c(
+    person(c("Samuel"), "Aeschbach", role= c("aut", "cre"),
+            email= "samuel.aeschbach@gmail.com",
+            comment = c(ORCID = "0000-0002-6167-4901")),
+    person(c("Dirk","U."), "Wulff", role = "aut",
+    		email = "dirk.wulff@gmail.com",
+    		comment = c(ORCID = "0000-0002-4008-8022")),
+    person("Rui", "Mata", role = "ctb",
+        email= "rui.mata@unibas.ch",
+        comment = c(ORCID = "0000-0002-7730-9511"))
+    )
+Author: Samuel Aeschbach [aut, cre] (<https://orcid.org/0000-0002-6167-4901>),
+  Dirk U. Wulff [aut] (<https://orcid.org/0000-0002-4008-8022>),
+  Rui Mata [ctb] (<https://orcid.org/0000-0002-1679-906X>)
+URL: https://github.com/samuelae/associatoR
+BugReports: https://github.com/samuelae/associatoR/issues
+Maintainer: Samuel Aeschbach <samuel.aeschbach@gmail.com>
+License: GPL-3
+Depends: R (>= 3.1.0),
+Imports: dplyr (>= 0.5.0), tidyr, magrittr
+Suggests: testthat
+LinkingTo: Rcpp
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Repository: CRAN
