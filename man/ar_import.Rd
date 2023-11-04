@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{ar_import}
 \alias{ar_import}
-\title{Title}
+\title{Import association data into an associatoR object}
 \usage{
 ar_import(
   data,
@@ -18,8 +18,45 @@ ar_import(
 )
 }
 \arguments{
-\item{response_attributes}{}
+\item{data}{a \code{data.frame} or \code{tibble} containing the association data.}
+
+\item{participant_id}{a \code{character} scalar of the variable name in \code{data} identifying participants.}
+
+\item{response_col}{a \code{character} scalar of the variable name in \code{data} identifying responses.}
+
+\item{cue_type}{one of \code{"manual"} for one cue or \code{"col"} for a column of cues, if \code{"manual"}, the argument \code{cue_manual} must be supplied, if \code{"col"}, argument \code{cue_col} must be supplied.}
+
+\item{cue_col}{(if \code{cue_type = "manual"}) a \code{character} scalar of the variable name in \code{data} identifying cues.}
+
+\item{cue_manual}{(if \code{cue_type = "col"}) a \code{character} scalar specifying the cue for all responses.}
+
+\item{response_level}{(optional) a \code{character} scalar of the variable name in \code{data} identifying response levels.}
+
+\item{participant_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
+
+\item{cue_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.}
+
+\item{response_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of responses}
+}
+\value{
+Returns an \code{associatoR} object containing a list of tibbles:
+\describe{
+ \item{participants}{A tibble of all participants including \code{p_id} to identify participants, and potentially additional participant attributes \code{p_attr_*}.}
+ \item{cues}{A tibble of all cues \code{c_cue} and potentially additional cue attributes \code{c_attr_*}.}
+ \item{responses}{A tibble of all participant's \code{p_id} cue \code{r_cue} and response \code{r_response} pairs including response levels \code{r_level}, as well as potentially additional responseattributes \code{r_attr_*}.}
+}
 }
 \description{
-Title
+\code{ar_import} processes tabular association data into an associatoR object.
+}
+\examples{
+ai_asso_imported <- ar_import(ai_asso, participant_id = "id",
+                              response_col = "association_correct",
+                              cue_type = "manual", cue_manual = "artificial intelligence",
+                              participant_attributes = c("age", "gender", "use", "expertise"),
+                              response_attributes = c("association", "trial"))
+
+}
+\references{
+Aeschbach, S., Mata, R., Wulff, D. U. (in progress)
 }
