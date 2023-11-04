@@ -44,7 +44,7 @@ Returns an \code{associatoR} object containing a list of \code{tibble}s:
 }
 }
 \description{
-\code{ar_import} processes tabular association data into an associatoR object
+\code{ar_import} processes tabular association data into an associatoR object.
 }
 \examples{
 

@@ -22,7 +22,7 @@ BugReports: https://github.com/samuelae/associatoR/issues
 Maintainer: Samuel Aeschbach <samuel.aeschbach@gmail.com>
 License: GPL-3
 Depends: R (>= 3.1.0),
-Imports: dplyr (>= 0.5.0), tidyr, magrittr, httr, glue
+Imports: dplyr (>= 0.5.0), tidyr, magrittr, httr, glue, stringr
 Suggests: testthat
 LinkingTo: Rcpp
 Encoding: UTF-8

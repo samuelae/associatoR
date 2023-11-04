@@ -1,6 +1,6 @@
 #' Import association data into associatoR object
 #'
-#' \code{ar_import} processes tabular association data into an associatoR object
+#' \code{ar_import} processes tabular association data into an associatoR object.
 #'
 #' @param data a \code{data.frame} or \code{tibble} containing the association data.
 #' @param part_id a \code{character} scalar of the variable name in \code{data} identifying individual participants.
