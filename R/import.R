@@ -45,18 +45,18 @@ ar_import <- function(data, participant_id, response_col, cue_type,
   chk::chk_data(data)
 
   # participant_id
-  chk::chk_character(participant_id)
+  chk::chk_string(participant_id)
 
   # response_col
-  chk::chk_character(response_col)
+  chk::chk_string(response_col)
 
   # cue_type
-  chk::chk_character(cue_type)
+  chk::chk_string(cue_type)
   chk::chk_subset(cue_type, c("manual", "col"))
 
   # cue_col
   if (cue_type == "col") {
-    chk::chk_character(cue_col)
+    chk::chk_string(cue_col)
     chk::chk_subset(cue_col, names(data))
   } else {
     chk::chk_null(cue_col)
@@ -64,14 +64,14 @@ ar_import <- function(data, participant_id, response_col, cue_type,
 
   # cue_manual
   if (cue_type == "manual") {
-    chk::chk_character(cue_manual)
+    chk::chk_string(cue_manual)
   } else {
     chk::chk_null(cue_manual)
   }
 
   # response_level
   if (!is.null(response_level)) {
-    chk::chk_character(response_level)
+    chk::chk_string(response_level)
     chk::chk_subset(response_level, names(data))
   }
 

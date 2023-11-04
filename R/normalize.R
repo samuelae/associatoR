@@ -122,15 +122,15 @@ ar_normalize <- function(x, case = "lower", punct = "end", whitespace = "squish"
   chk::chk_s3_class(x, "associatoR")
 
   # case
-  chk::chk_length(case, 1)
+  chk::chk_string(case)
   chk::chk_subset(case, c("lower", "upper", "original"))
 
   # punct
-  chk::chk_length(punct, 1)
+  chk::chk_string(punct)
   chk::chk_subset(punct, c("end", "all", "original"))
 
   # whitespace
-  chk::chk_length(whitespace, 1)
+  chk::chk_string(whitespace)
   chk::chk_subset(whitespace, c("squish", "trim", "original"))
 
   # normalize_cues
