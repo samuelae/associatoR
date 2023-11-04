@@ -24,6 +24,14 @@ Returns an \code{associatoR} object containing a list of \code{tibble}s with \co
 \description{
 \code{ar_normalize} offers an interface to add self-defined normalization steps for responses in associatoR objects.
 }
+\examples{
+
+ai_asso_processed <- ar_normalize(ai_asso_processed, tolower)
+
+ai_asso_processed <- ar_normalize(ai_asso_processed, trimws, which = "left")
+
+
+}
 \references{
 Aeschbach, S., Mata, R., Wulff, D. U. (in progress). associatoR. psyArXiv
 }

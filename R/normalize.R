@@ -19,6 +19,9 @@
 #'
 #' @examples
 #'
+#' ai_asso_processed <- ar_normalize(ai_asso_processed, tolower)
+#'
+#' ai_asso_processed <- ar_normalize(ai_asso_processed, trimws, which = "left")
 #'
 #'
 ar_normalize <- function(x, fun, ...) {
@@ -33,7 +36,7 @@ ar_normalize <- function(x, fun, ...) {
     stop("fun must be a function")
   }
 
-  args <- list(...)
+  args <- c(...)
 
   if(length(args) == 0) {
     x$responses$resp_text <- sapply(x$responses$resp_text,
@@ -42,12 +45,10 @@ ar_normalize <- function(x, fun, ...) {
   } else {
     x$responses$resp_text <- sapply(x$responses$resp_text,
                                     FUN = fun,
-                                    ... = args,
+                                    ...,
                                     USE.NAMES = FALSE)
   }
 
-
   x
-
 
 }
