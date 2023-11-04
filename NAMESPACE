@@ -3,5 +3,5 @@
 export("%>%")
 export(ar_embed)
 export(ar_import)
-export(ar_normalize)
+export(ar_normalize_manual)
 importFrom(magrittr,"%>%")
