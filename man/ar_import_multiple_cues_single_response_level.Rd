@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{ar_import_multiple_cues_single_response_level}
 \alias{ar_import_multiple_cues_single_response_level}
-\title{Title}
+\title{ar_import_multiple_cues_single_response_level}
 \usage{
 ar_import_multiple_cues_single_response_level(
   data,
@@ -18,7 +18,7 @@ ar_import_multiple_cues_single_response_level(
 \item{response_attributes}{}
 }
 \description{
-Title
+ar_import_multiple_cues_single_response_level
 }
 \examples{
 

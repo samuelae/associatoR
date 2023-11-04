@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{ar_import_single_cue_single_response_level}
 \alias{ar_import_single_cue_single_response_level}
-\title{Title}
+\title{ar_import_single_cue_single_response_level}
 \usage{
 ar_import_single_cue_single_response_level(
   data,
@@ -27,7 +27,7 @@ ar_import_single_cue_single_response_level(
 \item{response_attributes}{a \code{character} vector containing all additional variable names in \code{data} that are attributes of responses.}
 }
 \description{
-Title
+ar_import_single_cue_single_response_level
 }
 \examples{
 
