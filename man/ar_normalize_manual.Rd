@@ -12,6 +12,8 @@ ar_normalize_manual(x, fun, ...)
 \item{fun}{a \code{function} to apply to all responses (resp_text) in an associatoR object.}
 
 \item{...}{additional arguments passed on to \code{fun}.}
+
+\item{case}{one of \code{c("lower", "upper", "original"), converts the resp_text to the specified casing, \code{"original"} does not change the casing.}}
 }
 \value{
 Returns an \code{associatoR} object containing a list of \code{tibble}s with \code{fun} applied to all responses:
@@ -22,14 +24,13 @@ Returns an \code{associatoR} object containing a list of \code{tibble}s with \co
 }
 }
 \description{
-\code{ar_normalize_manual} offers an interface to add self-defined normalization steps for responses in associatoR objects.
+\code{ar_normalize_manual(x, fun, ...)} offers an interface to add self-defined normalization steps for responses in associatoR objects.
 }
 \examples{
 
 ai_asso_processed <- ar_normalize_manual(ai_asso_processed, tolower)
 
 ai_asso_processed <- ar_normalize_manual(ai_asso_processed, trimws, which = "left")
-
 
 }
 \references{
