@@ -4,15 +4,15 @@
 #'
 #'
 #' @param data a \code{data.frame} or \code{tibble} containing the association data.
-#' @param participant_id a \code{character} scalar of the variable name in \code{data} identifying participants.
-#' @param response_col a \code{character} scalar of the variable name in \code{data} identifying responses.
-#' @param cue_type one of \code{"manual"} for one cue or \code{"col"} for a column of cues, if \code{"manual"}, the argument \code{cue_manual} must be supplied, if \code{"col"}, argument \code{cue_col} must be supplied.
-#' @param cue_col (if \code{cue_type = "manual"}) a \code{character} scalar of the variable name in \code{data} identifying cues.
-#' @param cue_manual (if \code{cue_type = "col"}) a \code{character} scalar specifying the cue for all responses.
-#' @param response_level (optional) a \code{character} scalar of the variable name in \code{data} identifying response levels.
-#' @param participant_attributes (optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.
-#' @param cue_attributes (optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.
-#' @param response_attributes (optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of responses
+#' @param participant a \code{character} scalar of the variable name in \code{data} identifying participants.
+#' @param cue a \code{character} scalar of the variable name in \code{data} identifying the cues.
+#' @param cue_manual an optional \code{character} scalar specifying the cue for all responses. Overrides argument \code{cue}.
+#' @param response a \code{character} scalar of the variable name in \code{data} identifying responses.
+#' @param response_level an optional \code{character} scalar of the variable name in \code{data} identifying response levels.
+#' @param participant_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.
+#' @param cue_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.
+#' @param response_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of responses
+#' @param verbose an \code{logical} specifying whether to show messages.
 #'
 #' @return Returns an \code{associatoR} object containing a list of tibbles:
 #' \describe{
@@ -26,152 +26,113 @@
 #' @export
 #'
 #' @examples
-#' ai_asso_imported <- ar_import(ai_asso, participant_id = "id",
-#'                               response_col = "association_correct",
-#'                               cue_type = "manual", cue_manual = "artificial intelligence",
-#'                               participant_attributes = c("age", "gender", "use", "expertise"),
-#'                               response_attributes = c("association", "trial"))
+#' ai_asso_imported <- ar_import(ai_asso,
+#'                               participant = "id",
+#'                               response = "association_correct",
+#'                               cue_manual = "AI",
+#'                               participant_vars = c("age", "gender", "use", "expertise"),
+#'                               response_vars = c("association", "trial"))
 #'
-ar_import <- function(data, participant_id, response_col, cue_type,
-                      cue_col = NULL,
+ar_import <- function(data,
+                      participant,
+                      cue = NULL,
                       cue_manual = NULL,
+                      response,
                       response_level = NULL,
-                      participant_attributes = NULL,
-                      cue_attributes = NULL,
-                      response_attributes = NULL) {
-  # check argumets -------------------------------------------------------------
+                      participant_vars = NULL,
+                      cue_vars = NULL,
+                      response_vars = NULL,
+                      verbose = FALSE) {
+
+  # check arguments ----
 
   # data
   chk::chk_data(data)
 
-  # participant_id
-  chk::chk_string(participant_id)
+  # check types
+  chk::chk_string(participant)
+  if(!chk::vld_null(cue)) chk::chk_string(cue)
+  if(!chk::vld_null(cue_manual)) chk::chk_string(cue_manual)
+  chk::chk_string(response)
+  if(!chk::vld_null(response_level)) chk::chk_string(response_level)
+  if(!chk::vld_null(participant_vars)) chk::chk_character(participant_vars)
+  if(!chk::vld_null(cue_vars)) chk::chk_character(cue_vars)
+  if(!chk::vld_null(response_vars)) chk::chk_character(response_vars)
+  chk::chk_logical(verbose)
 
-  # response_col
-  chk::chk_string(response_col)
+  # check existence
+  chk::chk_subset(participant, names(data))
+  chk::chk_subset(cue, names(data))
+  chk::chk_subset(response, names(data))
+  chk::chk_subset(response_level, names(data))
+  chk::chk_subset(participant_vars, names(data))
+  chk::chk_subset(cue_vars, names(data))
+  chk::chk_subset(response_vars, names(data))
 
-  # cue_type
-  chk::chk_string(cue_type)
-  chk::chk_subset(cue_type, c("manual", "col"))
+  # handle protected variables ----
 
-  # cue_col
-  if (cue_type == "col") {
-    chk::chk_string(cue_col)
-    chk::chk_subset(cue_col, names(data))
-  } else {
-    chk::chk_null(cue_col)
-  }
+  # participant and response
+  data = data %>%
+    dplyr::rename(id = {{participant}}) %>%
+    dplyr::rename(response = {{response}})
 
-  # cue_manual
-  if (cue_type == "manual") {
-    chk::chk_string(cue_manual)
-  } else {
-    chk::chk_null(cue_manual)
-  }
+  # cue
+  if(!chk::vld_null(cue_manual)){
+    data = data %>% dplyr::mutate(cue = cue_manual)
+    } else {
+    data = data %>% dplyr::rename(cue = {{cue}})
+    }
 
-  # response_level
-  if (!is.null(response_level)) {
-    chk::chk_string(response_level)
-    chk::chk_subset(response_level, names(data))
-  }
+  # level
+  if(chk::vld_null(response_level)){
+    data = data %>% dplyr::mutate(level = 1)
+    } else {
+    data = data %>% dplyr::rename(level = {{response_level}})
+    }
 
-  # participant_attributes
-  if (!is.null(participant_attributes)) {
-    chk::chk_character(participant_attributes)
-    chk::chk_subset(participant_attributes, names(data))
-  }
-
-  # cue_attributes
-  if (!is.null(cue_attributes)) {
-    chk::chk_character(cue_attributes)
-    chk::chk_subset(cue_attributes, names(data))
-  }
-
-  # response_attributes
-  if (!is.null(response_attributes)) {
-    chk::chk_character(response_attributes)
-    chk::chk_subset(response_attributes, names(data))
-  }
-
-  # participants ---------------------------------------------------------------
+  # participants ----
 
   # all use-cases
   participants <- data %>%
-    dplyr::select(dplyr::all_of(c(participant_id, participant_attributes))) %>%
+    dplyr::select(id, tidyselect::all_of(participant_vars)) %>%
     dplyr::distinct()
 
-  # handle participant_attributes
-  if(length(names(participants)) > 1) {
-    names(participants) <- c("p_id", paste0("p_attr_", names(participants)[-1]))
-  } else {
-    names(participants) <- c("p_id")
-  }
+  # check for duplicates
+  if(any(duplicated(participants$id))){
+    stop("Found duplicate participant ids. Make sure that the participant id is uniquely identified and to only include variables as participant attributes that vary between (not within) participants.")
+    }
 
-  # cues -----------------------------------------------------------------------
+  # cues ----
 
-  switch (cue_type,
-          "manual" = {
-            # cue is a string, single cue case, e.g. AInet
-            cues <- tibble::tibble(c_cue = cue_manual)
-          },
-          "col" = {
-            # cue is a variable name in data
-            if(is.null(response_level)) {
-              # get cues from cue variable
-              cues <- data %>%
-                dplyr::select(dplyr::all_of(c(cue_col, cue_attributes))) %>%
-                dplyr::distinct()
-            } else {
-              # get cues from cue variable where response_level is 1
-              cues <- data %>%
-                dplyr::filter(eval(parse(text = response_level)) == 1) %>%
-                dplyr::select(dplyr::all_of(c(cue_col, cue_attributes))) %>%
-                dplyr::distinct()
-            }
-          }
-  )
+  # create cues
+  cues <- data %>%
+    dplyr::select(cue, tidyselect::all_of(cue_vars)) %>%
+    dplyr::distinct()
 
-  # handle cue_attributes
-  if(length(names(cues)) > 1) {
-    names(cues) <- c("c_cue", paste0("c_attr_", names(cues)[-1]))
-  } else {
-    names(cues) <- c("c_cue")
-  }
+  # check for duplicates
+  if(any(duplicated(cue$cue))){
+    stop("Found duplicate cues. Make sure that the cue variable is uniquely identified and to only include variables as cue attributes that vary between (not within) cues.")
+    }
 
-  # responses ------------------------------------------------------------------
+  # responses ----
 
-  switch (cue_type,
-          "manual" = {
-            responses <- data %>%
-              dplyr::mutate(r_cue = cue_manual, r_level = 1) %>%
-              dplyr::select(dplyr::all_of(c(participant_id, "r_cue", response_col, "r_level", response_attributes)))
-          },
-          "col" = {
-            if (is.null(response_level)) {
-              responses <- data %>%
-                dplyr::mutate(r_level = 1) %>%
-                dplyr::select(dplyr::all_of(c(participant_id, cue_col, response_col, "r_level", response_attributes)))
-            } else {
-              responses <- data %>%
-                dplyr::select(dplyr::all_of(c(participant_id, cue_col, response_col, response_level, response_attributes)))
+  # create responses
+  responses <- data %>%
+    dplyr::select(id, cue, response, level,
+                  tidyselect::all_of(c(response_vars)))
 
-            }
-          })
 
-  # handle response_attributes
-  if(length(names(responses)) > 4) {
-    names(responses) <- c("p_id", "r_cue", "r_response", "r_level", paste0("r_attr_", names(responses)[-(1:4)]))
-  } else {
-    names(responses) <- c("p_id", "r_cue", "r_response", "r_level")
-  }
+  # check if unique
+  if(nrow(responses) > nrow(dplyr::distinct(responses))){
+    stop("Responses are not uniquely identified. Add response level or attribute (e.g., trial or repetition) to uniquely identify responses.")
+    }
 
-  # compose associatoR object --------------------------------------------------
+  # compose associatoR object ----
 
   output <- list(participants = participants,
                  cues = cues,
                  responses = responses)
   class(output) <- "associatoR"
-
   output
 
-}
+  }

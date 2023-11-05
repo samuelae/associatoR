@@ -6,37 +6,37 @@
 \usage{
 ar_import(
   data,
-  participant_id,
-  response_col,
-  cue_type,
-  cue_col = NULL,
+  participant,
+  cue = NULL,
   cue_manual = NULL,
+  response,
   response_level = NULL,
-  participant_attributes = NULL,
-  cue_attributes = NULL,
-  response_attributes = NULL
+  participant_vars = NULL,
+  cue_vars = NULL,
+  response_vars = NULL,
+  verbose = FALSE
 )
 }
 \arguments{
 \item{data}{a \code{data.frame} or \code{tibble} containing the association data.}
 
-\item{participant_id}{a \code{character} scalar of the variable name in \code{data} identifying participants.}
+\item{participant}{a \code{character} scalar of the variable name in \code{data} identifying participants.}
 
-\item{response_col}{a \code{character} scalar of the variable name in \code{data} identifying responses.}
+\item{cue}{a \code{character} scalar of the variable name in \code{data} identifying the cues.}
 
-\item{cue_type}{one of \code{"manual"} for one cue or \code{"col"} for a column of cues, if \code{"manual"}, the argument \code{cue_manual} must be supplied, if \code{"col"}, argument \code{cue_col} must be supplied.}
+\item{cue_manual}{an optional \code{character} scalar specifying the cue for all responses. Overrides argument \code{cue}.}
 
-\item{cue_col}{(if \code{cue_type = "manual"}) a \code{character} scalar of the variable name in \code{data} identifying cues.}
+\item{response}{a \code{character} scalar of the variable name in \code{data} identifying responses.}
 
-\item{cue_manual}{(if \code{cue_type = "col"}) a \code{character} scalar specifying the cue for all responses.}
+\item{response_level}{an optional \code{character} scalar of the variable name in \code{data} identifying response levels.}
 
-\item{response_level}{(optional) a \code{character} scalar of the variable name in \code{data} identifying response levels.}
+\item{participant_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
 
-\item{participant_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
+\item{cue_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.}
 
-\item{cue_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.}
+\item{response_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of responses}
 
-\item{response_attributes}{(optional) a \code{character} vector containing all additional variable names in \code{data} that are attributes of responses}
+\item{verbose}{an \code{logical} specifying whether to show messages.}
 }
 \value{
 Returns an \code{associatoR} object containing a list of tibbles:
@@ -50,11 +50,12 @@ Returns an \code{associatoR} object containing a list of tibbles:
 \code{ar_import} processes tabular association data into an associatoR object.
 }
 \examples{
-ai_asso_imported <- ar_import(ai_asso, participant_id = "id",
-                              response_col = "association_correct",
-                              cue_type = "manual", cue_manual = "artificial intelligence",
-                              participant_attributes = c("age", "gender", "use", "expertise"),
-                              response_attributes = c("association", "trial"))
+ai_asso_imported <- ar_import(ai_asso,
+                              participant = "id",
+                              response = "association_correct",
+                              cue_manual = "AI",
+                              participant_vars = c("age", "gender", "use", "expertise"),
+                              response_vars = c("association", "trial"))
 
 }
 \references{
