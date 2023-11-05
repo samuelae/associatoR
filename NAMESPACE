@@ -2,10 +2,10 @@
 
 S3method(print,associatoR)
 export("%>%")
-export(ar_define_target)
+export(ar_append_frequency)
 export(ar_embed)
 export(ar_import)
 export(ar_normalize)
 export(ar_normalize_manual)
-export(ar_target_add_frequency)
+export(ar_set_target)
 importFrom(magrittr,"%>%")

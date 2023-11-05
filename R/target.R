@@ -1,4 +1,4 @@
-#' Define target in an associatoR object
+#'
 #'
 #' \code{ar_define_target} defines the target level to further analyze in an associatoR object. This could be multiple cue words to analyze based on responses, response words to analyze based on an external embedding, or response words to analyze based on a second level of responses.
 #'
@@ -20,9 +20,9 @@
 #' ai_asso_imported <- ai_asso_imported %>%
 #'   ar_define_target(source = "responses")
 #'
-ar_define_target <- function(associations,
-                             source = c("cues", "responses"),
-                             response_level = 1) {
+ar_set_target <- function(associations,
+                          source = c("cues", "responses"),
+                           response_level = 1) {
 
   # checks -----
 
@@ -79,8 +79,8 @@ ar_define_target <- function(associations,
 #'   ar_define_target(source = "responses") %>%
 #'   ar_target_add_frequency(source = "responses")
 #'
-ar_target_add_frequency <- function(associations,
-                                    source = c("cues", "responses")) {
+ar_append_frequency <- function(associations,
+                               source = c("cues", "responses")) {
 
   # checks -----
 

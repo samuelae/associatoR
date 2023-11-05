@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{ar_import}
 \alias{ar_import}
-\title{Import association data into an associatoR object}
+\title{Import association data}
 \usage{
 ar_import(
   data,

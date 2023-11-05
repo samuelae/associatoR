@@ -1,4 +1,4 @@
-#' Import association data into an associatoR object
+#' Import association data
 #'
 #' \code{ar_import} processes tabular association data into an associatoR object.
 #'
