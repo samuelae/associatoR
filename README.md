@@ -1,6 +1,6 @@
 # associatoR
 
-Text
+A package to work with association data. 
 
 ## General Information
 
