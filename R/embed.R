@@ -22,7 +22,7 @@
 #'
 #' @export
 
-ar_embed <- function(data) {
+ar_embed <- function(data, api, model) {
 
   # check class
   if(!class(data) == "associatoR") stop('Argument data must be a "ar_object" object')
@@ -34,7 +34,5 @@ ar_embed <- function(data) {
 
 
 }
-
-
 
 
