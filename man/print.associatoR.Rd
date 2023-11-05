@@ -4,7 +4,7 @@
 \alias{print.associatoR}
 \title{Generic print for class associatoR}
 \usage{
-\method{print}{associatoR}(x, n = 3, ...)
+\method{print}{associatoR}(x, n = 5, ...)
 }
 \arguments{
 \item{x}{an object of class \code{associatoR}}

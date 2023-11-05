@@ -16,9 +16,9 @@
 #'
 #' @return Returns an \code{associatoR} object containing a list of tibbles:
 #' \describe{
-#'  \item{participants}{A tibble of all participants including \code{p_id} to identify participants, and potentially additional participant attributes \code{p_attr_*}.}
-#'  \item{cues}{A tibble of all cues \code{c_cue} and potentially additional cue attributes \code{c_attr_*}.}
-#'  \item{responses}{A tibble of all participant's \code{p_id} cue \code{r_cue} and response \code{r_response} pairs including response levels \code{r_level}, as well as potentially additional responseattributes \code{r_attr_*}.}
+#'  \item{participants}{A tibble of participants including a participant \code{id} and potential participant attributes.}
+#'  \item{cues}{A tibble of cues including a \code{cue} variable and potential cue attributes.}
+#'  \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes.}
 #' }
 #'
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (in progress)

@@ -24,7 +24,7 @@ NULL
 #' @method print associatoR
 #' @export
 #'
-print.associatoR <- function(x, n = 3, ...) {
+print.associatoR <- function(x, n = 5, ...) {
 
   cli::cli_h1("An associatoR object")
   cat("\n")
