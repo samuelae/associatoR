@@ -17,7 +17,8 @@ Authors@R: c(
 Author: Samuel Aeschbach [aut, cre] (<https://orcid.org/0000-0002-6167-4901>),
   Dirk U. Wulff [aut] (<https://orcid.org/0000-0002-4008-8022>),
   Rui Mata [ctb] (<https://orcid.org/0000-0002-1679-906X>)
-URL: https://github.com/samuelae/associatoR
+URL: https://github.com/samuelae/associatoR,
+    http://samuelaeschbach.com/associatoR/
 BugReports: https://github.com/samuelae/associatoR/issues
 Maintainer: Samuel Aeschbach <samuel.aeschbach@gmail.com>
 License: GPL-3
