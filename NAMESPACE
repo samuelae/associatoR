@@ -8,11 +8,7 @@ export(ar_embed)
 export(ar_import)
 export(ar_normalize)
 export(ar_normalize_manual)
-<<<<<<< HEAD
 export(ar_set_targets)
 export(ar_subset)
-=======
-export(ar_set_target)
 export(ar_write_csv)
->>>>>>> 869c63c7cd382ef4fc3ece1e97cdf07ff52bf5a5
 importFrom(magrittr,"%>%")
