@@ -24,12 +24,8 @@ Returns an \code{associatoR} object containing a list of tibbles:
 Adds a variable \code{frequency} to the Targets in an associatoR object .
 }
 \examples{
-ar_import(ai_asso, participant_id = "id",
-                              response_col = "association_correct",
-                              cue_type = "manual", cue_manual = "artificial intelligence",
-                              participant_attributes = c("age", "gender", "use", "expertise"),
-                              response_attributes = c("association", "trial")) \%>\%
-  ar_normalize() \%>\%
+
+ai_asso_imported <- ai_asso_imported \%>\%
   ar_define_target(source = "responses") \%>\%
   ar_target_add_frequency(source = "responses")
 
