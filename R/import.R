@@ -110,7 +110,7 @@ ar_import <- function(data,
     dplyr::distinct()
 
   # check for duplicates
-  if(any(duplicated(cue$cue))){
+  if(any(duplicated(cues$cue))){
     stop("Found duplicate cues. Make sure that the cue variable is uniquely identified and to only include variables as cue attributes that vary between (not within) cues.")
     }
 
