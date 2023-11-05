@@ -41,7 +41,7 @@ print.associatoR <- function(x, n = 3, ...) {
   print(x$responses, n = n, ...)
   cat("\n")
 
-  if("Targets" %in% names(x)){
+  if("targets" %in% names(x)){
     cli::cli_text(cli::style_bold("Targets"))
     print(x$targets, n = n, ...)
     cat("\n")
