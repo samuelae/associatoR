@@ -10,7 +10,6 @@ ar_import(
   cue = NULL,
   cue_manual = NULL,
   response,
-  response_level = NULL,
   participant_vars = NULL,
   cue_vars = NULL,
   response_vars = NULL,
@@ -20,15 +19,13 @@ ar_import(
 \arguments{
 \item{data}{a \code{data.frame} or \code{tibble} containing the association data.}
 
-\item{participant}{a \code{character} scalar of the variable name in \code{data} identifying participants.}
+\item{participant}{a \code{character} string of the variable name in \code{data} identifying participants.}
 
-\item{cue}{a \code{character} scalar of the variable name in \code{data} identifying the cues.}
+\item{cue}{a \code{character} string of the variable name in \code{data} identifying the cues.}
 
-\item{cue_manual}{an optional \code{character} scalar specifying the cue for all responses. Overrides argument \code{cue}.}
+\item{cue_manual}{an optional \code{character} string specifying the cue for all responses. Overrides argument \code{cue}.}
 
-\item{response}{a \code{character} scalar of the variable name in \code{data} identifying responses.}
-
-\item{response_level}{an optional \code{character} scalar of the variable name in \code{data} identifying response levels.}
+\item{response}{a \code{character} string of the variable name in \code{data} identifying responses.}
 
 \item{participant_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
 

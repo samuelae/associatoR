@@ -4,11 +4,10 @@
 #'
 #'
 #' @param data a \code{data.frame} or \code{tibble} containing the association data.
-#' @param participant a \code{character} scalar of the variable name in \code{data} identifying participants.
-#' @param cue a \code{character} scalar of the variable name in \code{data} identifying the cues.
-#' @param cue_manual an optional \code{character} scalar specifying the cue for all responses. Overrides argument \code{cue}.
-#' @param response a \code{character} scalar of the variable name in \code{data} identifying responses.
-#' @param response_level an optional \code{character} scalar of the variable name in \code{data} identifying response levels.
+#' @param participant a \code{character} string of the variable name in \code{data} identifying participants.
+#' @param cue a \code{character} string of the variable name in \code{data} identifying the cues.
+#' @param cue_manual an optional \code{character} string specifying the cue for all responses. Overrides argument \code{cue}.
+#' @param response a \code{character} string of the variable name in \code{data} identifying responses.
 #' @param participant_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.
 #' @param cue_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.
 #' @param response_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of responses
@@ -38,7 +37,6 @@ ar_import <- function(data,
                       cue = NULL,
                       cue_manual = NULL,
                       response,
-                      response_level = NULL,
                       participant_vars = NULL,
                       cue_vars = NULL,
                       response_vars = NULL,
@@ -54,7 +52,6 @@ ar_import <- function(data,
   if(!chk::vld_null(cue)) chk::chk_string(cue)
   if(!chk::vld_null(cue_manual)) chk::chk_string(cue_manual)
   chk::chk_string(response)
-  if(!chk::vld_null(response_level)) chk::chk_string(response_level)
   if(!chk::vld_null(participant_vars)) chk::chk_character(participant_vars)
   if(!chk::vld_null(cue_vars)) chk::chk_character(cue_vars)
   if(!chk::vld_null(response_vars)) chk::chk_character(response_vars)
@@ -64,7 +61,6 @@ ar_import <- function(data,
   chk::chk_subset(participant, names(data))
   chk::chk_subset(cue, names(data))
   chk::chk_subset(response, names(data))
-  chk::chk_subset(response_level, names(data))
   chk::chk_subset(participant_vars, names(data))
   chk::chk_subset(cue_vars, names(data))
   chk::chk_subset(response_vars, names(data))
@@ -81,13 +77,6 @@ ar_import <- function(data,
     data = data %>% dplyr::mutate(cue = cue_manual)
     } else {
     data = data %>% dplyr::rename(cue = {{cue}})
-    }
-
-  # level
-  if(chk::vld_null(response_level)){
-    data = data %>% dplyr::mutate(level = 1)
-    } else {
-    data = data %>% dplyr::rename(level = {{response_level}})
     }
 
   # participants ----
@@ -118,13 +107,13 @@ ar_import <- function(data,
 
   # create responses
   responses <- data %>%
-    dplyr::select(id, cue, response, level,
+    dplyr::select(id, cue, response,
                   tidyselect::all_of(c(response_vars)))
 
 
   # check if unique
   if(nrow(responses) > nrow(dplyr::distinct(responses))){
-    stop("Responses are not uniquely identified. Add response level or attribute (e.g., trial or repetition) to uniquely identify responses.")
+    stop("Responses are not uniquely identified. Add response attribute(s) (e.g., trial, repetition, level) to uniquely identify responses.")
     }
 
   # compose associatoR object ----
