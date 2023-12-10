@@ -48,7 +48,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ar_embed</span><span class="op">(</span><span class="va">data</span>, <span class="va">api</span>, <span class="va">model</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ar_embed</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"ppmi-svd"</span>,</span>
+<span>  min_count <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  n_dim <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  context <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,17 +65,28 @@
 <dd><p>an <code>ar_object</code> including targets.</p></dd>
 
 
-<dt>api</dt>
-<dd><p>a <code>character</code> specifying the api One of <code>c("huggingface","openai")</code>. Default is <code>"huggingface"</code>.</p></dd>
+<dt>type</dt>
+<dd><p>a <code>character</code> specifying the type of embedding. One of <code>c("counts","ppmi","ppmi-svd","huggingface")</code>. Default is <code>"ppmi-svd"</code>.</p></dd>
+
+
+<dt>min_count</dt>
+<dd><p>an <code>integer</code> value specifying the minimum response count for responses to be considered in the embedding for <code>type = c("counts","ppmi","ppmi-svd")</code>. Default is <code>5</code>.</p></dd>
+
+
+<dt>n_dim</dt>
+<dd><p>an <code>integer</code> value specifying the number of dimensions generated in <code>type = "ppmi-svd"</code>. Default is <code>300</code>.</p></dd>
 
 
 <dt>model</dt>
-<dd><p>a <code>character</code> specifying the model label. Must match the
-model names on the corresponding APIs. See, <a href="https://huggingface.co/models" class="external-link">huggingface.co/models</a>, <a href="https://platform.openai.com/docs/models/embeddings" class="external-link">platform.openai.com/docs/models/embeddings</a>, <a href="https://cohere.com/embeddings" class="external-link">cohere.com/embeddings</a>. Defaults to XX for <code>api = "huggingface"</code>, to <code>"text-embedding-ada-002"</code> for <code>api = "openai"</code>, and to <code>"embed-english-v3.0"</code> for <code>api = "cohere"</code>.</p></dd>
+<dd><p>a <code>character</code> specifying the model label. Must match the name on <a href="https://huggingface.co/models" class="external-link">huggingface.co/models</a>.</p></dd>
 
 
-<dt>type</dt>
-<dd><p>a <code>character</code> specifying the type of embedding. One of <code>c("counts","ppmi","ppmi-svd")</code>. Default is <code>"model"</code>.</p></dd>
+<dt>token</dt>
+<dd><p>a <code>character</code> string specifying the access token for the hugging face API. Must be obtained from <a href="https://huggingface.co/inference-api" class="external-link">huggingface.co/inference-api</a>.</p></dd>
+
+
+<dt>context</dt>
+<dd><p>an optional <code>character</code> string specifying a common lead text that may help the language model interpret the associations. Defaults to <code>"Free association: "</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -76,7 +95,7 @@ model names on the corresponding APIs. See, <a href="https://huggingface.co/mode
 
 <p>The function returns the <code>associatoR</code> object including a new</p>
 <p></p>
-<p><code>matrix</code> element containing the embeddings.</p>
+<p><code>matrix</code> element called <code>target_embeddings</code> containing the target embeddings.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -88,7 +107,7 @@ model names on the corresponding APIs. See, <a href="https://huggingface.co/mode
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run embedding</span></span></span>
 <span class="r-in"><span><span class="fu">ar_embed</span><span class="op">(</span><span class="va">ai_asso_processed</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ar_embed(ai_asso_processed):</span> object 'associations' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘tidyr’</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
