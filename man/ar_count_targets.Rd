@@ -31,6 +31,7 @@ ar_import(ai_asso, participant = "id",
           participant_vars = c("age", "gender", "use", "expertise"),
           response_vars = c("association", "trial")) \%>\%
   ar_normalize() \%>\%
-  ar_set_targets(target_set = "responses")
+  ar_set_targets(target_set = "responses") \%>\%
+  ar_count_targets()
 
 }
