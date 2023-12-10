@@ -1,8 +1,8 @@
 #' Embed associations
 #'
-#' \code{ar_embed_targets} generates target embeddings
+#' \code{ar_embed} generates target embeddings.
 #'
-#' @param associations an \code{ar_object} including targets.
+#' @param associations an \code{associatoR} object including targets.
 #' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
 #' @param min_count an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{type = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.
 #' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{type = "ppmi-svd"}. Default is \code{300}.
@@ -17,8 +17,11 @@
 #'
 #' @examples
 #'
-#' # run embedding
-#' ar_embed(ai_asso_processed)
+#' ar_import(risk_asso, participant = "id", cue = "cue", response = "response",
+#'           response_vars = "trial", participant_vars = c("gender", "age", "age_group")) %>%
+#'   ar_normalize() %>%
+#'   ar_set_targets(target_set = "responses") %>%
+#'   ar_embed()
 #'
 #' @export
 
@@ -34,6 +37,7 @@ ar_embed <- function(associations,
   chk::chk_s3_class(associations, "associatoR")
   chk::chk_subset("targets", names(associations))
   chk::chk_subset(type, c("counts","ppmi","ppmi-svd","huggingface"))
+  chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
 
   if(type != "huggingface"){
 
@@ -48,7 +52,7 @@ ar_embed <- function(associations,
                   values_from = n)
 
     # get count embed
-    embed = as.matrix(counts %>% select(-cue))
+    embed = as.matrix(counts %>% dplyr::select(-cue))
     rownames(embed) = counts$cue
     embed[is.na(embed)] = 0
 
@@ -71,7 +75,7 @@ ar_embed <- function(associations,
       embed = embed / norm
 
       if(type == "ppmi-svd"){
-        n_dim = min(n_dim, ncol(embed))
+        n_dim = min(n_dim, ncol(embed), nrow(embed))
         svd = RSpectra::svds(embed, n_dim)
         rownames(svd$u) = rownames(embed)
         embed = svd$u %*% diag(svd$d)
@@ -199,10 +203,10 @@ ar_embed <- function(associations,
 
 #' Project embeddings
 #'
-#' \code{ar_project} generates a 2D projection of the target embedding
+#' \code{ar_project} generates a 2D projection of the target embedding.
 #'
-#' @param associations an \code{ar_object} including targets.
-#' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
+#' @param associations an \code{associatoR} object including targets.
+#' @param type a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.
 #' @param ... additional parguments passed to the projection method.
 #'
 #' @return The function returns the \code{associatoR} object with the
@@ -212,8 +216,12 @@ ar_embed <- function(associations,
 #'
 #' @examples
 #'
-#' # run embedding
-#' ar_project(ai_asso_processed)
+#' ar_import(risk_asso, participant = "id", cue = "cue", response = "response",
+#'           response_vars = "trial", participant_vars = c("gender", "age", "age_group")) %>%
+#'   ar_normalize() %>%
+#'   ar_set_targets(target_set = "responses") %>%
+#'   ar_embed() %>%
+#'   ar_project()
 #'
 #' @export
 

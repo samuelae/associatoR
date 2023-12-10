@@ -12,6 +12,8 @@ ar_normalize_manual(associations, fun, ..., protect_cues = TRUE)
 \item{fun}{a vectorized \code{function} applied to all responses and cues in the response matrix, excluding cues that exist in the .}
 
 \item{...}{additional arguments passed to \code{fun}.}
+
+\item{protect_cues}{a \code{logical} indicating if cues should be protected (i.e. not changed by \code{fun}) or not.}
 }
 \value{
 Returns an \code{associatoR} object containing a list of tibbles:
@@ -19,7 +21,7 @@ Returns an \code{associatoR} object containing a list of tibbles:
 \describe{
  \item{participants}{A tibble of participants including a participant \code{id} and potential participant attributes.}
  \item{cues}{A tibble of cues including a \code{cue} variable and potential cue attributes.}
- \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes.}
+ \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes. All responses are passed through \code{fun}}
 }
 }
 \description{
