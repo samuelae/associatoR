@@ -5,7 +5,7 @@
 \title{Embed associations}
 \usage{
 ar_embed(
-  data,
+  associations,
   type = "ppmi-svd",
   min_count = 5,
   n_dim = 300,
@@ -15,7 +15,7 @@ ar_embed(
 )
 }
 \arguments{
-\item{data}{an \code{ar_object} including targets.}
+\item{associations}{an \code{ar_object} including targets.}
 
 \item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
 

@@ -6,7 +6,7 @@
 \usage{
 ar_characterize_targets(
   associations,
-  characteristic = c("valence", "concreteness", "pos", "frequency")
+  characteristic = c("valence", "arrousal", "dominance", "concreteness", "frequency")
 )
 }
 \arguments{
@@ -27,5 +27,6 @@ Returns an \code{associatoR} object containing a list of tibbles, with \code{tar
 Append target characteristic to the \code{targets} table in the \code{associatoR} object
 }
 \references{
-insertAllCited{}
+Warriner, A.B., Kuperman, V. & Brysbaert, M. Norms of valence, arousal, and dominance for 13,915 English lemmas. Behav Res 45, 1191–1207 (2013). https://doi.org/10.3758/s13428-012-0314-x
+  Brysbaert, M., Warriner, A.B. & Kuperman, V. Concreteness ratings for 40 thousand generally known English word lemmas. Behav Res 46, 904–911 (2014). https://doi.org/10.3758/s13428-013-0403-5
 }

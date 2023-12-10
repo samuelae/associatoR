@@ -2,7 +2,7 @@
 #'
 #' \code{ar_embed_targets} generates target embeddings
 #'
-#' @param data an \code{ar_object} including targets.
+#' @param associations an \code{ar_object} including targets.
 #' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
 #' @param min_count an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{type = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.
 #' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{type = "ppmi-svd"}. Default is \code{300}.
@@ -22,7 +22,7 @@
 #'
 #' @export
 
-ar_embed <- function(data,
+ar_embed <- function(associations,
                      type = "ppmi-svd",
                      min_count = 5,
                      n_dim = 300,
@@ -30,24 +30,19 @@ ar_embed <- function(data,
                      token = NULL,
                      context = NULL) {
 
-  # check types
-  chk::chk_s3_class(data, "associatoR")
-
-  # do targets exist
-  chk::chk_subset("targets", names(data))
-
-  # does method match
+  # checks
+  chk::chk_s3_class(associations, "associatoR")
+  chk::chk_subset("targets", names(associations))
   chk::chk_subset(type, c("counts","ppmi","ppmi-svd","huggingface"))
-
 
   if(type != "huggingface"){
 
     # get counts
-    counts = data$responses %>%
-      dplyr::filter(cue %in% data$targets$target) %>%
+    counts = associations$responses %>%
+      dplyr::filter(cue %in% associations$targets$target) %>%
       dplyr::mutate(response = paste0("resp_",response)) %>%
       dplyr::group_by(cue, response) %>%
-      dplyr::summarize(n = n()) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
       dplyr::ungroup() %>%
       tidyr::pivot_wider(names_from = response,
                   values_from = n)
@@ -105,7 +100,7 @@ ar_embed <- function(data,
       }
 
     # set targets
-    targets = data$targets$target
+    targets = associations$targets$target
 
     # set api and token
     api = glue::glue("https://api-inference.huggingface.co/pipeline/feature-extraction/{model}")
@@ -194,10 +189,10 @@ ar_embed <- function(data,
     dplyr::select(target, dplyr::everything())
 
   # add
-  data$target_embedding = embed
+  associations$target_embedding = embed
 
   # out
-  data
+  associations
 
 }
 
@@ -206,7 +201,7 @@ ar_embed <- function(data,
 #'
 #' \code{ar_project} generates a 2D projection of the target embedding
 #'
-#' @param data an \code{ar_object} including targets.
+#' @param associations an \code{ar_object} including targets.
 #' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
 #' @param ... additional parguments passed to the projection method.
 #'
@@ -222,21 +217,17 @@ ar_embed <- function(data,
 #'
 #' @export
 
-ar_project <- function(data,
+ar_project <- function(associations,
                        type = "umap",
                        ...) {
 
-  # check types
-  chk::chk_s3_class(data, "associatoR")
-
-  # do targets exist
-  chk::chk_subset("target_embedding", names(data))
-
-  # does method match
+  # checks
+  chk::chk_s3_class(associations, "associatoR")
+  chk::chk_subset("target_embedding", names(associations))
   chk::chk_subset(type, c("mds","umap"))
 
   # get embed
-  embed = data$target_embedding %>%
+  embed = associations$target_embedding %>%
     dplyr::select(-target) %>%
     as.matrix()
 
@@ -261,12 +252,12 @@ ar_project <- function(data,
   # out
   embed_2d = embed_2d %>%
     tibble::as_tibble() %>%
-    dplyr::mutate(target = data$target_embedding$target) %>%
+    dplyr::mutate(target = associations$target_embedding$target) %>%
     dplyr::select(target, dplyr::everything())
 
   # over write
-  data$target_embedding = embed_2d
+  associations$target_embedding = embed_2d
 
   # out
-  data
+  associations
   }
