@@ -22,8 +22,13 @@ URL: https://github.com/samuelae/associatoR,
 BugReports: https://github.com/samuelae/associatoR/issues
 Maintainer: Samuel Aeschbach <samuel.aeschbach@gmail.com>
 License: GPL-3
+<<<<<<< HEAD
 Depends: R (>= 3.1.0)
 Imports: dplyr (>= 0.5.0), dtplyr, tidyselect, magrittr, tibble, stringr, chk, cli, rlang, readr
+=======
+Depends: R (>= 3.1.0),
+Imports: dplyr (>= 0.5.0), dtplyr, tidyselect, magrittr, tibble, stringr, chk, cli, rlang, readr, readxl, tidyr
+>>>>>>> 02a06577cdf9c11e3baf4eccb56a1dc37e992886
 Suggests: testthat
 Encoding: UTF-8
 LazyData: true
