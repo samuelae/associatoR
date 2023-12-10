@@ -48,7 +48,6 @@ ar_subset <- function(associations, ...) {
                            participant = "id",
                            cue = "cue",
                            response = "response",
-                           response_level = "level",
                            participant_vars = part_names[!part_names %in% "id"],
                            cue_vars = cue_names[!cue_names %in% "cue"],
                            response_vars = resp_names[!resp_names %in% c("id", "cue", "response", "level")])

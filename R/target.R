@@ -107,11 +107,14 @@ ar_append_frequency <- function(associations, ...) {
   frequencies = associations$responses %>%
     dplyr::filter(!!!filters) %>%
     dplyr::group_by(response) %>%
-    dplyr::summarize(frequency = n())
+    dplyr::summarize(frequency = dplyr::n())
 
   # join
   associations$targets = associations$targets %>%
     dplyr::left_join(frequencies, by = c("target" = "response"))
+
+  # handle NAs (in filtered counts)
+  associations$targets$frequency[is.na(associations$targets$frequency)] <- 0
 
   # out
   associations
