@@ -29,24 +29,31 @@ print.associatoR <- function(x, n = 5, ...) {
   cli::cli_h1("An associatoR object")
   cat("\n")
 
-  cli::cli_text(cli::style_bold("Participants"))
+  cli::cli_text(cli::style_bold("participants"))
   print(x$participants, n = n, ...)
   cat("\n")
 
-  cli::cli_text(cli::style_bold("Cues"))
+  cli::cli_text(cli::style_bold("cues"))
   print(x$cues, n = n, ...)
   cat("\n")
 
-  cli::cli_text(cli::style_bold("Responses"))
+  cli::cli_text(cli::style_bold("responses"))
   print(x$responses, n = n, ...)
   cat("\n")
 
   if("targets" %in% names(x)){
-    cli::cli_text(cli::style_bold("Targets"))
+    cli::cli_text(cli::style_bold("targets"))
     print(x$targets, n = n, ...)
     cat("\n")
   }
 
+  if("target_embedding" %in% names(x)){
+    cli::cli_text(cli::style_bold("target_embedding"))
+    print(x$target_embedding, n = n, ..., width = 70)
+    cat("\n")
   }
+
+}
+
 
 

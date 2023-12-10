@@ -4,21 +4,34 @@
 \alias{ar_embed}
 \title{Embed associations}
 \usage{
-ar_embed(data, api, model)
+ar_embed(
+  data,
+  type = "ppmi-svd",
+  min_count = 5,
+  n_dim = 300,
+  model = NULL,
+  token = NULL,
+  context = NULL
+)
 }
 \arguments{
 \item{data}{an \code{ar_object} including targets.}
 
-\item{api}{a \code{character} specifying the api One of \code{c("huggingface","openai")}. Default is \code{"huggingface"}.}
+\item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
 
-\item{model}{a \code{character} specifying the model label. Must match the
-model names on the corresponding APIs. See, \href{https://huggingface.co/models}{huggingface.co/models}, \href{https://platform.openai.com/docs/models/embeddings}{platform.openai.com/docs/models/embeddings}, \href{https://cohere.com/embeddings}{cohere.com/embeddings}. Defaults to XX for \code{api = "huggingface"}, to \code{"text-embedding-ada-002"} for \code{api = "openai"}, and to \code{"embed-english-v3.0"} for \code{api = "cohere"}.}
+\item{min_count}{an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{type = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.}
 
-\item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd")}. Default is \code{"model"}.}
+\item{n_dim}{an \code{integer} value specifying the number of dimensions generated in \code{type = "ppmi-svd"}. Default is \code{300}.}
+
+\item{model}{a \code{character} specifying the model label. Must match the name on \href{https://huggingface.co/models}{huggingface.co/models}.}
+
+\item{token}{a \code{character} string specifying the access token for the hugging face API. Must be obtained from \href{https://huggingface.co/inference-api}{huggingface.co/inference-api}.}
+
+\item{context}{an optional \code{character} string specifying a common lead text that may help the language model interpret the associations. Defaults to \code{"Free association: "}}
 }
 \value{
 The function returns the \code{associatoR} object including a new
-  \code{matrix} element containing the embeddings.
+  \code{matrix} element called \code{target_embeddings} containing the target embeddings.
 }
 \description{
 \code{ar_embed_targets} generates target embeddings
