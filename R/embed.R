@@ -1,14 +1,12 @@
 #' Embed associations
 #'
-#' \code{ar_embed} generates abstract embedding dimensions for target
-#' associations.
+#' \code{ar_embed_targets} generates target embeddings
 #'
 #' @param data an \code{ar_object} including targets.
-#' @param type a \code{character} specifying the type of embedding. One of \code{c("model","counts","ppmi","ppmi-svd")}. Default is \code{"model"}.
-#' @param api a \code{character} specifying the api One of
-#'   \code{c("huggingface","openai","cohere")}. Default is \code{"huggingface"}.
+#' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd")}. Default is \code{"model"}.
 #' @param model a \code{character} specifying the model label. Must match the
 #'   model names on the corresponding APIs. See, \href{https://huggingface.co/models}{huggingface.co/models}, \href{https://platform.openai.com/docs/models/embeddings}{platform.openai.com/docs/models/embeddings}, \href{https://cohere.com/embeddings}{cohere.com/embeddings}. Defaults to XX for \code{api = "huggingface"}, to \code{"text-embedding-ada-002"} for \code{api = "openai"}, and to \code{"embed-english-v3.0"} for \code{api = "cohere"}.
+#' @param api a \code{character} specifying the api One of \code{c("huggingface","openai")}. Default is \code{"huggingface"}.
 #'
 #' @return The function returns the \code{associatoR} object including a new
 #'   \code{matrix} element containing the embeddings.
@@ -24,11 +22,11 @@
 
 ar_embed <- function(data, api, model) {
 
-  # check class
-  if(!class(data) == "associatoR") stop('Argument data must be a "ar_object" object')
+  # check types
+  chk::chk_s3_class(associations, "associatoR")
 
-  # check for targets
-  if(!"targets" %in% names(data)) stop('Data must contain element "targets". Create via "ar_define_targets()."')
+  # do targets exist
+  chk::chk_subset(names(data), c("targets"))
 
 
 

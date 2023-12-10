@@ -9,21 +9,19 @@ ar_embed(data, api, model)
 \arguments{
 \item{data}{an \code{ar_object} including targets.}
 
-\item{api}{a \code{character} specifying the api One of
-\code{c("huggingface","openai","cohere")}. Default is \code{"huggingface"}.}
+\item{api}{a \code{character} specifying the api One of \code{c("huggingface","openai")}. Default is \code{"huggingface"}.}
 
 \item{model}{a \code{character} specifying the model label. Must match the
 model names on the corresponding APIs. See, \href{https://huggingface.co/models}{huggingface.co/models}, \href{https://platform.openai.com/docs/models/embeddings}{platform.openai.com/docs/models/embeddings}, \href{https://cohere.com/embeddings}{cohere.com/embeddings}. Defaults to XX for \code{api = "huggingface"}, to \code{"text-embedding-ada-002"} for \code{api = "openai"}, and to \code{"embed-english-v3.0"} for \code{api = "cohere"}.}
 
-\item{type}{a \code{character} specifying the type of embedding. One of \code{c("model","counts","ppmi","ppmi-svd")}. Default is \code{"model"}.}
+\item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd")}. Default is \code{"model"}.}
 }
 \value{
 The function returns the \code{associatoR} object including a new
   \code{matrix} element containing the embeddings.
 }
 \description{
-\code{ar_embed} generates abstract embedding dimensions for target
-associations.
+\code{ar_embed_targets} generates target embeddings
 }
 \examples{
 
