@@ -4,14 +4,12 @@
 #'
 #'
 #' @param data a \code{data.frame} or \code{tibble} containing the association data.
-#' @param participant a \code{character} string of the variable name in \code{data} identifying participants.
-#' @param cue a \code{character} string of the variable name in \code{data} identifying the cues.
-#' @param cue_manual an optional \code{character} string specifying the cue for all responses. Overrides argument \code{cue}.
-#' @param response a \code{character} string of the variable name in \code{data} identifying responses.
-#' @param participant_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.
-#' @param cue_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.
-#' @param response_vars an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of responses
-#' @param verbose an \code{logical} specifying whether to show messages.
+#' @param participant variable name in \code{data} identifying the participants.
+#' @param cue variable name in \code{data} or \code{character} string identifying the cue(s).
+#' @param response variable name in \code{data} identifying the responses.
+#' @param participant_vars optional variable names in \code{data} identifying participant attributes (e.g., demographics).
+#' @param cue_vars optional variable names in \code{data} identifying cue attributes.
+#' @param response_vars optional variable names in \code{data}  identifying response attributes.
 #'
 #' @return Returns an \code{associatoR} object containing a list of tibbles:
 #' \describe{
@@ -22,68 +20,60 @@
 #'
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (in progress)
 #'
-#' @export
-#'
 #' @examples
 #' ai_asso_imported <- ar_import(ai_asso,
-#'                               participant = "id",
+#'                               participant = id,
+#'                               cue = "AI",
 #'                               response = "association_correct",
-#'                               cue_manual = "AI",
 #'                               participant_vars = c("age", "gender", "use", "expertise"),
 #'                               response_vars = c("association", "trial"))
 #'
+#' @export
 ar_import <- function(data,
                       participant,
-                      cue = NULL,
-                      cue_manual = NULL,
+                      cue,
                       response,
                       participant_vars = NULL,
                       cue_vars = NULL,
-                      response_vars = NULL,
-                      verbose = FALSE) {
+                      response_vars = NULL) {
 
   # check arguments ----
 
   # data
   chk::chk_data(data)
 
-  # check types
-  chk::chk_string(participant)
-  if(!chk::vld_null(cue)) chk::chk_string(cue)
-  if(!chk::vld_null(cue_manual)) chk::chk_string(cue_manual)
-  chk::chk_string(response)
-  if(!chk::vld_null(participant_vars)) chk::chk_character(participant_vars)
-  if(!chk::vld_null(cue_vars)) chk::chk_character(cue_vars)
-  if(!chk::vld_null(response_vars)) chk::chk_character(response_vars)
-  chk::chk_logical(verbose)
+  # enquo arguments ----
+  participant = dplyr::enquo(participant)
+  response = dplyr::enquo(response)
+  cue = dplyr::enquo(cue)
+  participant_vars = dplyr::enquo(participant_vars)
+  response_vars = dplyr::enquo(response_vars)
+  cue_vars = dplyr::enquo(cue_vars)
 
-  # check existence
-  chk::chk_subset(participant, names(data))
-  chk::chk_subset(cue, names(data))
-  chk::chk_subset(response, names(data))
-  chk::chk_subset(participant_vars, names(data))
-  chk::chk_subset(cue_vars, names(data))
-  chk::chk_subset(response_vars, names(data))
+  #print(rlang::expr_text(cue))
+
+  # check types
+  check_tidy(data, participant)
+  check_tidy(data, response)
+  check_tidy(data, participant_vars)
+  check_tidy(data, response_vars)
+  check_tidy(data, cue_vars)
 
   # handle protected variables ----
 
   # participant and response
   data = data %>%
-    dplyr::rename(id = {{participant}}) %>%
-    dplyr::rename(response = {{response}})
+    dplyr::rename(id = !!participant) %>%
+    dplyr::rename(response = !!response)
 
-  # cue
-  if(!chk::vld_null(cue_manual)){
-    data = data %>% dplyr::mutate(cue = cue_manual)
-    } else {
-    data = data %>% dplyr::rename(cue = {{cue}})
-    }
+  # add cue
+  data = data %>% dplyr::mutate(cue = !!cue)
 
   # participants ----
 
   # all use-cases
   participants <- data %>%
-    dplyr::select(id, tidyselect::all_of(participant_vars)) %>%
+    dplyr::select(id, !!participant_vars) %>%
     dplyr::distinct()
 
   # check for duplicates
@@ -95,7 +85,7 @@ ar_import <- function(data,
 
   # create cues
   cues <- data %>%
-    dplyr::select(cue, tidyselect::all_of(cue_vars)) %>%
+    dplyr::select(cue, !!cue_vars) %>%
     dplyr::distinct()
 
   # check for duplicates
@@ -107,8 +97,7 @@ ar_import <- function(data,
 
   # create responses
   responses <- data %>%
-    dplyr::select(id, cue, response,
-                  tidyselect::all_of(c(response_vars)))
+    dplyr::select(id, cue, response, !!response_vars)
 
 
   # check if unique
