@@ -32,38 +32,39 @@ ar_compare = function(associations,
 
   # get groups
   data = associations$responses %>%
-    left_join(associations$participants %>% select(id, !!p_vars), by = "id") %>%
-    right_join(associations$targets, by = c("response" = "target")) %>%
-    mutate(target = response)
+    dplyr::left_join(associations$participants %>% dplyr::select(id, !!p_vars), by = "id") %>%
+    dplyr::filter(response %in% associations$targets$target) %>%
+    dplyr::left_join(associations$targets, by = c("response" = "target")) %>%
+    dplyr::mutate(target = response)
 
   if(!is.function(fun)){
     if(fun[1] == "count"){
 
       # do counts
       out = data %>%
-        dplyr::group_by(across(c(!!p_vars, !!t_var))) %>%
+        dplyr::group_by(dplyr::across(c(!!p_vars, !!t_var))) %>%
         dplyr::summarize(n = length(!!t_var)) %>%
-        ungroup() %>%
+        dplyr::ungroup() %>%
         tidyr::pivot_wider(names_from = !!t_var,
                            values_from = n) %>%
-        mutate_all(replace_na, 0)
+        dplyr::mutate_all(tidyr::replace_na, 0)
 
     }
     if(fun[1] == "mean"){
 
       # do mean
       out = data %>%
-        dplyr::group_by(across(c(!!p_vars))) %>%
+        dplyr::group_by(dplyr::across(c(!!p_vars))) %>%
         dplyr::summarize(!!rlang::ensym(target_var) := mean(!!t_var, na.rm=T)) %>%
-        ungroup()
+        dplyr::ungroup()
     }
   } else {
 
     # do fun
     out = data %>%
-      dplyr::group_by(across(c(!!p_vars))) %>%
+      dplyr::group_by(dplyr::across(c(!!p_vars))) %>%
       dplyr::summarize(!!rlang::ensym(target_var) := fun(!!t_var, na.rm=T)) %>%
-      ungroup()
+      dplyr::ungroup()
 
     }
 
