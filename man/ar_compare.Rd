@@ -7,9 +7,8 @@
 ar_compare(
   associations,
   participant_vars,
-  target_var = "targets",
-  fun = c("mean", "count"),
-  normalize = NULL
+  target_var,
+  fun = c("count", "mean")
 )
 }
 \arguments{
@@ -19,17 +18,17 @@ ar_compare(
 
 \item{target_var}{an optional \code{character} string specifying the target variable to be summarized. If not specified \code{ar_comapre} tabulates the frequencies of targets.}
 
-\item{normalize}{an optional \code{character} string specifying whether the output should be normalized by rows (\code{normalize = "rows"}) or columns (\code{normalize = "columns"}). Defaults to \code{normalize = NULL} implying no normalization.}
+\item{fun}{a \code{character} string or a function specifying the statistic to calculate from \code{target_var}.}
 }
 \value{
-Returns an \code{tibble} conatining grouped summaries (means or frequencies).
+Returns an \code{tibble} containing grouped summaries (means, frequencies, or other custom statistics).
 }
 \description{
 \code{ar_compare} compares responses across participant variables.
 }
 \examples{
 
-ai_asso <- ai_asso \%>\%
-  ar_define_targets(source = "cues")
+ai_asso \%>\%
+  ar_ar_compare()
 
 }
