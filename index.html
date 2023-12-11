@@ -80,9 +80,42 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/ar_import.html">ar_import</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">ar_set_target</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="reference/ar_set_targets.html">ar_set_targets</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/ar_embed.html">ar_embed</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">ar_plot</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level1">
+<h1 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h1>
+<pre class="mermaid"><code>flowchart TD
+    DATA(free association data) --&gt; IMPORT["ar_import()"]
+    IMPORT --&gt; OBJ("associatoR Object \n [cues, participants, responses]")
+    IMPORT --&gt; NORM["ar_normalize()"] --&gt; OBJ
+    IMPORT --&gt; NORMM["ar_normalize_manual()"] --&gt; OBJ
+
+    OBJ &lt;--&gt; SUB["ar_subset()"]
+
+    OBJ --&gt; SET["ar_set_targets()"]
+
+    SET --&gt; OBJT("associatoR Object \n [cues, participants, responses, targets]")
+
+    OBJT &lt;--&gt; COUNT["ar_count_targets()"]
+    OBJT &lt;--&gt; CHAR["ar_characterize_targets()"]
+
+    OBJT --&gt; EMBED["ar_embed()"]
+    EMBED --&gt; OBJTE("associatoR Object \n [cues, participants, responses, targets, target_embedding]")
+
+    OBJTE &lt;--&gt; PROJ["ar_project()"]
+
+    COMP["ar_compare()"]
+    OBJ &lt;--&gt; COMP
+    OBJT &lt;--&gt; COMP
+    OBJTE &lt;--&gt; COMP
+
+    CORR["ar_correlate()"]
+    OBJ &lt;--&gt; CORR
+    OBJT &lt;--&gt; CORR
+    OBJTE &lt;--&gt; CORR</code></pre>
 <p>Detailed descriptions can be found on the <a href="https://samuelaeschbach.com/associatoR" class="external-link">package website</a>. This includes the <a href="https://samuelaeschbach.com/associatoR/reference/index.html" class="external-link">function reference</a>.</p>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
