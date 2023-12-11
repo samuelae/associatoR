@@ -17,7 +17,7 @@ ar_write_csv(associations, file, ...)
 \code{ar_write_csv()} returns the joined associations as a tibble invisibly.
 }
 \description{
-\code{ar_write_csv()} joins all data in an \code{associatoR} object into one table and writes the table to disk using readr::write_csv().
+\code{ar_write_csv()} joins all data in an \code{associatoR} object (except potential target embedding) into one table and writes the table to disk using readr::write_csv().
 }
 \examples{
 

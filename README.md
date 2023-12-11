@@ -56,6 +56,16 @@ flowchart TD
     OBJ <--> CORR
     OBJT <--> CORR
     OBJTE <--> CORR
+    
+    PRINT["print(associatoR Object)"]
+    OBJ --> PRINT
+    OBJT --> PRINT
+    OBJTE --> PRINT
+
+    CSV["ar_write_csv()"]
+    OBJ --> CSV
+    OBJT --> CSV
+    OBJTE --> CSV
 ```
 
 
