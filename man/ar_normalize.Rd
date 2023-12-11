@@ -9,7 +9,8 @@ ar_normalize(
   case = "lower",
   punct = "end",
   punct_replacement = " ",
-  whitespace = "squish"
+  whitespace = "squish",
+  process_cues = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ ar_normalize(
 \item{punct_replacement}{a \code{character} used as replacement for punctuation.}
 
 \item{whitespace}{a \code{character} specifying the normalization of white spaces. Must be one of \code{c("squish", "trim")}. Setting \code{whitespace = "squish"} removes additional white spaces at the start, the end, and in-between words, whereas setting \code{whitespace = "trim"} removes white space from the start and end.}
+
+\item{process_cues}{a \code{logical} specifying, if cues should be processed as well. Defaults to \code{FALSE}.}
 }
 \value{
 Returns an \code{associatoR} object containing a list of tibbles:
@@ -36,10 +39,11 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 \examples{
 
-ai_asso <- ar_normalize(ai_asso)
-ai_asso <- ar_normalize(ai_asso,
-                        case = "original",
-                        punct = "all")
+ar_import(ai_asso, participant = id, cue = "AI",
+          response = association_correct,
+          participant_vars = c(age, gender, use, expertise),
+          response_vars = c(trial)) \%>\%
+  ar_normalize(case = "original", punct = "all")
 
 }
 \references{
