@@ -51,9 +51,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ar_compare</span><span class="op">(</span></span>
 <span>  <span class="va">associations</span>,</span>
 <span>  <span class="va">participant_vars</span>,</span>
-<span>  target_var <span class="op">=</span> <span class="st">"targets"</span>,</span>
-<span>  fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"count"</span><span class="op">)</span>,</span>
-<span>  normalize <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">target_var</span>,</span>
+<span>  fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"count"</span>, <span class="st">"mean"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,23 +70,23 @@
 <dd><p>an optional <code>character</code> string specifying the target variable to be summarized. If not specified <code>ar_comapre</code> tabulates the frequencies of targets.</p></dd>
 
 
-<dt>normalize</dt>
-<dd><p>an optional <code>character</code> string specifying whether the output should be normalized by rows (<code>normalize = "rows"</code>) or columns (<code>normalize = "columns"</code>). Defaults to <code>normalize = NULL</code> implying no normalization.</p></dd>
+<dt>fun</dt>
+<dd><p>a <code>character</code> string or a function specifying the statistic to calculate from <code>target_var</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns an <code>tibble</code> conatining grouped summaries (means or frequencies).</p>
+<p>Returns an <code>tibble</code> containing grouped summaries (means, frequencies, or other custom statistics).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ai_asso</span> <span class="op">&lt;-</span> <span class="va">ai_asso</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">ar_define_targets</span><span class="op">(</span>source <span class="op">=</span> <span class="st">"cues"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ar_define_targets(., source = "cues"):</span> could not find function "ar_define_targets"</span>
+<span class="r-in"><span><span class="va">ai_asso</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">ar_ar_compare</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ar_ar_compare(.):</span> could not find function "ar_ar_compare"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

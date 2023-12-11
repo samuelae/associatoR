@@ -51,13 +51,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ar_import</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">participant</span>,</span>
-<span>  cue <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  cue_manual <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">cue</span>,</span>
 <span>  <span class="va">response</span>,</span>
 <span>  participant_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cue_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  response_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  response_vars <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -68,35 +66,27 @@
 
 
 <dt>participant</dt>
-<dd><p>a <code>character</code> string of the variable name in <code>data</code> identifying participants.</p></dd>
+<dd><p>variable name in <code>data</code> identifying the participants.</p></dd>
 
 
 <dt>cue</dt>
-<dd><p>a <code>character</code> string of the variable name in <code>data</code> identifying the cues.</p></dd>
-
-
-<dt>cue_manual</dt>
-<dd><p>an optional <code>character</code> string specifying the cue for all responses. Overrides argument <code>cue</code>.</p></dd>
+<dd><p>variable name in <code>data</code> or <code>character</code> string identifying the cue(s).</p></dd>
 
 
 <dt>response</dt>
-<dd><p>a <code>character</code> string of the variable name in <code>data</code> identifying responses.</p></dd>
+<dd><p>variable name in <code>data</code> identifying the responses.</p></dd>
 
 
 <dt>participant_vars</dt>
-<dd><p>an optional <code>character</code> vector containing all additional variable names in <code>data</code> that are attributes of participants.</p></dd>
+<dd><p>optional variable names in <code>data</code> identifying participant attributes (e.g., demographics).</p></dd>
 
 
 <dt>cue_vars</dt>
-<dd><p>an optional <code>character</code> vector containing all additional variable names in <code>data</code> that are attributes of cues.</p></dd>
+<dd><p>optional variable names in <code>data</code> identifying cue attributes.</p></dd>
 
 
 <dt>response_vars</dt>
-<dd><p>an optional <code>character</code> vector containing all additional variable names in <code>data</code> that are attributes of responses</p></dd>
-
-
-<dt>verbose</dt>
-<dd><p>an <code>logical</code> specifying whether to show messages.</p></dd>
+<dd><p>optional variable names in <code>data</code>  identifying response attributes.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -122,12 +112,11 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ai_asso_imported</span> <span class="op">&lt;-</span> <span class="fu">ar_import</span><span class="op">(</span><span class="va">ai_asso</span>,</span></span>
-<span class="r-in"><span>                              participant <span class="op">=</span> <span class="st">"id"</span>,</span></span>
+<span class="r-in"><span>                              participant <span class="op">=</span> <span class="va">id</span>,</span></span>
+<span class="r-in"><span>                              cue <span class="op">=</span> <span class="st">"AI"</span>,</span></span>
 <span class="r-in"><span>                              response <span class="op">=</span> <span class="st">"association_correct"</span>,</span></span>
-<span class="r-in"><span>                              cue_manual <span class="op">=</span> <span class="st">"AI"</span>,</span></span>
 <span class="r-in"><span>                              participant_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"gender"</span>, <span class="st">"use"</span>, <span class="st">"expertise"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                              response_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"association"</span>, <span class="st">"trial"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ar_import(ai_asso, participant = "id", response = "association_correct",     cue_manual = "AI", participant_vars = c("age", "gender",         "use", "expertise"), response_vars = c("association",         "trial")):</span> unused argument (cue_manual = "AI")</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
