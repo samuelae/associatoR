@@ -28,13 +28,13 @@ Function calculates the point-biserial correlation for numeric and Cramer's V fo
 }
 \examples{
 
-ar_import(ai_asso, participant = "id",
-          response = "association_correct",
-          cue_manual = "AI",
-          participant_vars = c("age", "gender", "use", "expertise"),
-          response_vars = c("association", "trial")) \%>\%
-  ar_normalize() \%>\%
-  ar_set_targets(target_set = "responses") \%>\%
-  ar_count_targets()
+ar_import(risk_asso,
+          participant = "id",
+          cue = "cue",
+          response = "response",
+          response_vars = "trial",
+          participant_vars = c("gender", "age", "age_group")) \%>\%
+  ar_set_targets("cues") \%>\%
+  ar_correlate_targets(participant_vars = c("age", "gender"))
 
 }

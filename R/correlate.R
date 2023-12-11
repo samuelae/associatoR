@@ -1,4 +1,3 @@
-
 #' Correlate targets responses with participant variables
 #'
 #' \code{ar_correlate_targets} calculates the correlations between the response occurrence of \code{targets} and participant variables, such as gender or age.
@@ -18,14 +17,14 @@
 #'
 #' @examples
 #'
-#' ar_import(ai_asso, participant = "id",
-#'           response = "association_correct",
-#'           cue_manual = "AI",
-#'           participant_vars = c("age", "gender", "use", "expertise"),
-#'           response_vars = c("association", "trial")) %>%
-#'   ar_normalize() %>%
-#'   ar_set_targets(target_set = "responses") %>%
-#'   ar_count_targets()
+#' ar_import(risk_asso,
+#'           participant = "id",
+#'           cue = "cue",
+#'           response = "response",
+#'           response_vars = "trial",
+#'           participant_vars = c("gender", "age", "age_group")) %>%
+#'   ar_set_targets("cues") %>%
+#'   ar_correlate_targets(participant_vars = c("age", "gender"))
 #'
 #' @export
 
@@ -41,12 +40,13 @@ ar_correlate_targets <- function(associations, participant_vars) {
   participants = associations$responses$id %>% as.character()
   responses = associations$responses$response
   uni_participant = unique(participants)
-  target_participants = matrix(FALSE, nrow = length(uni_participant), ncol = length(targets),
-         dimnames = list(uni_participant, targets))
+  target_participants = matrix(FALSE,
+                               nrow = length(uni_participant),
+                               ncol = length(targets),
+                               dimnames = list(uni_participant, targets))
   for(i in 1:length(targets)){
-    target_participants[unique(participants[responses == targets[i]]), targets[i]] = TRUE
-    }
-
+    target_participants[unique(participants[(!is.na(responses)) & responses == targets[i]]), targets[i]] = TRUE
+  }
 
   # do calc
   corr_list = list()

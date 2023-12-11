@@ -23,11 +23,14 @@ Returns an \code{associatoR} object containing a list of tibbles:
 Subset the \code{associatoR} object.
 }
 \details{
-Note that subsets resets the \code{associatoR} object. A potential \code{target} tibble will be removed and has to be added again using \link[associatoR]{ar_import}.
+Note that subsets resets the \code{associatoR} object. A potential \code{target} tibble will be removed and has to be added again using \link[associatoR]{ar_set_target}.
 }
 \examples{
 
-ai_asso <- ai_asso \%>\%
-  ar_subset(id > 10, trial = 10)
+ar_import(fa_data,
+          participant = "participantID", participant_vars = c("age", "gender"),
+          cue = "cue", response = "response",
+          response_vars = c("created_at", "pos")) \%>\%
+  ar_subset(age > 25, gender == "Fe")
 
 }
