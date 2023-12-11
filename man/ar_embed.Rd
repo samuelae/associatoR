@@ -15,7 +15,7 @@ ar_embed(
 )
 }
 \arguments{
-\item{associations}{an \code{ar_object} including targets.}
+\item{associations}{an \code{associatoR} object including targets.}
 
 \item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
 
@@ -34,12 +34,15 @@ The function returns the \code{associatoR} object including a new
   \code{matrix} element called \code{target_embeddings} containing the target embeddings.
 }
 \description{
-\code{ar_embed_targets} generates target embeddings
+\code{ar_embed} generates target embeddings.
 }
 \examples{
 
-# run embedding
-ar_embed(ai_asso_processed)
+ar_import(risk_asso, participant = "id", cue = "cue", response = "response",
+          response_vars = "trial", participant_vars = c("gender", "age", "age_group")) \%>\%
+  ar_normalize() \%>\%
+  ar_set_targets(target_set = "responses") \%>\%
+  ar_embed()
 
 }
 \references{

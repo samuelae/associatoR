@@ -7,9 +7,9 @@
 ar_project(associations, type = "umap", ...)
 }
 \arguments{
-\item{associations}{an \code{ar_object} including targets.}
+\item{associations}{an \code{associatoR} object including targets.}
 
-\item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
+\item{type}{a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.}
 
 \item{...}{additional parguments passed to the projection method.}
 }
@@ -18,12 +18,16 @@ The function returns the \code{associatoR} object with the
   \code{target_embeddings} overwritten by the projected embeddings.
 }
 \description{
-\code{ar_project} generates a 2D projection of the target embedding
+\code{ar_project} generates a 2D projection of the target embedding.
 }
 \examples{
 
-# run embedding
-ar_project(ai_asso_processed)
+ar_import(risk_asso, participant = "id", cue = "cue", response = "response",
+          response_vars = "trial", participant_vars = c("gender", "age", "age_group")) \%>\%
+  ar_normalize() \%>\%
+  ar_set_targets(target_set = "responses") \%>\%
+  ar_embed() \%>\%
+  ar_project()
 
 }
 \references{

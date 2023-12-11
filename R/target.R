@@ -170,6 +170,7 @@ ar_characterize_targets <- function(associations,
 
   # checks
   chk::chk_s3_class(associations, "associatoR")
+  chk::chk_subset("targets", names(associations))
   chk::chk_null_or(characteristics, chk::chk_subset, c("valence",
                                                       "arousal",
                                                       "dominance",
@@ -188,7 +189,8 @@ ar_characterize_targets <- function(associations,
     # download from publisher
     temp <- tempfile()
     download.file("https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-012-0314-x/MediaObjects/13428_2012_314_MOESM1_ESM.zip", temp)
-    warriner <- readr::read_csv(temp, show_col_types = FALSE)
+    warriner <- readr::read_csv(temp, show_col_types = FALSE) %>%
+      suppressMessages()
     unlink(temp)
 
     warriner <- warriner %>%
