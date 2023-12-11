@@ -7,33 +7,27 @@
 ar_import(
   data,
   participant,
-  cue = NULL,
-  cue_manual = NULL,
+  cue,
   response,
   participant_vars = NULL,
   cue_vars = NULL,
-  response_vars = NULL,
-  verbose = FALSE
+  response_vars = NULL
 )
 }
 \arguments{
 \item{data}{a \code{data.frame} or \code{tibble} containing the association data.}
 
-\item{participant}{a \code{character} string of the variable name in \code{data} identifying participants.}
+\item{participant}{variable name in \code{data} identifying the participants.}
 
-\item{cue}{a \code{character} string of the variable name in \code{data} identifying the cues.}
+\item{cue}{variable name in \code{data} or \code{character} string identifying the cue(s).}
 
-\item{cue_manual}{an optional \code{character} string specifying the cue for all responses. Overrides argument \code{cue}.}
+\item{response}{variable name in \code{data} identifying the responses.}
 
-\item{response}{a \code{character} string of the variable name in \code{data} identifying responses.}
+\item{participant_vars}{optional variable names in \code{data} identifying participant attributes (e.g., demographics).}
 
-\item{participant_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of participants.}
+\item{cue_vars}{optional variable names in \code{data} identifying cue attributes.}
 
-\item{cue_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of cues.}
-
-\item{response_vars}{an optional \code{character} vector containing all additional variable names in \code{data} that are attributes of responses}
-
-\item{verbose}{an \code{logical} specifying whether to show messages.}
+\item{response_vars}{optional variable names in \code{data}  identifying response attributes.}
 }
 \value{
 Returns an \code{associatoR} object containing a list of tibbles:
@@ -48,9 +42,9 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 \examples{
 ai_asso_imported <- ar_import(ai_asso,
-                              participant = "id",
+                              participant = id,
+                              cue = "AI",
                               response = "association_correct",
-                              cue_manual = "AI",
                               participant_vars = c("age", "gender", "use", "expertise"),
                               response_vars = c("association", "trial"))
 

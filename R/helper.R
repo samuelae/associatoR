@@ -35,10 +35,15 @@ cramer = function(d1,d2){
 
 check_tidy = function(data, var){
   if(!missing(var)){
-    #var = dplyr::enquo(var)
     test = try(rlang::eval_tidy(var, data))
     if(class(test) == "try-error") stop(paste0("Cannot find one or all columns ",quo_name(var), " in data."))
     }
   }
 
+check_tidy_vld = function(data, var){
+  if(!missing(var)){
+    test = try(rlang::eval_tidy(var, data))
+    class(test) != "try-error"
+  }
+}
 
