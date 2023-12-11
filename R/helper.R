@@ -32,3 +32,13 @@ cramer = function(d1,d2){
   sqrt(chi/(sum(tab) * min(nrow(tab)-1,ncol(tab)-1)))
   }
 
+
+check_tidy = function(data, var){
+  if(!missing(var)){
+    #var = dplyr::enquo(var)
+    test = try(rlang::eval_tidy(var, data))
+    if(class(test) == "try-error") stop(paste0("Cannot find one or all columns ",quo_name(var), " in data."))
+    }
+  }
+
+
