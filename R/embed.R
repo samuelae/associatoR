@@ -68,7 +68,7 @@ ar_embed <- function(associations,
       # do ppmi
       embed = embed / sum(embed)
       norm = rowSums(embed) %*% t(colSums(embed))
-      embed = embed / norm
+      embed = log2(embed / norm)
 
       if(type == "ppmi-svd"){
         n_dim = min(n_dim, ncol(embed))

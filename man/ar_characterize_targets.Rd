@@ -6,12 +6,8 @@
 \usage{
 ar_characterize_targets(
   associations,
-<<<<<<< HEAD
-  characteristic = c("valence", "arrousal", "dominance", "concreteness", "frequency")
-=======
   characteristics = c("valence", "arousal", "dominance", "concreteness", "frequency"),
   manual = NULL
->>>>>>> 02a06577cdf9c11e3baf4eccb56a1dc37e992886
 )
 }
 \arguments{
@@ -44,13 +40,8 @@ ar_import(fa_data,
 
 }
 \references{
-<<<<<<< HEAD
-Warriner, A.B., Kuperman, V. & Brysbaert, M. Norms of valence, arousal, and dominance for 13,915 English lemmas. Behav Res 45, 1191–1207 (2013). https://doi.org/10.3758/s13428-012-0314-x
-  Brysbaert, M., Warriner, A.B. & Kuperman, V. Concreteness ratings for 40 thousand generally known English word lemmas. Behav Res 46, 904–911 (2014). https://doi.org/10.3758/s13428-013-0403-5
-=======
 \itemize{
   \item{Warriner, A.B., Kuperman, V. & Brysbaert, M. Norms of valence, arousal, and dominance for 13,915 English lemmas. Behav Res 45, 1191–1207 (2013). https://doi.org/10.3758/s13428-012-0314-x}
   \item{Brysbaert, M., Warriner, A.B. & Kuperman, V. Concreteness ratings for 40 thousand generally known English word lemmas. Behav Res 46, 904–911 (2014). https://doi.org/10.3758/s13428-013-0403-5}
 }
->>>>>>> 02a06577cdf9c11e3baf4eccb56a1dc37e992886
 }

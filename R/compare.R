@@ -31,33 +31,21 @@ ar_compare = function(associations,
   # get groups
   data = associations$responses %>%
     left_join(associations$participants %>% select(id, dplyr::all_of(participant_vars)), by = "id") %>%
-    left_join(associations$targets, by = c("response" = "target"))
-
-  # set target
-  if(target_var == "targets"){
-    data = data %>% dplyr::mutate(value = 1)
-    } else {
-    chk::chk_subset(target_var, names(associations$targets))
-    data = data %>% dplyr::mutate(value = .[[target_var]])
-    }
-
+    right_join(associations$targets, by = c("response" = "target"))
 
   # resolve fun
   if(is.character(fun)){
     if(fun[1] == "count") fun = sum
-    if(fun[1] == "mean") fun = mean
+    if(fun[1] == "mean") fun = function(x) mean(x, na.rm=T)
     }
 
   # count targets
   out = data %>%
     dplyr::filter(response %in% associations$targets$target) %>%
-    dplyr::group_by(dplyr::across(dplyr::all_of(c(participant_vars, "response")))) %>%
-    dplyr::summarize(value = fun(value)) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(participant_vars))) %>%
+    dplyr::summarize(value = fun()) %>%
     ungroup() %>%
-    tidyr::pivot_wider(names_from = response, values_from = value)
-
-
-  %>%
+    tidyr::pivot_wider(names_from = response, values_from = value) %>%
     mutate_at(-1, replace_na, 0)
 
 
