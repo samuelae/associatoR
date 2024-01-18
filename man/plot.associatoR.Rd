@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot.associatoR}
 \alias{plot.associatoR}
-\title{Subset associations}
+\title{Plot associations}
 \usage{
 \method{plot}{associatoR}(associations, facets = NULL, top_n = 5, ...)
 }
@@ -20,8 +20,5 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 }
 \description{
-Subset the \code{associatoR} object.
-}
-\details{
-Note that subsets resets the \code{associatoR} object. A potential \code{target} tibble will be removed and has to be added again using \link[associatoR]{ar_import}.
+Plot the \code{associatoR} object.
 }
