@@ -26,9 +26,3 @@ Returns an \code{tibble} containing grouped summaries (means, frequencies, or ot
 \description{
 \code{ar_compare} compares responses across participant variables.
 }
-\examples{
-
-ai_asso \%>\%
-  ar_ar_compare()
-
-}

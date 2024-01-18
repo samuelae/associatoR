@@ -16,7 +16,6 @@
 #'
 #' @examples
 #'
-#' ai_asso <- plot()
 #'
 #' @method plot associatoR
 #' @export

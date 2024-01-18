@@ -25,13 +25,12 @@ Append the response \code{frequency} of each target to the \code{targets} table 
 }
 \examples{
 
-ar_import(ai_asso, participant = "id",
-          response = "association_correct",
-          cue_manual = "AI",
-          participant_vars = c("age", "gender", "use", "expertise"),
-          response_vars = c("association", "trial")) \%>\%
+ar_import(fa_data,
+          participant = participantID, participant_vars = c(age, gender),
+          cue = cue, response = response,
+          response_vars = c("created_at", "pos")) \%>\%
   ar_normalize() \%>\%
-  ar_set_targets(target_set = "responses") \%>\%
+  ar_set_targets("responses") \%>\%
   ar_count_targets()
 
 }

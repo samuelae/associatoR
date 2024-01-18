@@ -12,8 +12,6 @@
 #'
 #' @examples
 #'
-#' ai_asso %>%
-#'   ar_ar_compare()
 #'
 #' @export
 

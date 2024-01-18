@@ -25,8 +25,3 @@ Subset the \code{associatoR} object.
 \details{
 Note that subsets resets the \code{associatoR} object. A potential \code{target} tibble will be removed and has to be added again using \link[associatoR]{ar_import}.
 }
-\examples{
-
-ai_asso <- plot()
-
-}

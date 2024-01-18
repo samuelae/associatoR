@@ -76,7 +76,7 @@ ar_normalize_manual <- function(associations, fun, ..., process_cues = FALSE) {
 #'           response = association_correct,
 #'           participant_vars = c(age, gender, use, expertise),
 #'           response_vars = c(trial)) %>%
-#'   ar_normalize(case = "original", punct = "all")
+#'   ar_normalize(case = "lower", punct = "all")
 #'
 #' @export
 

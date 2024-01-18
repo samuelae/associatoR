@@ -43,7 +43,7 @@ ar_import(ai_asso, participant = id, cue = "AI",
           response = association_correct,
           participant_vars = c(age, gender, use, expertise),
           response_vars = c(trial)) \%>\%
-  ar_normalize(case = "original", punct = "all")
+  ar_normalize(case = "lower", punct = "all")
 
 }
 \references{

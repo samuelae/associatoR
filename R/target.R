@@ -16,8 +16,12 @@
 #'
 #' @examples
 #'
-#' ai_asso <- ai_asso %>%
-#'   ar_define_targets(source = "cues")
+#' ar_import(fa_data,
+#'           participant = participantID, participant_vars = c(age, gender),
+#'           cue = cue, response = response,
+#'           response_vars = c("created_at", "pos")) %>%
+#'   ar_normalize() %>%
+#'   ar_set_targets("responses")
 #'
 #' @export
 
@@ -87,13 +91,12 @@ ar_set_targets <- function(associations,
 #'
 #' @examples
 #'
-#' ar_import(ai_asso, participant = "id",
-#'           response = "association_correct",
-#'           cue_manual = "AI",
-#'           participant_vars = c("age", "gender", "use", "expertise"),
-#'           response_vars = c("association", "trial")) %>%
+#' ar_import(fa_data,
+#'           participant = participantID, participant_vars = c(age, gender),
+#'           cue = cue, response = response,
+#'           response_vars = c("created_at", "pos")) %>%
 #'   ar_normalize() %>%
-#'   ar_set_targets(target_set = "responses") %>%
+#'   ar_set_targets("responses") %>%
 #'   ar_count_targets()
 #'
 #' @export
@@ -152,8 +155,8 @@ ar_count_targets <- function(associations, ...) {
 #'
 #' @examples
 #' ar_import(fa_data,
-#'           participant = "participantID", participant_vars = c("age", "gender"),
-#'           cue = "cue", response = "response",
+#'           participant = participantID, participant_vars = c(age, gender),
+#'           cue = cue, response = response,
 #'           response_vars = c("created_at", "pos")) %>%
 #'   ar_normalize() %>%
 #'   ar_set_targets("cues") %>%
@@ -209,9 +212,9 @@ ar_characterize_targets <- function(associations,
   if(chk::vld_character(characteristics) & any(characteristics %in% c("concreteness", "frequency"))) {
 
     # download from publisher
-    name = paste0(tempdir(), "/brysbaert.zip")
+    name = paste0(tempdir(), "/brysbaert.xlsx")
     if(!file.exists(name)){
-      download.file("https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-013-0403-5/MediaObjects/13428_2013_403_MOESM1_ESM.xlsx", temp)
+      download.file("https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-013-0403-5/MediaObjects/13428_2013_403_MOESM1_ESM.xlsx", name)
       }
     brysbaert <- readxl::read_excel(name)
 

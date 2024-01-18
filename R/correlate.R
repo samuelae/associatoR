@@ -18,10 +18,10 @@
 #' @examples
 #'
 #' ar_import(risk_asso,
-#'           participant = "id",
-#'           cue = "cue",
-#'           response = "response",
-#'           response_vars = "trial",
+#'           participant = id,
+#'           cue = cue,
+#'           response = response,
+#'           response_vars = trial,
 #'           participant_vars = c("gender", "age", "age_group")) %>%
 #'   ar_set_targets("cues") %>%
 #'   ar_correlate_targets(participant_vars = c("age", "gender"))

@@ -21,8 +21,10 @@ ar_write_csv(associations, file, ...)
 }
 \examples{
 
-ai_asso_imported \%>\%
-  ar_set_target("responses") \%>\%
-  ar_write_csv(file = "associations.csv")
+ar_import(risk_asso, participant = id, cue = cue, response = response,
+          response_vars = trial, participant_vars = c(gender, age, age_group)) \%>\%
+ ar_normalize() \%>\%
+ ar_set_targets(targets = "responses") \%>\%
+ ar_write_csv(file = "associations.csv")
 
 }

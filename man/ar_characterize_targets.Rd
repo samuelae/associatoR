@@ -31,8 +31,8 @@ Data on valence, arousal, and dominance are retrieved from Warriner et al. (2013
 }
 \examples{
 ar_import(fa_data,
-          participant = "participantID", participant_vars = c("age", "gender"),
-          cue = "cue", response = "response",
+          participant = participantID, participant_vars = c(age, gender),
+          cue = cue, response = response,
           response_vars = c("created_at", "pos")) \%>\%
   ar_normalize() \%>\%
   ar_set_targets("cues") \%>\%

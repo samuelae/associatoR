@@ -25,7 +25,11 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 \examples{
 
-ai_asso <- ai_asso \%>\%
-  ar_define_targets(source = "cues")
+ar_import(fa_data,
+          participant = participantID, participant_vars = c(age, gender),
+          cue = cue, response = response,
+          response_vars = c("created_at", "pos")) \%>\%
+  ar_normalize() \%>\%
+  ar_set_targets("responses")
 
 }

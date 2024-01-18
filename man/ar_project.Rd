@@ -22,10 +22,10 @@ The function returns the \code{associatoR} object with the
 }
 \examples{
 
-ar_import(risk_asso, participant = "id", cue = "cue", response = "response",
-          response_vars = "trial", participant_vars = c("gender", "age", "age_group")) \%>\%
+ar_import(risk_asso, participant = id, cue = cue, response = response,
+          response_vars = trial, participant_vars = c(gender, age, age_group)) \%>\%
   ar_normalize() \%>\%
-  ar_set_targets(target_set = "responses") \%>\%
+  ar_set_targets(targets = "responses") \%>\%
   ar_embed() \%>\%
   ar_project()
 
