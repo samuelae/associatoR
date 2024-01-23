@@ -25,11 +25,12 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 \examples{
 
-ar_import(fa_data,
-          participant = participantID, participant_vars = c(age, gender),
-          cue = cue, response = response,
-          response_vars = c("created_at", "pos")) \%>\%
-  ar_normalize() \%>\%
-  ar_set_targets("responses")
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_set_targets(targets = "cues")
 
 }
