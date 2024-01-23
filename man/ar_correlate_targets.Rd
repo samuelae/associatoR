@@ -12,12 +12,12 @@ ar_correlate_targets(associations, participant_vars)
 \item{participant_vars}{a \code{character} vector specifying the participant variables to assess. The variables must exist in \code{associations$participants}.}
 }
 \value{
-Returns an \code{associatoR} object containing a list of tibbles, with \code{targets} gaining a \code{frequency} column:
+Returns an \code{associatoR} object containing a list of tibbles, with \code{targets} gaining correlation column(s):
 \describe{
  \item{participants}{A tibble of participants including a participant \code{id} and potential participant attributes.}
  \item{cues}{A tibble of cues including a \code{cue} variable and potential cue attributes.}
  \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes.}
- \item{targets}{A tibble of targets including the specified analysis target}
+ \item{targets}{A tibble of targets including the specified analysis target, and correlation column(s).}
 }
 }
 \description{
@@ -27,14 +27,13 @@ Returns an \code{associatoR} object containing a list of tibbles, with \code{tar
 Function calculates the point-biserial correlation for numeric and Cramer's V for categorical \code{participant_vars}.
 }
 \examples{
-
-ar_import(risk_asso,
-          participant = id,
+ar_import(intelligence,
+          participant = participant_id,
           cue = cue,
           response = response,
-          response_vars = trial,
-          participant_vars = c("gender", "age", "age_group")) \%>\%
-  ar_set_targets("cues") \%>\%
-  ar_correlate_targets(participant_vars = c("age", "gender"))
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_set_targets(targets = "cues") \%>\%
+  ar_correlate_targets(participant_vars = c("education", "gender"))
 
 }

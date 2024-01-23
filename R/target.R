@@ -180,7 +180,8 @@ ar_count_targets <- function(associations, ...) {
 #'           participant_vars = c(gender, education),
 #'           response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets(targets = "cues") %>%
-#'   ar_characterize_targets(characteristics = data.frame(word = c("intelligence", "brain"), message = c("Hello", "World")))
+#'   ar_characterize_targets(characteristics = data.frame(word = c("intelligence", "brain"),
+#'                                                        message = c("Hello", "World")))
 #'
 #' @export
 ar_characterize_targets <- function(associations,
