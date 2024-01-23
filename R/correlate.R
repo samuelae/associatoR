@@ -48,7 +48,7 @@ ar_correlate_targets <- function(associations, participant_vars) {
     target_participants[unique(participants[(!is.na(responses)) & responses == targets[i]]), targets[i]] = TRUE
   }
 
-  # do calc
+  # do calculations, functions defined in helper.R
   corr_list = list()
   for(i in 1:length(participant_vars)) {
     gr = associations$participants[[participant_vars[i]]]
