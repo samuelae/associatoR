@@ -27,10 +27,12 @@ Note that subsets resets the \code{associatoR} object. A potential \code{target}
 }
 \examples{
 
-ar_import(fa_data,
-          participant = "participantID", participant_vars = c("age", "gender"),
-          cue = "cue", response = "response",
-          response_vars = c("created_at", "pos")) \%>\%
-  ar_subset(age > 25, gender == "Fe")
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_subset(gender == "female", education == "high school")
 
 }

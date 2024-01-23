@@ -16,11 +16,13 @@
 #'
 #' @examples
 #'
-#' ar_import(fa_data,
-#'           participant = "participantID", participant_vars = c("age", "gender"),
-#'           cue = "cue", response = "response",
-#'           response_vars = c("created_at", "pos")) %>%
-#'   ar_subset(age > 25, gender == "Fe")
+#' ar_import(intelligence,
+#'           participant = participant_id,
+#'           cue = cue,
+#'           response = response,
+#'           participant_vars = c(gender, education),
+#'           response_vars = c(response_position, response_level)) %>%
+#'   ar_subset(gender == "female", education == "high school")
 #'
 #' @export
 
@@ -47,12 +49,12 @@ ar_subset <- function(associations, ...) {
 
   # re-import
   associations = ar_import(tbl,
-                           participant = "id",
-                           cue = "cue",
-                           response = "response",
+                           participant = id,
+                           cue = cue,
+                           response = response,
                            participant_vars = part_names[!part_names %in% "id"],
                            cue_vars = cue_names[!cue_names %in% "cue"],
-                           response_vars = resp_names[!resp_names %in% c("id", "cue", "response", "level")])
+                           response_vars = resp_names[!resp_names %in% c("id", "cue", "response")])
 
 
   # out
