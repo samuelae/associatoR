@@ -16,11 +16,13 @@
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (2024). associatoR. psyArXiv
 #'
 #' @examples
-#'
-#' ar_import(risk_asso, participant = id, cue = cue, response = response,
-#'           response_vars = trial, participant_vars = c(gender, age, age_group)) %>%
-#'   ar_normalize() %>%
-#'   ar_set_targets(targets = "responses") %>%
+#' ar_import(intelligence,
+#'           participant = participant_id,
+#'           cue = cue,
+#'           response = response,
+#'           participant_vars = c(gender, education),
+#'           response_vars = c(response_position, response_level)) %>%
+#'   ar_set_targets(targets = "cues") %>%
 #'   ar_embed()
 #'
 #' @export
@@ -216,11 +218,13 @@ ar_embed <- function(associations,
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (2024). associatoR. psyArXiv
 #'
 #' @examples
-#'
-#' ar_import(risk_asso, participant = id, cue = cue, response = response,
-#'           response_vars = trial, participant_vars = c(gender, age, age_group)) %>%
-#'   ar_normalize() %>%
-#'   ar_set_targets(targets = "responses") %>%
+#' ar_import(intelligence,
+#'           participant = participant_id,
+#'           cue = cue,
+#'           response = response,
+#'           participant_vars = c(gender, education),
+#'           response_vars = c(response_position, response_level)) %>%
+#'   ar_set_targets(targets = "cues") %>%
 #'   ar_embed() %>%
 #'   ar_project()
 #'

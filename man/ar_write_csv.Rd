@@ -17,14 +17,16 @@ ar_write_csv(associations, file, ...)
 \code{ar_write_csv()} returns the joined associations as a tibble invisibly.
 }
 \description{
-\code{ar_write_csv()} joins all data in an \code{associatoR} object (except potential target embedding) into one table and writes the table to disk using readr::write_csv().
+\code{ar_write_csv()} joins all data in an \code{associatoR} object (except potential target embedding) into one table and writes the table to disk using \link[readr]{write_csv}.
 }
 \examples{
-
-ar_import(risk_asso, participant = id, cue = cue, response = response,
-          response_vars = trial, participant_vars = c(gender, age, age_group)) \%>\%
- ar_normalize() \%>\%
- ar_set_targets(targets = "responses") \%>\%
- ar_write_csv(file = "associations.csv")
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_set_targets(targets = "cues") \%>\%
+  ar_write_csv(file = "intelligence.csv")
 
 }

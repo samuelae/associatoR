@@ -59,4 +59,5 @@ ar_subset <- function(associations, ...) {
 
   # out
   associations
-  }
+
+}

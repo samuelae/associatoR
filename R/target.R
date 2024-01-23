@@ -73,9 +73,9 @@ ar_set_targets <- function(associations,
   associations$targets <- targets
   associations
 
-  }
+}
 
-#' Count target occurences in responses
+#' Count target occurrences in responses
 #'
 #' Append the response \code{frequency} of each target to the \code{targets} table in the \code{associatoR} object.
 #'

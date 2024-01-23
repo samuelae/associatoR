@@ -21,12 +21,12 @@
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (in progress)
 #'
 #' @examples
-#' ai_asso_imported <- ar_import(ai_asso,
-#'                               participant = id,
-#'                               cue = "AI",
-#'                               response = "association_correct",
-#'                               participant_vars = c("age", "gender", "use", "expertise"),
-#'                               response_vars = c("association", "trial"))
+#' ar_import(intelligence,
+#'           participant = participant_id,
+#'           cue = cue,
+#'           response = response,
+#'           participant_vars = c(gender, education),
+#'           response_vars = c(response_position, response_level))
 #'
 #' @export
 ar_import <- function(data,
@@ -113,4 +113,4 @@ ar_import <- function(data,
   class(output) <- "associatoR"
   output
 
-  }
+}

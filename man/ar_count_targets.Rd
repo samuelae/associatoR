@@ -2,7 +2,7 @@
 % Please edit documentation in R/target.R
 \name{ar_count_targets}
 \alias{ar_count_targets}
-\title{Count target occurences in responses}
+\title{Count target occurrences in responses}
 \usage{
 ar_count_targets(associations, ...)
 }

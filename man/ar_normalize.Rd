@@ -39,10 +39,12 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 \examples{
 
-ar_import(ai_asso, participant = id, cue = "AI",
-          response = association_correct,
-          participant_vars = c(age, gender, use, expertise),
-          response_vars = c(trial)) \%>\%
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
   ar_normalize(case = "lower", punct = "all")
 
 }
