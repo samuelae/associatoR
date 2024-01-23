@@ -58,7 +58,7 @@
 
 
 <dt>...</dt>
-<dd><p>optional <code>logical</code> comparisons filtering the responses before computing the frequencies.</p></dd>
+<dd><p>optional <code>logical</code> comparisons filtering the participants, cues, or responses. Multiple filter arguments will be combined with an AND logic.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -78,7 +78,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Note that subsets resets the <code>associatoR</code> object. A potential <code>target</code> tibble will be removed and has to be added again using ar_set_target.</p>
+    <p>Note that <code>ar_subset()</code> resets the <code>associatoR</code> object. Potential <code>targets</code> and <code>target_embedding</code> tibbles will be removed and have to be added again using <a href="ar_set_targets.html">ar_set_targets</a>.</p>
     </div>
 
     <div class="section level2">
