@@ -17,20 +17,29 @@ Returns an \code{associatoR} object containing a list of tibbles, with \code{tar
  \item{participants}{A tibble of participants including a participant \code{id} and potential participant attributes.}
  \item{cues}{A tibble of cues including a \code{cue} variable and potential cue attributes.}
  \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes.}
- \item{targets}{A tibble of targets including the specified analysis target}
+ \item{targets}{A tibble of targets including a column `frequency` containing counts of this target in the responses.}
 }
 }
 \description{
 Append the response \code{frequency} of each target to the \code{targets} table in the \code{associatoR} object.
 }
 \examples{
-
-ar_import(fa_data,
-          participant = participantID, participant_vars = c(age, gender),
-          cue = cue, response = response,
-          response_vars = c("created_at", "pos")) \%>\%
-  ar_normalize() \%>\%
-  ar_set_targets("responses") \%>\%
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_set_targets(targets = "cues") \%>\%
   ar_count_targets()
+
+ar_import(intelligence,
+          participant = participant_id,
+          cue = cue,
+          response = response,
+          participant_vars = c(gender, education),
+          response_vars = c(response_position, response_level)) \%>\%
+  ar_set_targets(targets = "cues") \%>\%
+  ar_count_targets(response_position == 1)
 
 }
