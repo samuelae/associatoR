@@ -2,7 +2,6 @@
 #'
 #' \code{ar_import} processes tabular association data into an associatoR object.
 #'
-#'
 #' @param data a \code{data.frame} or \code{tibble} containing the association data.
 #' @param participant variable name in \code{data} identifying the participants.
 #' @param cue variable name in \code{data} or \code{character} string identifying the cue(s).
@@ -60,6 +59,15 @@ ar_import <- function(data,
   check_tidy(data, cue_vars)
 
   # handle protected variables ----
+
+  # make sure no other variables use the protected names
+  chk::chk_not_subset(names(data %>% dplyr::select(!!participant_vars, !!cue_vars, !!response_vars)),
+                      c("id", "cue", "response"),
+                      x_name = "participant_vars, cue_vars, and response_vars")
+
+  # remove all columns that will not be used to avoid naming issues
+  data <- data %>%
+    dplyr::select(!!participant, !!cue, !!response, !!participant_vars, !!cue_vars, !!response_vars)
 
   # participant and response
   data = data %>%
