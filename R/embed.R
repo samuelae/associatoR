@@ -38,20 +38,19 @@ ar_embed <- function(associations,
   # checks
   chk::chk_s3_class(associations, "associatoR")
   chk::chk_subset("targets", names(associations))
-  chk::chk_subset(type, c("counts","ppmi","ppmi-svd","huggingface"))
+  chk::chk_subset(type, c("counts", "ppmi", "ppmi-svd", "huggingface"))
   chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
 
-  if(type != "huggingface"){
+  if(type != "huggingface") {
 
     # get counts
     counts = associations$responses %>%
       dplyr::filter(cue %in% associations$targets$target) %>%
-      dplyr::mutate(response = paste0("resp_",response)) %>%
+      dplyr::mutate(response = paste0("resp_", response)) %>%
       dplyr::group_by(cue, response) %>%
       dplyr::summarize(n = dplyr::n()) %>%
       dplyr::ungroup() %>%
-      tidyr::pivot_wider(names_from = response,
-                  values_from = n)
+      tidyr::pivot_wider(names_from = response, values_from = n)
 
     # get count embed
     embed = as.matrix(counts %>% dplyr::select(-cue))
@@ -59,17 +58,17 @@ ar_embed <- function(associations,
     embed[is.na(embed)] = 0
 
     # remove lower than min_count
-    embed = embed[,colSums(embed) >= min_count]
+    embed = embed[, colSums(embed) >= min_count]
 
     # remove cues with zero row sum
     row_sums = rowSums(embed)
-    if(any(row_sums == 0)){
-      embed = embed[row_sums >= min_count,]
-      warning(paste0(sum(row_sums < min_count)," cues with < min_count responses >= min_count were dropped from embedding."))
-      }
+    if(any(row_sums == 0)) {
+      embed = embed[row_sums >= min_count, ]
+      warning(paste0(sum(row_sums < min_count), " cues with < min_count responses >= min_count were dropped from embedding."))
+    }
 
 
-    if(type %in% c("ppmi","ppmi-svd")){
+    if(type %in% c("ppmi", "ppmi-svd")) {
 
       # do ppmi
       embed = embed / sum(embed)
@@ -82,12 +81,12 @@ ar_embed <- function(associations,
         svd = RSpectra::svds(embed, n_dim)
         rownames(svd$u) = rownames(embed)
         embed = svd$u %*% diag(svd$d)
-        }
       }
     }
+  }
 
   # api
-  if(type == "huggingface"){
+  if(type == "huggingface") {
 
     # check if token exists
     chk::chk_not_null(token)
@@ -95,16 +94,16 @@ ar_embed <- function(associations,
     # set model
     if(is.null(model)) {
       model = "sentence-transformers/all-mpnet-base-v2"
-      } else {
+    } else {
       chk::chk_character(model)
-      }
+    }
 
     # set context
     if(is.null(context)) {
       context = "Free association: "
-      } else {
+    } else {
       chk::chk_character(context)
-      }
+    }
 
     # set targets
     targets = associations$targets$target
@@ -116,16 +115,17 @@ ar_embed <- function(associations,
     if(length(targets) > 500) {
       ind = seq(0, ceiling(length(targets) / 500) - .00001, length = length(targets)) %>% floor()
       texts = split(targets, ind)
-      } else {
+    } else {
       texts = list(targets)
-      }
+    }
 
     # setup progress bar
-    bar = progress::progress_bar$new(format = "Generating embeddings [:bar] :percent eta: :eta", total = 100, clear = FALSE, width= 60)
+    bar = progress::progress_bar$new(format = "Generating embeddings [:bar] :percent eta: :eta",
+                                     total = 100, clear = FALSE, width= 60)
     bar$tick(0)
 
     # post
-    embed = lapply(1:length(texts), function(i){
+    embed = lapply(1:length(texts), function(i) {
 
       # process text
       text_processed = texts[[i]] %>% paste0(context, .)
@@ -139,12 +139,12 @@ ar_embed <- function(associations,
       # show error
       if(!post$status_code %in% c(200, 503)) stop(paste0("Error:", post$status_code))
 
-      if(post$status_code == 503){
+      if(post$status_code == 503) { # Service Unavailable
 
         # handle error
         error = httr::content(post, as = "text", encoding = "UTF-8") %>% jsonlite::fromJSON()
         time = error$estimated
-        message(paste0(error$error,glue::glue(". Waiting {time} seconds.")))
+        message(paste0(error$error, glue::glue(". Waiting {time} seconds.")))
 
         # sleep
         Sys.sleep(time + 5)
@@ -153,37 +153,35 @@ ar_embed <- function(associations,
         post = httr::POST(url = api,
                           httr::add_headers(Authorization = glue::glue("Bearer {token}"),
                                             "Content-Type" = "application/json"),
-                          body = jsonlite::toJSON(texts[[i]]))
-        }
+                          body = jsonlite::toJSON(text_processed))
+      }
 
-
-      if(post$status_code == 200){
+      if(post$status_code == 200) { # OK
 
         # extract embedding
         emb_raw = httr::content(post, as = "text", encoding = "UTF-8") %>%
           jsonlite::fromJSON()
 
         # handle multi-token embeddings
-        if(class(emb_raw)[1] == "list"){
-          emb = sapply(emb_raw, function(x) x[1,1,]) %>% t()
-          } else {
+        if(class(emb_raw)[1] == "list") {
+          emb = sapply(emb_raw, function(x) x[1, 1, ]) %>% t()
+        } else {
           emb = emb_raw
-          }
         }
+      }
 
       # names
       rownames(emb) = texts[[i]]
 
       # update bar
-      bar$update(i/length(texts))
+      bar$update(i / length(texts))
 
       # out
       emb
 
-    }) %>% do.call(what = rbind)
+    }) %>% do.call(what = rbind) # end embed = lapply
 
-
-    }
+  } # end if type == huggingface
 
 
   # out ----
