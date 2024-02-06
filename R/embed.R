@@ -168,6 +168,10 @@ ar_embed <- function(associations,
         } else {
           emb = emb_raw
         }
+
+      } else { # not OK
+        # catch error message of potential second POST attempt and stop
+        stop(paste0("Error:", post$status_code))
       }
 
       # names
