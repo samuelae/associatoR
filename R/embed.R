@@ -64,7 +64,7 @@ ar_embed <- function(associations,
     row_sums = rowSums(embed)
     if(any(row_sums == 0)) {
       embed = embed[row_sums >= min_count, ]
-      warning(paste0(sum(row_sums < min_count), " cues with < min_count responses >= min_count were dropped from embedding."))
+      warning(paste0(sum(row_sums < min_count), " targets with count < min_count were dropped from embedding."))
     }
 
 
@@ -192,6 +192,11 @@ ar_embed <- function(associations,
 
   # colnames
   colnames(embed) = paste0("dim_",1:ncol(embed))
+
+  # restore order of targets
+  embed = embed[associations$targets$target[associations$targets$target %in% rownames(embed)], ]
+
+  # convert to tibble
   embed = embed %>%
     tibble::as_tibble() %>%
     dplyr::mutate(target = rownames(embed)) %>%
