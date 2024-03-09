@@ -78,7 +78,7 @@ ar_write_csv <- function(associations, file, ...) {
   }
 
   # join the contents of associations into one tibble
-  export <- associatoR:::ar_export_all(associations)
+  export <- ar_export_all(associations)
 
   # export using
   readr::write_csv(export, file, ...)

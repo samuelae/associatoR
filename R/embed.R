@@ -1,6 +1,6 @@
 #' Embed associations
 #'
-#' \code{ar_embed} generates target embeddings.
+#' \code{ar_embed_targets} generates target embeddings.
 #'
 #' @param associations an \code{associatoR} object including targets.
 #' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
@@ -23,17 +23,17 @@
 #'           participant_vars = c(gender, education),
 #'           response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets(targets = "cues") %>%
-#'   ar_embed()
+#'   ar_embed_targets()
 #'
 #' @export
 
-ar_embed <- function(associations,
-                     type = "ppmi-svd",
-                     min_count = 5,
-                     n_dim = 300,
-                     model = NULL,
-                     token = NULL,
-                     context = NULL) {
+ar_embed_targets <- function(associations,
+                             type = "ppmi-svd",
+                             min_count = 5,
+                             n_dim = 300,
+                             model = NULL,
+                             token = NULL,
+                             context = NULL) {
 
   # checks
   chk::chk_s3_class(associations, "associatoR")
@@ -232,14 +232,14 @@ ar_embed <- function(associations,
 #'           participant_vars = c(gender, education),
 #'           response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets(targets = "cues") %>%
-#'   ar_embed() %>%
-#'   ar_project()
+#'   ar_embed_targets() %>%
+#'   ar_project_embedding()
 #'
 #' @export
 
-ar_project <- function(associations,
-                       type = "umap",
-                       ...) {
+ar_project_embedding <- function(associations,
+                                 type = "umap",
+                                 ...) {
 
   # checks
   chk::chk_s3_class(associations, "associatoR")
@@ -280,4 +280,5 @@ ar_project <- function(associations,
 
   # out
   associations
-  }
+
+}
