@@ -54,8 +54,8 @@ ar_compare = function(associations,
                       ...) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
-  chk::chk_subset("targets", names(associations))
+  check_object(associations)
+  check_targets(associations)
   if(chk::vld_function(fun)) {
     chk::chk_function(fun)
   } else if (chk::vld_character(fun)) {

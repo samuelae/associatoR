@@ -36,8 +36,8 @@ ar_embed_targets <- function(associations,
                              context = NULL) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
-  chk::chk_subset("targets", names(associations))
+  check_object(associations)
+  check_targets(associations)
   chk::chk_subset(type, c("counts", "ppmi", "ppmi-svd", "huggingface"))
   chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
 
