@@ -6,7 +6,7 @@
 \usage{
 ar_embed_targets(
   associations,
-  type = "ppmi-svd",
+  method = "ppmi-svd",
   min_count = 5,
   n_dim = 300,
   model = NULL,
@@ -17,11 +17,11 @@ ar_embed_targets(
 \arguments{
 \item{associations}{an \code{associatoR} object including targets.}
 
-\item{type}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
+\item{method}{a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.}
 
-\item{min_count}{an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{type = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.}
+\item{min_count}{an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{method = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.}
 
-\item{n_dim}{an \code{integer} value specifying the number of dimensions generated in \code{type = "ppmi-svd"}. Default is \code{300}.}
+\item{n_dim}{an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{300}.}
 
 \item{model}{a \code{character} specifying the model label. Must match the name on \href{https://huggingface.co/models}{huggingface.co/models}.}
 

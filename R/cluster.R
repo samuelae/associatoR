@@ -128,11 +128,22 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
 
   }
 
+  if("boot" %in% names(associations)) return(targets_clusters)
+
   # add clusters to targets tibble
   associations$targets <- associations$targets %>%
     dplyr::left_join(targets_clusters, by = "target")
 
+  # add attribute
+  cluster_settings = list(method = method,
+                          similarity = similarity,
+                          k = k,
+                          linkage = linkage,
+                          eps = eps)
+  cluster_settings = c(cluster_settings, list(...))
+  attr(associations$targets, "cluster_settings") = cluster_settings
+
   # out
   associations
 
-}
+  }

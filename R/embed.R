@@ -3,9 +3,9 @@
 #' \code{ar_embed_targets} generates target embeddings.
 #'
 #' @param associations an \code{associatoR} object including targets.
-#' @param type a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
-#' @param min_count an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{type = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.
-#' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{type = "ppmi-svd"}. Default is \code{300}.
+#' @param method a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
+#' @param min_count an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{method = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.
+#' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{300}.
 #' @param model a \code{character} specifying the model label. Must match the name on \href{https://huggingface.co/models}{huggingface.co/models}.
 #' @param token a \code{character} string specifying the access token for the hugging face API. Must be obtained from \href{https://huggingface.co/inference-api}{huggingface.co/inference-api}.
 #' @param context an optional \code{character} string specifying a common lead text that may help the language model interpret the associations. Defaults to \code{"Free association: "}
@@ -28,7 +28,7 @@
 #' @export
 
 ar_embed_targets <- function(associations,
-                             type = "ppmi-svd",
+                             method = "ppmi-svd",
                              min_count = 5,
                              n_dim = 300,
                              model = NULL,
@@ -38,10 +38,10 @@ ar_embed_targets <- function(associations,
   # checks
   check_object(associations)
   check_targets(associations)
-  chk::chk_subset(type, c("counts", "ppmi", "ppmi-svd", "huggingface"))
+  chk::chk_subset(method, c("counts", "ppmi", "ppmi-svd", "huggingface"))
   chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
 
-  if(type != "huggingface") {
+  if(method != "huggingface") {
 
     # get counts
     counts = associations$responses %>%
@@ -68,7 +68,7 @@ ar_embed_targets <- function(associations,
     }
 
 
-    if(type %in% c("ppmi", "ppmi-svd")) {
+    if(method %in% c("ppmi", "ppmi-svd")) {
 
       # do ppmi
       embed = embed / sum(embed)
@@ -76,7 +76,7 @@ ar_embed_targets <- function(associations,
       embed = log2(embed / norm)
       embed[embed < 0] = 0
 
-      if(type == "ppmi-svd"){
+      if(method == "ppmi-svd"){
         n_dim = min(n_dim, ncol(embed), nrow(embed))
         svd = RSpectra::svds(embed, n_dim)
         rownames(svd$u) = rownames(embed)
@@ -86,7 +86,7 @@ ar_embed_targets <- function(associations,
   }
 
   # api
-  if(type == "huggingface") {
+  if(method == "huggingface") {
 
     # check if token exists
     chk::chk_not_null(token)
@@ -185,7 +185,7 @@ ar_embed_targets <- function(associations,
 
     }) %>% do.call(what = rbind) # end embed = lapply
 
-  } # end if type == huggingface
+  } # end if method == huggingface
 
 
   # out ----
@@ -202,8 +202,16 @@ ar_embed_targets <- function(associations,
     dplyr::mutate(target = rownames(embed)) %>%
     dplyr::select(target, dplyr::everything())
 
-  # add
+  # add embedding
   associations$target_embedding = embed
+
+  # add attribute
+  attr(associations$target_embedding, "embedding_setting") = list(method = method,
+                                                                  min_count = min_count,
+                                                                  n_dim = n_dim,
+                                                                  model = model,
+                                                                  token = token,
+                                                                  context = context)
 
   # out
   associations
@@ -216,7 +224,7 @@ ar_embed_targets <- function(associations,
 #' \code{ar_project} generates a 2D projection of the target embedding.
 #'
 #' @param associations an \code{associatoR} object including targets.
-#' @param type a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.
+#' @param method a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.
 #' @param ... additional parguments passed to the projection method.
 #'
 #' @return The function returns the \code{associatoR} object with the
@@ -238,13 +246,13 @@ ar_embed_targets <- function(associations,
 #' @export
 
 ar_project_embedding <- function(associations,
-                                 type = "umap",
+                                 method = "umap",
                                  ...) {
 
   # checks
   chk::chk_s3_class(associations, "associatoR")
   chk::chk_subset("target_embedding", names(associations))
-  chk::chk_subset(type, c("mds","umap"))
+  chk::chk_subset(method, c("mds","umap"))
 
   # get embed
   embed = associations$target_embedding %>%
@@ -252,7 +260,7 @@ ar_project_embedding <- function(associations,
     as.matrix()
 
   # mds
-  if(type == "mds"){
+  if(method == "mds"){
 
     # run mds
     embed_2d = stats::cmdscale(embed, k = 2, ...)
@@ -260,7 +268,7 @@ ar_project_embedding <- function(associations,
   }
 
   # umap
-  if(type == "umap"){
+  if(method == "umap"){
 
     embed_2d = umap::umap(embed, ...)$layout
 

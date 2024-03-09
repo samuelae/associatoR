@@ -69,11 +69,17 @@ ar_set_targets <- function(associations,
 
   # out -----
 
+  # create targets
   targets = tibble::tibble(target = target_vec)
   associations$targets <- targets
+
+  # set attribute
+  attr(associations$targets, "target_settings") = list(targets = targets)
+
+  # out
   associations
 
-}
+  }
 
 #' Count target occurrences in responses
 #'

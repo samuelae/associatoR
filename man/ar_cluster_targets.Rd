@@ -4,21 +4,37 @@
 \alias{ar_cluster_targets}
 \title{Cluster targets}
 \usage{
-ar_cluster_targets(associations, method = c("louvain"), ...)
+ar_cluster_targets(
+  associations,
+  method = c("louvain"),
+  similarity = "arccos",
+  k = NULL,
+  linkage = NULL,
+  eps = NULL,
+  ...
+)
 }
 \arguments{
 \item{associations}{an \code{associatoR} object including target_embeddings.}
 
-\item{method}{a \code{character} specifying the clustering method. One of \code{c("louvain")}. Default is \code{"louvain"}.}
+\item{method}{a \code{character} specifying the clustering method. One of \code{c("louvain","hclust","kmeans","dbscan")}. Default is \code{"louvain"}.}
 
-\item{...}{additional attributes passed on to the clustering function.}
+\item{similarity}{a \code{character} specifying the similarity metric. One of \code{c("arccos","cosine","euclidean")}. Default is \code{"arccos"}.}
+
+\item{k}{an \code{integer} specifying the number of clusters for \code{method = c("hclust","kmeans")}.}
+
+\item{linkage}{a \code{character} specifying the linkage criterion for \code{method = c("hclust")}. Default is \code{"complete"}.}
+
+\item{eps}{a \code{numeric} specifying the point distance used in \code{method = c("dbscan")}.}
+
+\item{...}{additional attributes passed on to the clustering method.}
 }
 \value{
 The function returns the \code{associatoR} object including a new
   \code{clusters} column in \code{targets} containing the target clusters.
 }
 \description{
-Cluster targets
+\code{ar_cluster_targets} produces a target clustering based on the associatoR object's target embedding.
 }
 \examples{
 ar_import(intelligence,

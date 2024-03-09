@@ -47,7 +47,7 @@ check_targets = function(data) {
 }
 
 check_embeddings = function(data) {
-  if(!"target_embeddings" %in% names(data)) {
+  if(!"target_embedding" %in% names(data)) {
     stop("No target embeddings found. Embed targets using ar_embed_targets().")
   }
 }
@@ -82,4 +82,10 @@ arccos_sim = function(x){
   x[x < -1] = -1
   1-acos(x)/pi
   }
+
+
+# OTHER --------
+
+get_id = function(x, y) ifelse(x<y,paste(x,y,sep="_"),paste(y,x,sep="_"))
+
 
