@@ -1,5 +1,7 @@
 #' Cluster targets
 #'
+#' \code{ar_cluster_targets} produces a target clustering based on the associatoR object's target embedding.
+#'
 #' @param associations an \code{associatoR} object including target_embeddings.
 #' @param method a \code{character} specifying the clustering method. One of \code{c("louvain","hclust","kmeans","dbscan")}. Default is \code{"louvain"}.
 #' @param similarity a \code{character} specifying the similarity metric. One of \code{c("arccos","cosine","euclidean")}. Default is \code{"arccos"}.
