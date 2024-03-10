@@ -4,12 +4,14 @@
 \alias{ar_project_embedding}
 \title{Project embeddings}
 \usage{
-ar_project_embedding(associations, method = "umap", ...)
+ar_project_embedding(associations, method = "umap", n_dim = 2, ...)
 }
 \arguments{
 \item{associations}{an \code{associatoR} object including targets.}
 
 \item{method}{a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.}
+
+\item{n_dim}{an \code{integer} specifying the number of projection dimensions. Default is \code{2}.}
 
 \item{...}{additional parguments passed to the projection method.}
 }

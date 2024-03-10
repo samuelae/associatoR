@@ -32,7 +32,7 @@
 ar_normalize_manual <- function(associations, fun, ..., process_cues = FALSE) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
+  check_object(associations)
   chk::chk_function(fun)
   chk::chk_logical(process_cues)
 
