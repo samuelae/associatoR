@@ -225,6 +225,7 @@ ar_embed_targets <- function(associations,
 #'
 #' @param associations an \code{associatoR} object including targets.
 #' @param method a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.
+#' @param n_dim an \code{integer} specifying the number of projection dimensions. Default is \code{2}.
 #' @param ... additional parguments passed to the projection method.
 #'
 #' @return The function returns the \code{associatoR} object with the
@@ -247,12 +248,15 @@ ar_embed_targets <- function(associations,
 
 ar_project_embedding <- function(associations,
                                  method = "umap",
+                                 n_dim = 2,
                                  ...) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
-  chk::chk_subset("target_embedding", names(associations))
+  check_object(associations)
+  check_embeddings(associations)
   chk::chk_subset(method, c("mds","umap"))
+  chk::chk_whole_number(n_dim)
+  if(n_dim < 1) stop("Argument n_dim must be larger than 0.")
 
   # get embed
   embed = associations$target_embedding %>%
@@ -263,28 +267,41 @@ ar_project_embedding <- function(associations,
   if(method == "mds"){
 
     # run mds
-    embed_2d = stats::cmdscale(embed, k = 2, ...)
+    embed = stats::princomp(embed, ...)$scores[,1:n_dim]
+
+  }
+
+  # mds
+  if(method == "mds"){
+
+    # run mds
+    embed = stats::cmdscale(embed, k = n_dim, ...)
 
   }
 
   # umap
   if(method == "umap"){
 
-    embed_2d = umap::umap(embed, ...)$layout
+    args = list(...)
+    if(!"config" %in% args){
+      args$config = umap::umap.defaults
+      args$config$n_components = 2
+    }
+    embed = umap::umap(embed, config = args$config, ...)$layout
 
   }
 
   # names
-  colnames(embed_2d) = c("x","y")
+  colnames(embed) = paste0("dim_",1:ncol(embed))
 
   # out
-  embed_2d = embed_2d %>%
+  embed = embed %>%
     tibble::as_tibble() %>%
     dplyr::mutate(target = associations$target_embedding$target) %>%
     dplyr::select(target, dplyr::everything())
 
   # over write
-  associations$target_embedding = embed_2d
+  associations$target_embedding = embed
 
   # out
   associations

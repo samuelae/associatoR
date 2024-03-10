@@ -39,7 +39,7 @@
 plot.associatoR <- function(associations, facets = NULL, top_n = 5, ...) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
+  check_object(associations)
   chk::chk_superset(names(associations), c("participants", "cues", "responses", "targets"), x_name = "The associatoR object passed to plot.associatoR()")
   if(!chk::vld_null(facets)) {chk::chk_subset(facets, names(associations$participants))}
   chk::chk_whole_number(top_n)
