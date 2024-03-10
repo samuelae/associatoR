@@ -105,12 +105,15 @@ ar_compare = function(associations,
 #'
 #' \code{ar_compare_embeddings} compares embeddings between groups using representational similarity analysis
 #'
-#' Embedding comparisons are calculated with the identical clustering settings (e.g., clustering algorithm, similarity function, etc.) used to generate the original cluster assignment. The information is stored as a attribute to the \code{targets} table with name \code{"cluster_settings"}.
+#' Representational similarity is calculated based on the Spearman correlation between cosine similarity matrices extracted from each embedding specified by one or more grouping factors.
 #'
 #' @param associations an \code{associatoR} object including target_embeddings.
-#' @param participant_vars an \code{integer} specifying the number of bootstrap samples to draw. Default is \code{1000}.
+#' @param participant_vars one or more column names specifying the grouping variables for embedding comparisons.
+#' @param type a \code{character} specifying whether to compute representational similarity based on the full \code{"triangle"} or \code{"row"}-wise. Default is \code{"triangle"}.
+#' @param intersection a \code{character} specifying whether to compute representations for the set of targets shared by all groups (\code{"all"}) or only by the individual pair (\code{"pair"}). The default is (\code{"pair"}).
+#' @param ... arguments passed on to \code{ar_embed_targets}. If no arguments are specified arguments are taken from an existing \code{target_embedding} or based on default values.
 #'
-#' @return The function returns a list containing two matrices with the target- (\code{target_stability}) and cluster-wise (\code{cluster_stability}) probabilities of being assigned to the same cluster under random pertubation.
+#' @return The function returns a table of representation similarities.
 #'
 #' @examples
 #' ar_obj = ar_import(intelligence,
@@ -120,135 +123,146 @@ ar_compare = function(associations,
 #'                    participant_vars = c(gender, education),
 #'                    response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets(targets = "cues") %>%
-#'   ar_embed_targets() %>%
-#'   ar_cluster_targets(method = "louvain")
+#'   ar_embed_targets()
 #'
-#' ar_cluster_stability(ar_obj)
+#' ar_compare_embeddings(ar_obj, c(gender, education))
 #'
 #' @export
-ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
+ar_compare_embeddings = function(associations, participant_vars, type = "triangle", intersection = "pair", ...) {
 
   # check inputs
   check_object(associations)
   check_targets(associations)
-  check_embeddings(associations)
+  chk::chk_subset(type, c("triangle","row"))
+  chk::chk_subset(intersection, c("pair","all"))
 
-  # get embedding
-  emb = associations$target_embedding[, -1] %>% as.matrix()
-  rownames(emb) = associations$target_embedding %>% dplyr::pull(target)
+  # get cases
+  p_vars = dplyr::enquo(participant_vars)
+  cases = associations$participants %>%
+    dplyr::select(!!p_vars) %>%
+    dplyr::distinct()
 
-  # get settings
-  cluster_setting = attr(associations$targets, "cluster_settings")
+  # recreate data
+  part_names = names(associations$participants)
+  resp_names = names(associations$responses)
+  cue_names = names(associations$cues)
+  tbl = associations$participants %>%
+    dplyr::left_join(associations$responses, by = "id") %>%
+    dplyr::left_join(associations$cues, by = "cue")
 
-  # setup container
-  results = expand.grid(i = 1:nrow(emb), j = 1:nrow(emb)) %>%
-    tibble::as_tibble() %>%
-    dplyr::filter(i < j) %>%
-    dplyr::mutate(id = get_id(rownames(emb)[i], rownames(emb)[j]),
-                  count = 0,
-                  stab = 0) %>%
-    dplyr::select(id, count, stab)
+  # embedding container
+  embeddings = list()
 
-  # mutable object
-  associations_boot = associations
-  associations_boot$boot = TRUE
-
-  # setup progress bar
-  bar = progress::progress_bar$new(format = "Running bootstrap [:bar] :percent eta: :eta", total = 100, clear = FALSE, width= 60)
-  bar$tick(0)
-
-  for(i in 1:n_boot){
-
-    # sample
-    if(unique){
-      size = round(nrow(emb) * (1-1/exp(1)))
-      targets = sample(rownames(emb), size = size, replace = FALSE)
-    } else {
-      targets = sample(rownames(emb), replace = TRUE)
-    }
-
-    # overwrite_embeddings
-    associations_boot$target_embedding = tibble(target = targets) %>% bind_cols(as_tibble(emb[targets,]))
-
-    # run clustering
-    clustering = do.call(ar_cluster_targets,
-                         c(list(associations = associations_boot), cluster_setting))
-
-    # evaluate sameness
-    equal = cstab:::equal(clustering$cluster)
-
-    # evaluate sameness
-    equal_tbl = expand.grid(i = 1:length(targets), j = 1:length(targets)) %>%
-      as_tibble() %>%
-      filter(i < j) %>%
-      arrange(i, j) %>%
-      mutate(i = targets[i],
-             j = targets[j],
-             id = get_id(i, j),
-             equal = equal) %>%
-      group_by(id) %>%
-      summarize(count = n(),
-                stab = sum(equal))
-
-    # add to counts
-    results = results %>%
-      left_join(equal_tbl, by = c("id"), suffix = c("","_new")) %>%
-      mutate(count = count + ifelse(is.na(count_new), 0, count_new),
-             stab = stab + ifelse(is.na(stab_new), 0, stab_new)) %>%
-      select(-count_new, -stab_new)
-
-
-    # update bar
-    bar$update(i/n_boot)
-
+  # embedding settings
+  if("target_embedding" %in% names(associations)){
+    embedding_settings = attr(associations$target_embedding, "embedding_settings")
+  } else {
+    embedding_settings = list(method = "ppmi-svd",
+                              min_count = 5,
+                              n_dim = 300,
+                              model = NULL,
+                              token = NULL,
+                              context = NULL)
   }
 
-  # get original clusters from data
-  clusters = associations$targets %>% pull(cluster, target)
 
-  # evaluate
-  results = results %>%
-    dplyr::mutate(i = str_split(id, "_") %>% sapply(`[`, 1),
-                  j = str_split(id, "_") %>% sapply(`[`, 2)) %>%
-    dplyr::select(i, j, count, stab) %>%
-    dplyr::mutate(i_cluster = clusters[i],
-                  j_cluster = clusters[j],
-                  stability = stab / count) %>%
-    dplyr::select(i, j, i_cluster, j_cluster, count, stability)
+  # embedding settings
+  args = list(...)
+  if(length(args) > 0){
+    for(j in 1:length(args)){
+      if(names(args)[j] %in% names(embedding_settings)){
+        embedding_settings[[names(args)[j]]] = args[[j]]
+      } else {
+        stop("Arguments supplied for ... must match ar_embed_targets()")
+      }
+    }
+  }
 
-  # expand
-  results = results %>%
-    dplyr::bind_rows(tibble(i = results$j,
-                            j = results$i,
-                            i_cluster = results$j_cluster,
-                            j_cluster = results$i_cluster,
-                            count = results$count,
-                            stability = results$stability))
+  # iterate
+  for(i in 1:nrow(cases)){
 
-  # aggregate within clusters
-  results_cluster = results %>%
-    dplyr::group_by(i_cluster, j_cluster) %>%
-    dplyr::summarize(stability = mean(stability)) %>%
-    dplyr::ungroup()
+    # get case selector
+    filters = list()
+    for(j in 1:ncol(cases)){
+      filters[[j]] =  tbl[[names(cases)[j]]] == cases[[j]][i]
+      }
+    sel = do.call(cbind, filters) %>% rowMeans() %>% `==`(1)
 
-  # output matrix target
-  target_unique = names(clusters)[!is.na(clusters)]
-  target_stability = matrix(nrow = length(target_unique),
-                            ncol = length(target_unique),
-                            dimnames = list(target_unique, target_unique))
-  target_stability[cbind(results$i,results$j)] = results$stability
-  diag(target_stability) = 1
+    # select data
+    tbl_sel = tbl %>% slice(which(sel))
 
-  # output matrix cluster
-  cluster_unique = na.omit(unique(clusters))
-  cluster_stability = matrix(nrow = length(cluster_unique),
-                             ncol = length(cluster_unique),
-                             dimnames = list(cluster_unique, cluster_unique))
-  cluster_stability[cbind(results_cluster$i_cluster,results_cluster$j_cluster)] = results_cluster$stability
+    # import
+    data = ar_import(tbl_sel,
+                     participant = id,
+                     cue = cue,
+                     response = response,
+                     participant_vars = part_names[!part_names %in% "id"],
+                     cue_vars = cue_names[!cue_names %in% "cue"],
+                     response_vars = resp_names[!resp_names %in% c("id", "cue", "response")])
+
+    # set targets
+    data = do.call(ar_set_targets, c(list(data), attr(associations$targets, "target_settings")))
+
+    # run embedding
+    data = do.call(ar_embed_targets, c(list(data), embedding_settings)) %>%
+      suppressWarnings()
+
+    # store
+    embeddings[[i]] = data$target_embedding
+    }
+
+  # get cosine
+  coss = lapply(embeddings, function(emb){
+    emb_mat = emb %>%
+      select(-target) %>%
+      as.matrix()
+    rownames(emb_mat) = emb$target
+    emb_mat %>% cosine()
+      })
+
+  # get intersect
+  dict = lapply(embeddings, function(emb) emb$target) %>% Reduce(f = intersect)
+
+
+  # run repr sim
+  sims = list()
+  for(i in 1:(nrow(cases)-1)){
+    for(j in (i+1):nrow(cases)){
+
+      # get ids
+      id_i = cases %>% slice(i) %>% unlist() %>% paste0(collapse="-")
+      id_j = cases %>% slice(j) %>% unlist() %>% paste0(collapse="-")
+
+      # intersect
+      if(intersection == "all"){
+        counts = c(nrow(coss[[i]]), nrow(coss[[j]]), length(dict))
+        cos_i = coss[[i]][dict, dict]
+        cos_j = coss[[j]][dict, dict]
+      } else {
+        pair_dict = intersect(rownames(coss[[i]]), rownames(coss[[j]]))
+        counts = c(nrow(coss[[i]]), nrow(coss[[j]]), length(pair_dict))
+        cos_i = coss[[i]][pair_dict, pair_dict]
+        cos_j = coss[[j]][pair_dict, pair_dict]
+      }
+
+      # get sim
+      if(type == "triangle"){
+        sim = triangle_sim(cos_i, cos_j)
+        } else {
+        sim = row_sim(cos_i, cos_j)
+        }
+
+      sims[[length(sims) + 1]] = c(id_i, id_j, counts, sim)
+
+    }
+  }
 
   # out
-  list(target_stability = target_stability,
-       cluster_stability = cluster_stability)
+  out = sims %>% do.call(what = rbind)
+  colnames(out) = c("group_i", "group_j", "targets_i", "targets_j", "targets_shared", "similarity")
+  out %>% tibble::as_tibble() %>%
+    readr::type_convert() %>%
+    suppressMessages()
 
 }
 

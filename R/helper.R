@@ -83,6 +83,20 @@ arccos_sim = function(x){
   1-acos(x)/pi
   }
 
+triangle_sim = function(x,y,method="spearman"){
+  x = x[upper.tri(x)]
+  y = y[upper.tri(y)]
+  cor(x, y, method = method)
+  }
+
+row_sim = function(x,y,method="spearman"){
+  corrs = numeric(nrow(x))
+  for(i in 1:nrow(x)){
+    corrs[i] = cor(x[i,-i], y[i,-i], method = method)
+    }
+  mean(corrs, na.rm=T)
+  }
+
 
 # OTHER --------
 

@@ -70,8 +70,7 @@ ar_set_targets <- function(associations,
   # out -----
 
   # create targets
-  targets = tibble::tibble(target = target_vec)
-  associations$targets <- targets
+  associations$targets <- tibble::tibble(target = target_vec)
 
   # set attribute
   attr(associations$targets, "target_settings") = list(targets = targets)
@@ -265,7 +264,6 @@ ar_characterize_targets <- function(associations,
     # add characteristics to targets
     associations$targets <- associations$targets %>%
       dplyr::left_join(characteristics, by = c("target" = "word"))
-
   }
 
   # out

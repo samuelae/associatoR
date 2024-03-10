@@ -30,8 +30,8 @@
 ar_correlate_targets <- function(associations, participant_vars) {
 
   # checks
-  chk::chk_s3_class(associations, "associatoR")
-  chk::chk_subset("targets", names(associations))
+  check_class(associations)
+  check_targets(associations)
   chk::chk_character(participant_vars)
   chk::chk_subset(participant_vars, names(associations$participants))
 

@@ -206,12 +206,12 @@ ar_embed_targets <- function(associations,
   associations$target_embedding = embed
 
   # add attribute
-  attr(associations$target_embedding, "embedding_setting") = list(method = method,
-                                                                  min_count = min_count,
-                                                                  n_dim = n_dim,
-                                                                  model = model,
-                                                                  token = token,
-                                                                  context = context)
+  attr(associations$target_embedding, "embedding_settings") = list(method = method,
+                                                                   min_count = min_count,
+                                                                   n_dim = n_dim,
+                                                                   model = model,
+                                                                   token = token,
+                                                                   context = context)
 
   # out
   associations
