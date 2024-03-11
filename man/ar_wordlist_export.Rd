@@ -29,7 +29,7 @@ ar_obj = ar_import(intelligence,
                    response_vars = c(response_position, response_level)) \%>\%
   ar_normalize_manual(trimws, which = "left")
 
-ar_wordlist_export()
+ar_wordlist_export(ar_obj)
 
 }
 \references{

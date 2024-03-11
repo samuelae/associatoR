@@ -189,7 +189,7 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
     sel = do.call(cbind, filters) %>% rowMeans() %>% `==`(1)
 
     # select data
-    tbl_sel = tbl %>% slice(which(sel))
+    tbl_sel = tbl %>% dplyr::slice(which(sel))
 
     # import
     data = ar_import(tbl_sel,
@@ -214,7 +214,7 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
   # get cosine
   coss = lapply(embeddings, function(emb){
     emb_mat = emb %>%
-      select(-target) %>%
+      dplyr::select(-target) %>%
       as.matrix()
     rownames(emb_mat) = emb$target
     emb_mat %>% cosine()
@@ -230,8 +230,8 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
     for(j in (i+1):nrow(cases)){
 
       # get ids
-      id_i = cases %>% slice(i) %>% unlist() %>% paste0(collapse="-")
-      id_j = cases %>% slice(j) %>% unlist() %>% paste0(collapse="-")
+      id_i = cases %>% dplyr::slice(i) %>% unlist() %>% paste0(collapse="-")
+      id_j = cases %>% dplyr::slice(j) %>% unlist() %>% paste0(collapse="-")
 
       # intersect
       if(intersection == "all"){

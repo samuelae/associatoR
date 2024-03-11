@@ -30,7 +30,7 @@
 ar_correlate_targets <- function(associations, participant_vars) {
 
   # checks
-  check_class(associations)
+  check_object(associations)
   check_targets(associations)
   chk::chk_character(participant_vars)
   chk::chk_subset(participant_vars, names(associations$participants))
