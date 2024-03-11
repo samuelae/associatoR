@@ -23,17 +23,18 @@
 #'           participant_vars = c(gender, education),
 #'           response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets(targets = "cues") %>%
-#'   ar_correlate_targets(participant_vars = c("education", "gender"))
+#'   ar_correlate_targets(participant_vars = c(education, gender))
 #'
 #' @export
-
 ar_correlate_targets <- function(associations, participant_vars) {
+
+  # handle input
+  participant_vars <- rlang::enquo(participant_vars)
 
   # checks
   check_object(associations)
   check_targets(associations)
-  chk::chk_character(participant_vars)
-  chk::chk_subset(participant_vars, names(associations$participants))
+  check_tidy(associations$participants, participant_vars, data_label = "participants")
 
   # get targets
   targets <- associations$targets$target
@@ -50,16 +51,23 @@ ar_correlate_targets <- function(associations, participant_vars) {
 
   # do calculations, functions defined in helper.R
   corr_list = list()
-  for(i in 1:length(participant_vars)) {
-    gr = associations$participants[[participant_vars[i]]]
+
+  # extract variable names
+  p_vars <- associations$participants %>% dplyr::select(!!participant_vars) %>% names()
+
+  for(i in 1:length(p_vars)) {
+    gr = associations$participants[[p_vars[i]]]
     if(is.factor(gr)) gr = as.character(gr)
     if(is.numeric(gr)) {
-      corr_list[[participant_vars[i]]] = apply(target_participants, 2, function(x) point_biserial(gr, x))
+      corr_list[[p_vars[i]]] = apply(target_participants, 2,
+                                               function(x) point_biserial(gr, x))
     } else if(is.character(gr) | is.logical(gr)) {
       if(length(unique(gr)) == 2 | is.logical(gr)) {
-        corr_list[[participant_vars[i]]] = apply(target_participants, 2, function(x) phi(gr, x))
+        corr_list[[p_vars[i]]] = apply(target_participants, 2,
+                                                 function(x) phi(gr, x))
       } else {
-        corr_list[[participant_vars[i]]] = apply(target_participants, 2, function(x) cramer(gr, x))
+        corr_list[[p_vars[i]]] = apply(target_participants, 2,
+                                                 function(x) cramer(gr, x))
       }
     }
   }

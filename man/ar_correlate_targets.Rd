@@ -34,6 +34,6 @@ ar_import(intelligence,
           participant_vars = c(gender, education),
           response_vars = c(response_position, response_level)) \%>\%
   ar_set_targets(targets = "cues") \%>\%
-  ar_correlate_targets(participant_vars = c("education", "gender"))
+  ar_correlate_targets(participant_vars = c(education, gender))
 
 }
