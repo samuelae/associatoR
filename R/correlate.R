@@ -45,29 +45,32 @@ ar_correlate_targets <- function(associations, participant_vars) {
                                 nrow = length(uni_participant),
                                 ncol = length(targets),
                                 dimnames = list(uni_participant, targets))
-  for(i in 1:length(targets)){
-    target_participants[unique(participants[(!is.na(responses)) & responses == targets[i]]), targets[i]] = TRUE
+  for (i in 1:length(targets)) {
+    target_participants[unique(participants[(!is.na(responses)) & responses == targets[i]]),
+                        targets[i]] = TRUE
   }
 
   # do calculations, functions defined in helper.R
   corr_list = list()
 
   # extract variable names
-  p_vars <- associations$participants %>% dplyr::select(!!participant_vars) %>% names()
+  p_vars <- associations$participants %>%
+    dplyr::select(!!participant_vars) %>%
+    names()
 
   for(i in 1:length(p_vars)) {
     gr = associations$participants[[p_vars[i]]]
     if(is.factor(gr)) gr = as.character(gr)
     if(is.numeric(gr)) {
       corr_list[[p_vars[i]]] = apply(target_participants, 2,
-                                               function(x) point_biserial(gr, x))
+                                     function(x) point_biserial(gr, x))
     } else if(is.character(gr) | is.logical(gr)) {
       if(length(unique(gr)) == 2 | is.logical(gr)) {
         corr_list[[p_vars[i]]] = apply(target_participants, 2,
-                                                 function(x) phi(gr, x))
+                                       function(x) phi(gr, x))
       } else {
         corr_list[[p_vars[i]]] = apply(target_participants, 2,
-                                                 function(x) cramer(gr, x))
+                                       function(x) cramer(gr, x))
       }
     }
   }

@@ -14,10 +14,14 @@ point_biserial = function(x, d, na.rm = T){
 }
 
 phi = function(x, y) {
-  tab = table(x, y) %>% as.matrix()
-  num = tab[1, 1] * tab[2, 2] - tab[1, 2] * tab[2, 1]
-  denom = sqrt(prod(c(rowSums(tab), colSums(tab))))
-  num / denom
+  if(length(unique(x)) == 2 & length(unique(y)) == 2) {
+    tab = table(x, y) %>% as.matrix()
+    num = tab[1, 1] * tab[2, 2] - tab[1, 2] * tab[2, 1]
+    denom = sqrt(prod(c(rowSums(tab), colSums(tab))))
+    num / denom
+  } else {
+    NA
+  }
 }
 
 reg_r = function(x, d) {
