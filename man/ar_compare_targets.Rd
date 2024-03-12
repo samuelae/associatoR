@@ -11,7 +11,7 @@ ar_compare_targets(associations, participant_vars, target_var, fun = mean, ...)
 
 \item{participant_vars}{a \code{character} vector specifying the grouping variables.}
 
-\item{target_var}{an optional \code{character} string specifying the target variable to be summarized. If not specified \code{ar_comapre} tabulates the frequencies of targets.}
+\item{target_var}{an optional \code{character} string specifying the target variable to be summarized.}
 
 \item{fun}{a \code{function} specifying the statistic to calculate from \code{target_var}, defaults to mean.}
 
@@ -32,7 +32,7 @@ ar_import(intelligence,
           participant_vars = c(gender, education),
           response_vars = c(response_position, response_level)) \%>\%
   ar_set_targets(targets = "cues") \%>\%
-  ar_count_targets() \%>\%
-  ar_compare_targets(participant_vars = c(gender, education), target_var = frequency, fun = mean, na.rm = TRUE)
+  ar_summarize_targets(response_var = response_position) \%>\%
+  ar_compare_targets(participant_vars = c(gender, education), target_var = response_position, fun = mean, na.rm = TRUE)
 
 }
