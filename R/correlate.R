@@ -104,6 +104,9 @@ ar_correlate_targets <- function(associations, participant_vars, metric = "auto"
   names(corrs) <- paste0(names(corrs), "_corr")
   corrs <- corrs %>% dplyr::mutate(target = colnames(target_participants))
 
+  # check for NAs
+  if(any(is.na(corrs))) warning("NA correlations produced for targets not found in responses, check ar_normalize() and ar_set_targets() settings.", call. = FALSE)
+
   # join
   associations$targets <- associations$targets %>%
     dplyr::left_join(corrs)
