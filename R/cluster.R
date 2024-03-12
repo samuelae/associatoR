@@ -3,9 +3,9 @@
 #' \code{ar_cluster_targets} produces a target clustering based on the associatoR object's target embedding.
 #'
 #' @param associations an \code{associatoR} object including target_embeddings.
-#' @param method a \code{character} specifying the clustering method. One of \code{c("louvain","hclust","kmeans","dbscan")}. Default is \code{"louvain"}.
-#' @param similarity a \code{character} specifying the similarity metric. One of \code{c("arccos","cosine","euclidean")}. Default is \code{"arccos"}.
-#' @param k an \code{integer} specifying the number of clusters for \code{method = c("hclust","kmeans")}.
+#' @param method a \code{character} specifying the clustering method. One of \code{c("louvain", "hclust", "kmeans", "dbscan")}. Default is \code{"louvain"}.
+#' @param similarity a \code{character} specifying the similarity metric. One of \code{c("arccos", "cosine", "euclidean")}. Default is \code{"arccos"}.
+#' @param k an \code{integer} specifying the number of clusters for \code{method = c("hclust", "kmeans")}.
 #' @param linkage a \code{character} specifying the linkage criterion for \code{method = c("hclust")}. Default is \code{"complete"}.
 #' @param eps a \code{numeric} specifying the point distance used in \code{method = c("dbscan")}.
 #' @param ... additional attributes passed on to the clustering method.
@@ -25,14 +25,20 @@
 #'   ar_embed_targets() %>%
 #'   ar_cluster_targets(method = "louvain")
 #'
-ar_cluster_targets <- function(associations, method = c("louvain"), similarity = "arccos", k = NULL, linkage = NULL, eps = NULL, ...) {
+ar_cluster_targets <- function(associations,
+                               method = "louvain",
+                               similarity = "arccos",
+                               k = NULL,
+                               linkage = NULL,
+                               eps = NULL,
+                               ...) {
 
   # check inputs
   check_object(associations)
   check_targets(associations)
   check_embeddings(associations)
-  chk::chk_subset(method, c("louvain","hclust","kmeans","dbscan"))
-  chk::chk_subset(similarity, c("arccos","cosine","euclidean"))
+  chk::chk_subset(method, c("louvain", "hclust", "kmeans", "dbscan"))
+  chk::chk_subset(similarity, c("arccos", "cosine", "euclidean"))
 
   # get embedding
   emb = associations$target_embedding[, -1] %>% as.matrix()
@@ -128,11 +134,17 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
 
   }
 
+  # return raw clusters if in bootstrapping mode
   if("boot" %in% names(associations)) return(targets_clusters)
 
-  # add clusters to targets tibble
+  # improve cluster name readability
+  targets_clusters <- targets_clusters %>%
+    dplyr::mutate(cluster = paste0("cluster_", cluster))
+
+  # add clusters to targets tibble, rename NA clusters
   associations$targets <- associations$targets %>%
-    dplyr::left_join(targets_clusters, by = "target")
+    dplyr::left_join(targets_clusters, by = "target") %>%
+    tidyr::replace_na(list(cluster = "no_cluster"))
 
   # add attribute
   cluster_settings = list(method = method,
@@ -146,7 +158,7 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
   # out
   associations
 
-  }
+}
 
 
 #' Cluster stability
