@@ -60,7 +60,7 @@ check_embeddings = function(data) {
 check_tidy = function(data, var, data_label = "data") {
   if(!missing(var)) {
     test = try(rlang::eval_tidy(var, data))
-    if(class(test) == "try-error") stop(paste0("Cannot find one or more columns ", quo_name(var), " in ", data_label, "."))
+    if(class(test) == "try-error") stop(paste0("Cannot find one or more columns ", rlang::as_label(var), " in ", data_label, "."))
   }
 }
 
