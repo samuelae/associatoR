@@ -84,7 +84,7 @@ ar_compare_targets = function(associations,
 #'   ar_set_targets(targets = "cues") %>%
 #'   ar_embed_targets()
 #'
-#' ar_compare_embeddings(ar_obj, c(gender, education))
+#' ar_compare_embeddings(ar_obj, gender)
 #'
 #' @export
 ar_compare_embeddings = function(associations, participant_vars, type = "triangle", intersection = "pair", ...) {
