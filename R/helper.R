@@ -101,9 +101,35 @@ row_sim = function(x,y,method="spearman"){
   mean(corrs, na.rm=T)
   }
 
+# STRING CASING -------
+
+to_frequent <- function(string) {
+  str <- tibble::tibble(original = string,
+                        lower = tolower(string))
+  lookup <- str %>%
+    dplyr::count(original) %>%
+    dplyr::mutate(lower = tolower(original)) %>%
+    dplyr::group_by(lower) %>%
+    dplyr::slice_max(n) %>%
+    dplyr::slice(1) %>%
+    dplyr::select(lower, most_frequent = original)
+  out <- str %>%
+    dplyr::left_join(lookup, by = "lower") %>%
+    dplyr::pull(most_frequent)
+
+  out
+}
 
 # OTHER --------
 
 get_id = function(x, y) ifelse(x<y,paste(x,y,sep="_"),paste(y,x,sep="_"))
+
+
+
+
+
+
+
+
 
 
