@@ -109,7 +109,7 @@
 <span class="r-in"><span>  <span class="fu"><a href="ar_set_targets.html">ar_set_targets</a></span><span class="op">(</span>targets <span class="op">=</span> <span class="st">"cues"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ar_embed_targets.html">ar_embed_targets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">ar_cluster_targets</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"louvain"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>432 targets with count &lt; min_count were dropped from embedding.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>456 targets with count &lt; min_count were dropped from embedding.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">An associatoR object</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -125,54 +125,54 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 995 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">cues</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 792 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 804 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   cue         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> intelligence</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Einstein    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> books       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> science     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> technology  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 787 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> IQ tests    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> college     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 799 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">responses</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29,892 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      id cue          response   response_position response_level</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 intelligence Einstein                   1              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     1 intelligence books                      2              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     1 intelligence science                    3              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     1 intelligence technology                 4              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     1 intelligence university                 5              1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 29,887 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29,882 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id cue          response     response_position response_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 intelligence Einstein                     1              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     1 intelligence books                        2              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     1 intelligence IQ tests                     3              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     1 intelligence college                      4              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     1 intelligence smart people                 5              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 29,877 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">targets</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 792 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 804 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   target       cluster  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> intelligence cluster_1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Einstein     cluster_2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> books        cluster_3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> science      cluster_2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> technology   cluster_2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 787 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> IQ tests     cluster_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> college      cluster_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 799 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">target_embedding</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 360 × 301</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   target       dim_1   dim_2  dim_3  dim_4  dim_5  dim_6   dim_7 dim_8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> intelligence  4.18 -<span style="color: #BB0000;">0.153</span>  -<span style="color: #BB0000;">1.50</span>  -<span style="color: #BB0000;">0.628</span>  1.15   -<span style="color: #BB0000;">3.88</span>   2.24  -<span style="color: #BB0000;">1.51</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Einstein      3.18  0.048<span style="text-decoration: underline;">2</span>  0.247  2.73   2.87   -<span style="color: #BB0000;">4.19</span>  -<span style="color: #BB0000;">0.981</span> -<span style="color: #BB0000;">1.97</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> books         9.60 -<span style="color: #BB0000;">1.84</span>    9.14  -<span style="color: #BB0000;">0.268</span> 16.1     7.52   8.88   9.98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> science       9.40  8.58    0.929  5.69   9.32  -<span style="color: #BB0000;">12.3</span>  -<span style="color: #BB0000;">16.0</span>    3.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> technology    6.42 27.2    -<span style="color: #BB0000;">1.95</span>  -<span style="color: #BB0000;">1.75</span>  -<span style="color: #BB0000;">0.880</span>   6.04   2.98  -<span style="color: #BB0000;">4.49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 355 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 292 more variables: dim_9 &lt;dbl&gt;, dim_10 &lt;dbl&gt;, dim_11 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_12 &lt;dbl&gt;, dim_13 &lt;dbl&gt;, dim_14 &lt;dbl&gt;, dim_15 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_16 &lt;dbl&gt;, dim_17 &lt;dbl&gt;, dim_18 &lt;dbl&gt;, dim_19 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_20 &lt;dbl&gt;, dim_21 &lt;dbl&gt;, dim_22 &lt;dbl&gt;, dim_23 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_24 &lt;dbl&gt;, dim_25 &lt;dbl&gt;, dim_26 &lt;dbl&gt;, dim_27 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_28 &lt;dbl&gt;, dim_29 &lt;dbl&gt;, dim_30 &lt;dbl&gt;, dim_31 &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 348 × 301</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   target  dim_1  dim_2  dim_3   dim_4 dim_5  dim_6 dim_7  dim_8  dim_9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> intell…  4.15  0.283 -<span style="color: #BB0000;">2.03</span>    3.25  -<span style="color: #BB0000;">2.59</span>  0.775  1.67 -<span style="color: #BB0000;">0.227</span>  1.28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Einste…  1.73  0.462 -<span style="color: #BB0000;">0.532</span>   0.209 -<span style="color: #BB0000;">4.59</span> -<span style="color: #BB0000;">1.75</span>   2.92 -<span style="color: #BB0000;">0.333</span> -<span style="color: #BB0000;">1.55</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> books   11.3  -<span style="color: #BB0000;">3.82</span>  -<span style="color: #BB0000;">0.507</span> -<span style="color: #BB0000;">22.6</span>   -<span style="color: #BB0000;">7.53</span>  8.45  -<span style="color: #BB0000;">1.82</span>  4.80   6.00 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> IQ tes…  6.63 -<span style="color: #BB0000;">1.50</span>  -<span style="color: #BB0000;">7.86</span>    7.63  -<span style="color: #BB0000;">2.27</span>  9.65  14.6   4.16  -<span style="color: #BB0000;">6.55</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> college  8.24 -<span style="color: #BB0000;">6.60</span>   6.98   -<span style="color: #BB0000;">7.41</span>   7.06  0.863  8.66 -<span style="color: #BB0000;">9.98</span>  -<span style="color: #BB0000;">0.438</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 343 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 291 more variables: dim_10 &lt;dbl&gt;, dim_11 &lt;dbl&gt;, dim_12 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_13 &lt;dbl&gt;, dim_14 &lt;dbl&gt;, dim_15 &lt;dbl&gt;, dim_16 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_17 &lt;dbl&gt;, dim_18 &lt;dbl&gt;, dim_19 &lt;dbl&gt;, dim_20 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_21 &lt;dbl&gt;, dim_22 &lt;dbl&gt;, dim_23 &lt;dbl&gt;, dim_24 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_25 &lt;dbl&gt;, dim_26 &lt;dbl&gt;, dim_27 &lt;dbl&gt;, dim_28 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dim_29 &lt;dbl&gt;, dim_30 &lt;dbl&gt;, dim_31 &lt;dbl&gt;, dim_32 &lt;dbl&gt;, …</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
