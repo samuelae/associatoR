@@ -26,8 +26,33 @@
 
 ar_wordlist_export = function(associations, folder, file = "wordlist_correction.csv"){
 
+  # checks
   check_object(associations)
+  chk::chk_dir(folder)
+  chk::chk_character(file)
 
+  # check if targets exist
+  if("targets" %in% names(associations)) warning("Spell checking is should be performed prior to setting targets.")
+
+  # add csv if necessary
+  if(str_sub(stringr::str_to_lower(file), nchar(file)-3, nchar(file)) != ".csv") file = paste0(file, ".csv")
+
+  # response tab
+  tab = table(associations$responses$response)
+
+  # construct tibble
+  out = tibble(response = names(tab),
+               response_correct = c(),
+               response_frequency = c(tab))
+
+  all = spelling::spell_check_text(out$response, lang = "de_DE")
+
+
+  all = spelling::spell_check_text(acronyms$acronym %>% str_to_lower())
+
+  ind = all$found %>% unlist() %>% unique()
+
+  acronyms %>% slice(-ind) %>% print(n = 100)
 
 }
 

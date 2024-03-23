@@ -263,10 +263,10 @@ ar_project_embedding <- function(associations,
     dplyr::select(-target) %>%
     as.matrix()
 
-  # mds
-  if(method == "mds"){
+  # pca
+  if(method == "pca"){
 
-    # run mds
+    # run pca
     embed = stats::princomp(embed, ...)$scores[,1:n_dim]
 
   }
