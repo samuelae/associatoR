@@ -20,7 +20,7 @@ Aeschbach, S., Mata, R., & Wulff, D. U. (2024, March 22). Mapping the Mind With 
 
 ## Overview
 
-The Figure provides of the functionality of the associatoR package based on the example presented in [Aeschbach, Mata, & Wulff (2024)](https://doi.org/10.31234/osf.io/ra87s).
+The Figure provides an overview of the functionality of the associatoR package based on the example presented in [Aeschbach, Mata, & Wulff (2024)](https://doi.org/10.31234/osf.io/ra87s).
 
 ![](man/figures/overview.png)
 
