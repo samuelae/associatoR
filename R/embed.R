@@ -275,7 +275,7 @@ ar_project_embedding <- function(associations,
   if(method == "mds"){
 
     # run mds
-    embed = stats::cmdscale(embed, k = n_dim, ...)
+    embed = stats::cmdscale(dist(embed), k = n_dim, ...)
 
   }
 

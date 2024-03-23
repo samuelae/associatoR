@@ -174,7 +174,7 @@ ar_normalize <- function(associations,
   # checks ----
 
   # associations
-  check_class(associations)
+  check_object(associations)
   chk::chk_string(case)
   chk::chk_subset(case, c("lower", "upper", "sentence", "most_frequent"))
 
