@@ -4,7 +4,7 @@ Associations offer a window into the mind, revealing how words, concepts, and to
 
 `associatoR` is an R package for analyzing free association data. It covers the entire analysis pipeline, from importing and processing to embedding, clustering, and visualizing the data.
 
-## General Information
+## Team
 
 The `associatoR` package is developed by [Samuel Aeschbach](https://github.com/samuelae) and [Dirk U. Wulff](https://github.com/dwulff), with contributions from [Rui Mata](https://github.com/matarui).
 
