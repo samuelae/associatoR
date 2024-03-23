@@ -60,80 +60,28 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="associator">associatoR<a class="anchor" aria-label="anchor" href="#associator"></a>
 </h1></div>
-<p>Associations offer a window into the semantics of the mind, revealing how concepts and words are interconnected. This has interesting applications not only for psychological theory but also for practical uses in marketing research, sociology, education, and artificial intelligence.</p>
-<p><code>associatoR</code> is an R package to work with association data. It offers pipelines to import, normalize, process, analyze, and convey results.</p>
+<p>Associations offer a window into the semantics of the mind, revealing how concepts and words are represented. They can be employed to map how humans and artificial intelligence think about key social and technological issues.</p>
+<p><code>associatoR</code> is an R package for analyzing free association data. It covers the entire analysis pipeline, from importing and processing to embedding, clustering, and visualizing the data.</p>
 <div class="section level2">
 <h2 id="general-information">General Information<a class="anchor" aria-label="anchor" href="#general-information"></a>
 </h2>
-<p>The <code>associatoR</code> package is developed by <a href="https://github.com/samuelae" class="external-link">Samuel Aeschbach</a> and <a href="https://github.com/dwulff" class="external-link">Dirk U. Wulff</a>.</p>
+<p>The <code>associatoR</code> package is developed by <a href="https://github.com/samuelae" class="external-link">Samuel Aeschbach</a> and <a href="https://github.com/dwulff" class="external-link">Dirk U. Wulff</a>, with contributions from <a href="https://github.com/matarui" class="external-link">Rui Mata</a>.</p>
 </div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>The latest development version on GitHub can be installed via <code>devtools::install_github("samuelae/associatoR")</code>. This may require prior installation of the <code>devtools</code> package via <code>install.packages("devtools")</code>.</p>
 </div>
-<div class="section level1">
-<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h1>
-<p>The latest development version on GitHub can be installed via <code>devtools::install_github("samuelae/associatoR")</code>. Note that this requires prior installation of the <code>devtools</code> package which can be achieved running <code>install.packages("devtools")</code> in R.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 </div>
-<div class="section level1">
-<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
-</h1>
-<p>This is a prototypical workflow using functions from the <code>associatoR</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="reference/ar_import.html">ar_import</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="reference/ar_set_targets.html">ar_set_targets</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">ar_embed</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">ar_plot</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level1">
-<h1 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
-</h1>
-<pre class="mermaid"><code>flowchart TD
-    DATA(free association data) --&gt; IMPORT["ar_import()"]
-    IMPORT --&gt; OBJ("associatoR Object \n [cues, participants, responses]")
-    IMPORT --&gt; NORM["ar_normalize()"] --&gt; OBJ
-    IMPORT --&gt; NORMM["ar_normalize_manual()"] --&gt; OBJ
-
-    OBJ &lt;--&gt; SUB["ar_subset()"]
-
-    OBJ --&gt; SET["ar_set_targets()"]
-
-    SET --&gt; OBJT("associatoR Object \n [cues, participants, responses, targets]")
-
-    OBJT &lt;--&gt; COUNT["ar_count_targets()"]
-    OBJT &lt;--&gt; CHAR["ar_characterize_targets()"]
-
-    OBJT --&gt; EMBED["ar_embed()"]
-    EMBED --&gt; OBJTE("associatoR Object \n [cues, participants, responses, targets, target_embedding]")
-
-    OBJTE &lt;--&gt; PROJ["ar_project()"]
-
-    COMP["ar_compare()"]
-    OBJ &lt;--&gt; COMP
-    OBJT &lt;--&gt; COMP
-    OBJTE &lt;--&gt; COMP
-
-    CORR["ar_correlate()"]
-    OBJ &lt;--&gt; CORR
-    OBJT &lt;--&gt; CORR
-    OBJTE &lt;--&gt; CORR
-    
-    PRINT["print(associatoR Object)"]
-    OBJ --&gt; PRINT
-    OBJT --&gt; PRINT
-    OBJTE --&gt; PRINT
-
-    CSV["ar_write_csv()"]
-    OBJ --&gt; CSV
-    OBJT --&gt; CSV
-    OBJTE --&gt; CSV</code></pre>
-<p>Detailed descriptions can be found on the <a href="https://samuelaeschbach.com/associatoR" class="external-link">package website</a>. This includes the <a href="https://samuelaeschbach.com/associatoR/reference/index.html" class="external-link">function reference</a>.</p>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Aeschbach, S., Wulff, D. U. (2023). associatoR. <a href="https://github.com/samuelae/associatoR" class="external-link uri">https://github.com/samuelae/associatoR</a></p>
+<p>Aeschbach, S., Mata, R., &amp; Wulff, D. U. (2024, March 22). Mapping the Mind With Free Associations: A Tutorial Using the R Package associatoR. <a href="https://doi.org/10.31234/osf.io/ra87s" class="external-link uri">https://doi.org/10.31234/osf.io/ra87s</a></p>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
