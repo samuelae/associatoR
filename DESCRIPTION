@@ -23,7 +23,7 @@ BugReports: https://github.com/samuelae/associatoR/issues
 Maintainer: Samuel Aeschbach <samuel.aeschbach@gmail.com>
 License: GPL-3
 Depends: R (>= 3.1.0),
-Imports: dplyr (>= 0.5.0), dtplyr, tidyselect, magrittr, tibble, stringr, chk, cli, rlang, readr, readxl, tidyr, RSpectra, umap, ggplot2, igraph, cstab, progress
+Imports: dplyr (>= 0.5.0), dtplyr, tidyselect, magrittr, tibble, stringr, chk, cli, rlang, readr, readxl, tidyr, RSpectra, umap, ggplot2, igraph, cstab, progress, curl
 Suggests: testthat
 Encoding: UTF-8
 LazyData: true

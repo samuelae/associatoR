@@ -88,6 +88,9 @@ ar_embed_targets <- function(associations,
   # api
   if(method == "huggingface") {
 
+    # check for internet
+    if(!curl::has_internet()) stop("No internet connection. Needed to obtain huggingface embeddings.")
+
     # check if token exists
     chk::chk_not_null(token)
 
