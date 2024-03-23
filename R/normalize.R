@@ -51,7 +51,7 @@ ar_normalize_manual <- function(associations, fun, ..., process_cues = FALSE) {
 
     if(any(duplicated(associations$cues$cue))){
       n = sum(duplicated(associations$cues$cue))
-      warning(paste0("Normaliting reduced cues by ",n," entries."))
+      message(paste0(n, " entries were dropped from cues due to normalizing."))
       associations$cues = associations$cues %>% dplyr::filter(!duplicated(cue))
       }
     }
@@ -136,7 +136,7 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
 
     if(any(duplicated(associations$cues$cue))){
       n = sum(duplicated(associations$cues$cue))
-      warning(paste0("Normaliting reduced cues by ",n," entries."))
+      message(paste0(n, " entries were dropped from cues due to normalizing."))
       associations$cues = associations$cues %>% dplyr::filter(!duplicated(cue))
     }
   }

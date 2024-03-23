@@ -148,7 +148,6 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
     filters = list()
     for(j in 1:ncol(cases)){
       filters[[j]] =  tbl[[names(cases)[j]]] == cases[[j]][i]
-      print(cases[[j]][i])
       }
     sel = do.call(cbind, filters) %>% rowMeans() %>% `==`(1)
 
@@ -169,7 +168,7 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
 
     # run embedding
     data = do.call(ar_embed_targets, c(list(data), embedding_settings)) %>%
-      suppressWarnings()
+      suppressMessages()
 
     # store
     embeddings[[i]] = data$target_embedding

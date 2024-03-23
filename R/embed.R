@@ -64,7 +64,7 @@ ar_embed_targets <- function(associations,
     row_sums = rowSums(embed)
     if(any(row_sums == 0)) {
       embed = embed[row_sums >= min_count, ]
-      warning(paste0(sum(row_sums < min_count), " targets with count < min_count were dropped from embedding."))
+      message(paste0(sum(row_sums < min_count), " targets with count < min_count were dropped from embedding."))
     }
 
 
