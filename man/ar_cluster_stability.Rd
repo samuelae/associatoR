@@ -33,6 +33,6 @@ ar_obj = ar_import(intelligence,
   ar_embed_targets() \%>\%
   ar_cluster_targets(method = "louvain")
 
-ar_cluster_stability(ar_obj)
+ar_cluster_stability(ar_obj, n_boot = 10)
 
 }

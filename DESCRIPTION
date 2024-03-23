@@ -1,7 +1,7 @@
 Package: associatoR
 Type: Package
-Title: Analyzing association data
-Description: Association data is a promsing way to reveal the contents of mental representations. blah. See Aeschbach, Mata, & Wulff (2024)
+Title: Analyzing free associations
+Description: Associations offer a window into the mind, revealing how words, concepts, and topics are represented. They can be used to map how humans and artificial intelligence think about key social and technological issues. associatoR is an R package for analyzing free association data. It covers the entire analysis pipeline, from importing and processing to embedding, clustering, and visualizing the data.
 Version: 0.1.0.9
 Authors@R: c(
     person(c("Samuel"), "Aeschbach", role= c("aut", "cre"),

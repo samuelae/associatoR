@@ -42,6 +42,6 @@ ar_obj = ar_import(intelligence,
   ar_set_targets(targets = "cues") \%>\%
   ar_embed_targets()
 
-ar_compare_embeddings(ar_obj, c(gender, education))
+ar_compare_embeddings(ar_obj, gender)
 
 }

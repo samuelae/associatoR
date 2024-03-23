@@ -6,7 +6,7 @@
 \usage{
 ar_cluster_targets(
   associations,
-  method = c("louvain"),
+  method = "louvain",
   similarity = "arccos",
   k = NULL,
   linkage = NULL,
@@ -17,11 +17,11 @@ ar_cluster_targets(
 \arguments{
 \item{associations}{an \code{associatoR} object including target_embeddings.}
 
-\item{method}{a \code{character} specifying the clustering method. One of \code{c("louvain","hclust","kmeans","dbscan")}. Default is \code{"louvain"}.}
+\item{method}{a \code{character} specifying the clustering method. One of \code{c("louvain", "hclust", "kmeans", "dbscan")}. Default is \code{"louvain"}.}
 
-\item{similarity}{a \code{character} specifying the similarity metric. One of \code{c("arccos","cosine","euclidean")}. Default is \code{"arccos"}.}
+\item{similarity}{a \code{character} specifying the similarity metric. One of \code{c("arccos", "cosine", "euclidean")}. Default is \code{"arccos"}.}
 
-\item{k}{an \code{integer} specifying the number of clusters for \code{method = c("hclust","kmeans")}.}
+\item{k}{an \code{integer} specifying the number of clusters for \code{method = c("hclust", "kmeans")}.}
 
 \item{linkage}{a \code{character} specifying the linkage criterion for \code{method = c("hclust")}. Default is \code{"complete"}.}
 

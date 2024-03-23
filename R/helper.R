@@ -14,10 +14,14 @@ point_biserial = function(x, d, na.rm = T){
 }
 
 phi = function(x, y) {
-  tab = table(x, y) %>% as.matrix()
-  num = tab[1, 1] * tab[2, 2] - tab[1, 2] * tab[2, 1]
-  denom = sqrt(prod(c(rowSums(tab), colSums(tab))))
-  num / denom
+  if(length(unique(x)) == 2 & length(unique(y)) == 2) {
+    tab = table(x, y) %>% as.matrix()
+    num = tab[1, 1] * tab[2, 2] - tab[1, 2] * tab[2, 1]
+    denom = sqrt(prod(c(rowSums(tab), colSums(tab))))
+    num / denom
+  } else {
+    NA
+  }
 }
 
 reg_r = function(x, d) {
@@ -53,10 +57,10 @@ check_embeddings = function(data) {
 }
 
 
-check_tidy = function(data, var) {
+check_tidy = function(data, var, data_label = "data") {
   if(!missing(var)) {
     test = try(rlang::eval_tidy(var, data))
-    if(class(test) == "try-error") stop(paste0("Cannot find one or all columns ", quo_name(var), " in data."))
+    if(class(test) == "try-error") stop(paste0("Cannot find one or more columns ", rlang::as_label(var), " in ", data_label, "."))
   }
 }
 
@@ -97,10 +101,36 @@ row_sim = function(x,y,method="spearman"){
   mean(corrs, na.rm=T)
   }
 
+# STRING CASING -------
+
+to_frequent <- function(string) {
+  str <- tibble::tibble(original = string,
+                        lower = tolower(string))
+  lookup <- str %>%
+    dplyr::count(original) %>%
+    dplyr::mutate(lower = tolower(original)) %>%
+    dplyr::group_by(lower) %>%
+    dplyr::slice_max(n) %>%
+    dplyr::slice(1) %>%
+    dplyr::select(lower, most_frequent = original)
+  out <- str %>%
+    dplyr::left_join(lookup, by = "lower") %>%
+    dplyr::pull(most_frequent)
+
+  out
+}
 
 # OTHER --------
 
 get_id = function(x, y) ifelse(x<y,paste(x,y,sep="_"),paste(y,x,sep="_"))
 
 detect_acronym = function(x) str_count(x, "[A-Z0-9]")/nchar(x) > .95 & nchar(x) > 1
+
+
+
+
+
+
+
+
 

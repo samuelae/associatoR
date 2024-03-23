@@ -3,9 +3,9 @@
 #' \code{ar_cluster_targets} produces a target clustering based on the associatoR object's target embedding.
 #'
 #' @param associations an \code{associatoR} object including target_embeddings.
-#' @param method a \code{character} specifying the clustering method. One of \code{c("louvain","hclust","kmeans","dbscan")}. Default is \code{"louvain"}.
-#' @param similarity a \code{character} specifying the similarity metric. One of \code{c("arccos","cosine","euclidean")}. Default is \code{"arccos"}.
-#' @param k an \code{integer} specifying the number of clusters for \code{method = c("hclust","kmeans")}.
+#' @param method a \code{character} specifying the clustering method. One of \code{c("louvain", "hclust", "kmeans", "dbscan")}. Default is \code{"louvain"}.
+#' @param similarity a \code{character} specifying the similarity metric. One of \code{c("arccos", "cosine", "euclidean")}. Default is \code{"arccos"}.
+#' @param k an \code{integer} specifying the number of clusters for \code{method = c("hclust", "kmeans")}.
 #' @param linkage a \code{character} specifying the linkage criterion for \code{method = c("hclust")}. Default is \code{"complete"}.
 #' @param eps a \code{numeric} specifying the point distance used in \code{method = c("dbscan")}.
 #' @param ... additional attributes passed on to the clustering method.
@@ -25,14 +25,20 @@
 #'   ar_embed_targets() %>%
 #'   ar_cluster_targets(method = "louvain")
 #'
-ar_cluster_targets <- function(associations, method = c("louvain"), similarity = "arccos", k = NULL, linkage = NULL, eps = NULL, ...) {
+ar_cluster_targets <- function(associations,
+                               method = "louvain",
+                               similarity = "arccos",
+                               k = NULL,
+                               linkage = NULL,
+                               eps = NULL,
+                               ...) {
 
   # check inputs
   check_object(associations)
   check_targets(associations)
   check_embeddings(associations)
-  chk::chk_subset(method, c("louvain","hclust","kmeans","dbscan"))
-  chk::chk_subset(similarity, c("arccos","cosine","euclidean"))
+  chk::chk_subset(method, c("louvain", "hclust", "kmeans", "dbscan"))
+  chk::chk_subset(similarity, c("arccos", "cosine", "euclidean"))
 
   # get embedding
   emb = associations$target_embedding[, -1] %>% as.matrix()
@@ -128,11 +134,17 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
 
   }
 
+  # return raw clusters if in bootstrapping mode
   if("boot" %in% names(associations)) return(targets_clusters)
 
-  # add clusters to targets tibble
+  # improve cluster name readability
+  targets_clusters <- targets_clusters %>%
+    dplyr::mutate(cluster = paste0("cluster_", cluster))
+
+  # add clusters to targets tibble, rename NA clusters
   associations$targets <- associations$targets %>%
-    dplyr::left_join(targets_clusters, by = "target")
+    dplyr::left_join(targets_clusters, by = "target") %>%
+    tidyr::replace_na(list(cluster = "no_cluster"))
 
   # add attribute
   cluster_settings = list(method = method,
@@ -146,7 +158,7 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
   # out
   associations
 
-  }
+}
 
 
 #' Cluster stability
@@ -172,7 +184,7 @@ ar_cluster_targets <- function(associations, method = c("louvain"), similarity =
 #'   ar_embed_targets() %>%
 #'   ar_cluster_targets(method = "louvain")
 #'
-#' ar_cluster_stability(ar_obj)
+#' ar_cluster_stability(ar_obj, n_boot = 10)
 #'
 #' @export
 ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
@@ -217,7 +229,7 @@ ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
     }
 
     # overwrite_embeddings
-    associations_boot$target_embedding = tibble(target = targets) %>% bind_cols(as_tibble(emb[targets,]))
+    associations_boot$target_embedding = tibble::tibble(target = targets) %>% dplyr::bind_cols(tibble::as_tibble(emb[targets,]))
 
     # run clustering
     clustering = do.call(ar_cluster_targets,
@@ -228,23 +240,23 @@ ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
 
     # evaluate sameness
     equal_tbl = expand.grid(i = 1:length(targets), j = 1:length(targets)) %>%
-      as_tibble() %>%
-      filter(i < j) %>%
-      arrange(i, j) %>%
-      mutate(i = targets[i],
-             j = targets[j],
-             id = get_id(i, j),
-             equal = equal) %>%
-      group_by(id) %>%
-      summarize(count = n(),
-                stab = sum(equal))
+      tibble::as_tibble() %>%
+      dplyr::filter(i < j) %>%
+      dplyr::arrange(i, j) %>%
+      dplyr::mutate(i = targets[i],
+                    j = targets[j],
+                    id = get_id(i, j),
+                    equal = equal) %>%
+      dplyr::group_by(id) %>%
+      dplyr::summarize(count = dplyr::n(),
+                       stab = sum(equal))
 
     # add to counts
     results = results %>%
-      left_join(equal_tbl, by = c("id"), suffix = c("","_new")) %>%
-      mutate(count = count + ifelse(is.na(count_new), 0, count_new),
-             stab = stab + ifelse(is.na(stab_new), 0, stab_new)) %>%
-      select(-count_new, -stab_new)
+      dplyr::left_join(equal_tbl, by = c("id"), suffix = c("","_new")) %>%
+      dplyr::mutate(count = count + ifelse(is.na(count_new), 0, count_new),
+                    stab = stab + ifelse(is.na(stab_new), 0, stab_new)) %>%
+      dplyr::select(-count_new, -stab_new)
 
 
     # update bar
@@ -253,12 +265,12 @@ ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
   }
 
   # get original clusters from data
-  clusters = associations$targets %>% pull(cluster, target)
+  clusters = associations$targets %>% dplyr::pull(cluster, target)
 
   # evaluate
   results = results %>%
-    dplyr::mutate(i = str_split(id, "_") %>% sapply(`[`, 1),
-                  j = str_split(id, "_") %>% sapply(`[`, 2)) %>%
+    dplyr::mutate(i = stringr::str_split(id, "_") %>% sapply(`[`, 1),
+                  j = stringr::str_split(id, "_") %>% sapply(`[`, 2)) %>%
     dplyr::select(i, j, count, stab) %>%
     dplyr::mutate(i_cluster = clusters[i],
                   j_cluster = clusters[j],
@@ -267,12 +279,12 @@ ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
 
   # expand
   results = results %>%
-    dplyr::bind_rows(tibble(i = results$j,
-                            j = results$i,
-                            i_cluster = results$j_cluster,
-                            j_cluster = results$i_cluster,
-                            count = results$count,
-                            stability = results$stability))
+    dplyr::bind_rows(tibble::tibble(i = results$j,
+                                    j = results$i,
+                                    i_cluster = results$j_cluster,
+                                    j_cluster = results$i_cluster,
+                                    count = results$count,
+                                    stability = results$stability))
 
   # aggregate within clusters
   results_cluster = results %>%
