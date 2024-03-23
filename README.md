@@ -1,6 +1,6 @@
 # associatoR
 
-Associations offer a window into the semantics of the mind, revealing how concepts and words are represented. They can be employed to map how humans and artificial intelligence think about key social and technological issues.
+Associations offer a window into the mind, revealing how words, concepts, and topics are represented. They can be used to map how humans and artificial intelligence think about key social and technological issues.
 
 `associatoR` is an R package for analyzing free association data. It covers the entire analysis pipeline, from importing and processing to embedding, clustering, and visualizing the data.
 
