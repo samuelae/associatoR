@@ -41,6 +41,12 @@ ar_cluster_targets <- function(associations,
   chk::chk_subset(similarity, c("arccos", "cosine", "euclidean"))
 
   # get embedding
+  if("cluster" %in% names(associations$targets)){
+    associations$targets = associations$targets %>% dplyr::select(-cluster)
+    warnings("Existing clustering overwritten.")
+  }
+
+  # get embedding
   emb = associations$target_embedding[, -1] %>% as.matrix()
   rownames(emb) = associations$target_embedding %>% dplyr::pull(target)
 
