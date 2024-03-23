@@ -169,7 +169,7 @@ ar_cluster_targets <- function(associations,
 #'
 #' @param associations an \code{associatoR} object including target_embeddings.
 #' @param n_boot an \code{integer} specifying the number of bootstrap samples to draw. Default is \code{1000}.
-#' @param unique a \code{logical} specifying whether duplicate targets in bootstrap shouod be ignored. Default is \code{TRUE}.
+#' @param unique a \code{logical} specifying whether targets duplicates in bootstrap samples should be ignored. Default is \code{TRUE}.
 #'
 #' @return The function returns a list containing two matrices with the target- (\code{target_stability}) and cluster-wise (\code{cluster_stability}) probabilities of being assigned to the same cluster under random pertubation.
 #'
@@ -187,7 +187,7 @@ ar_cluster_targets <- function(associations,
 #' ar_cluster_stability(ar_obj, n_boot = 10)
 #'
 #' @export
-ar_cluster_stability <- function(associations, n_boot = 1000, unique = FALSE) {
+ar_cluster_stability <- function(associations, n_boot = 1000, unique = TRUE) {
 
   # check inputs
   check_object(associations)
