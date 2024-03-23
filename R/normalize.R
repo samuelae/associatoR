@@ -48,6 +48,12 @@ ar_normalize_manual <- function(associations, fun, ..., process_cues = FALSE) {
       }
     associations$cues$cue <- fun(associations$cues$cue, ...)
     associations$responses$cue <- fun(associations$responses$cue, ...)
+
+    if(any(duplicated(associations$cues$cue))){
+      n = sum(duplicated(associations$cues$cue))
+      warning(paste0("Normaliting reduced cues by ",n," entries."))
+      associations$cues = associations$cues %>% dplyr::filter(!duplicated(cue))
+      }
     }
 
   # add response original
@@ -102,7 +108,7 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
   check_object(associations)
   chk::chk_data(dictionary)
   chk::chk_logical(process_cues)
-  if(all(names(dictionary) %in% c("old", "new"))){
+  if(!all(names(dictionary) %in% c("old", "new"))){
     stop('Names of dictionary must be "old" and "new"')
     }
 
@@ -127,6 +133,12 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
 
     associations$cues$cue <- apply_dict(associations$cues$cue, dictionary)
     associations$responses$cue <- apply_dict(associations$responses$cue, dictionary)
+
+    if(any(duplicated(associations$cues$cue))){
+      n = sum(duplicated(associations$cues$cue))
+      warning(paste0("Normaliting reduced cues by ",n," entries."))
+      associations$cues = associations$cues %>% dplyr::filter(!duplicated(cue))
+    }
   }
 
   # add response original

@@ -30,7 +30,7 @@
 ar_embed_targets <- function(associations,
                              method = "ppmi-svd",
                              min_count = 5,
-                             n_dim = 300,
+                             n_dim = 100,
                              model = NULL,
                              token = NULL,
                              context = NULL) {
