@@ -14,7 +14,7 @@ The latest development version on GitHub can be installed via `devtools::install
 
 ## Overview
 
-
+![](man/figures/overview.png)
 
 
 ## Citation
