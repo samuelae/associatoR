@@ -14,7 +14,7 @@ The latest development version on GitHub can be installed via `devtools::install
 
 ## Citation
 
-Please cite package as:
+Please cite the package as:
 
 Aeschbach, S., Mata, R., & Wulff, D. U. (2024, March 22). Mapping the Mind With Free Associations: A Tutorial Using the R Package associatoR. <https://doi.org/10.31234/osf.io/ra87s>
 
