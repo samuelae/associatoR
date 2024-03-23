@@ -89,7 +89,7 @@
 <span class="r-in"><span>  <span class="fu"><a href="ar_embed_targets.html">ar_embed_targets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ar_cluster_targets.html">ar_cluster_targets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">ar_cross_targets</span><span class="op">(</span>participant_vars <span class="op">=</span> <span class="va">gender</span>, target_var <span class="op">=</span> <span class="va">cluster</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>204 targets with count &lt; min_count were dropped from embedding.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 204 targets with count &lt; min_count were dropped from embedding.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    gender cluster        n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -117,7 +117,7 @@
 <span class="r-in"><span>  <span class="fu"><a href="ar_embed_targets.html">ar_embed_targets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ar_cluster_targets.html">ar_cluster_targets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">ar_cross_targets</span><span class="op">(</span>participant_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">education</span><span class="op">)</span>, target_var <span class="op">=</span> <span class="va">cluster</span>, normalize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>204 targets with count &lt; min_count were dropped from embedding.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 204 targets with count &lt; min_count were dropped from embedding.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    gender education   cluster    proportion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
