@@ -16,12 +16,7 @@
 \item{...}{optional \code{logical} comparisons to filter the responses before computing frequencies.}
 }
 \value{
-Returns an \code{associatoR} object containing a list of tibbles:
-\describe{
- \item{participants}{A tibble of participants including a participant \code{id} and potential participant attributes.}
- \item{cues}{A tibble of cues including a \code{cue} variable and potential cue attributes.}
- \item{responses}{A tibble of responses including a participant id, the cues, the responses, the response level, and additional response attributes.}
-}
+Returns a \link[ggplot2]{ggplot} plot object.
 }
 \description{
 Generate a plot of an \code{associatoR} object.
