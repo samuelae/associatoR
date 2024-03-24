@@ -55,6 +55,12 @@
     <loc>http://samuelaeschbach.com/associatoR/reference/ar_normalize_manual.html</loc>
   </url>
   <url>
+    <loc>http://samuelaeschbach.com/associatoR/reference/ar_plot_embedding.html</loc>
+  </url>
+  <url>
+    <loc>http://samuelaeschbach.com/associatoR/reference/ar_plot_wordcloud.html</loc>
+  </url>
+  <url>
     <loc>http://samuelaeschbach.com/associatoR/reference/ar_project_embedding.html</loc>
   </url>
   <url>
@@ -65,9 +71,6 @@
   </url>
   <url>
     <loc>http://samuelaeschbach.com/associatoR/reference/ar_summarize_targets.html</loc>
-  </url>
-  <url>
-    <loc>http://samuelaeschbach.com/associatoR/reference/ar_word_cloud.html</loc>
   </url>
   <url>
     <loc>http://samuelaeschbach.com/associatoR/reference/ar_wordlist_export.html</loc>
