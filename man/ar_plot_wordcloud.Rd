@@ -24,7 +24,7 @@ ar_plot_wordcloud(
 
 \item{top_n}{a \code{integer} value specifying the number of highest frequency words to display.}
 
-\item{...}{}
+\item{...}{optional arguments passed on to \link[ggwordcloud]{geom_text_wordcloud}.}
 }
 \value{
 Returns a \link[ggplot2]{ggplot} plot object.
