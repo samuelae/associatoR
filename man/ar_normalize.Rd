@@ -6,11 +6,11 @@
 \usage{
 ar_normalize(
   associations,
-  case = "lower",
+  case = "majority",
   punct = "end",
   punct_replacement = " ",
   whitespace = "squish",
-  process_cues = FALSE
+  process_cues = TRUE
 )
 }
 \arguments{

@@ -101,6 +101,10 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
     dplyr::select(!!p_vars) %>%
     dplyr::distinct()
 
+  # remove originals
+  associations$cues = associations$cues %>% dplyr::select(-cue_original)
+  associations$responses = associations$responses %>% dplyr::select(-cue_original, -response_original)
+
   # recreate data
   part_names = names(associations$participants)
   resp_names = names(associations$responses)
@@ -118,7 +122,7 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
   } else {
     embedding_settings = list(method = "ppmi-svd",
                               min_count = 5,
-                              n_dim = 300,
+                              n_dim = 100,
                               model = NULL,
                               token = NULL,
                               context = NULL)
@@ -164,7 +168,7 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
 
     # run embedding
     data = do.call(ar_embed_targets, c(list(data), embedding_settings)) %>%
-      suppressWarnings()
+      suppressMessages()
 
     # store
     embeddings[[i]] = data$target_embedding

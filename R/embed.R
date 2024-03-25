@@ -30,7 +30,7 @@
 ar_embed_targets <- function(associations,
                              method = "ppmi-svd",
                              min_count = 5,
-                             n_dim = 300,
+                             n_dim = 100,
                              model = NULL,
                              token = NULL,
                              context = NULL) {
@@ -64,7 +64,7 @@ ar_embed_targets <- function(associations,
     row_sums = rowSums(embed)
     if(any(row_sums == 0)) {
       embed = embed[row_sums >= min_count, ]
-      warning(paste0(sum(row_sums < min_count), " targets with count < min_count were dropped from embedding."))
+      message(paste0(sum(row_sums < min_count), " targets with count < min_count were dropped from embedding."))
     }
 
 
@@ -87,6 +87,9 @@ ar_embed_targets <- function(associations,
 
   # api
   if(method == "huggingface") {
+
+    # check for internet
+    if(!curl::has_internet()) stop("No internet connection. Needed to obtain huggingface embeddings.")
 
     # check if token exists
     chk::chk_not_null(token)
@@ -263,10 +266,10 @@ ar_project_embedding <- function(associations,
     dplyr::select(-target) %>%
     as.matrix()
 
-  # mds
+  # pca
   if(method == "pca"){
 
-    # run mds
+    # run pca
     embed = stats::princomp(embed, ...)$scores[,1:n_dim]
 
   }
@@ -275,7 +278,7 @@ ar_project_embedding <- function(associations,
   if(method == "mds"){
 
     # run mds
-    embed = stats::cmdscale(embed, k = n_dim, ...)
+    embed = stats::cmdscale(dist(embed), k = n_dim, ...)
 
   }
 

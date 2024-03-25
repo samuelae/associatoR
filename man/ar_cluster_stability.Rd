@@ -4,14 +4,14 @@
 \alias{ar_cluster_stability}
 \title{Cluster stability}
 \usage{
-ar_cluster_stability(associations, n_boot = 1000, unique = FALSE)
+ar_cluster_stability(associations, n_boot = 1000, unique = TRUE)
 }
 \arguments{
 \item{associations}{an \code{associatoR} object including target_embeddings.}
 
 \item{n_boot}{an \code{integer} specifying the number of bootstrap samples to draw. Default is \code{1000}.}
 
-\item{unique}{a \code{logical} specifying whether duplicate targets in bootstrap shouod be ignored. Default is \code{TRUE}.}
+\item{unique}{a \code{logical} specifying whether targets duplicates in bootstrap samples should be ignored. Default is \code{TRUE}.}
 }
 \value{
 The function returns a list containing two matrices with the target- (\code{target_stability}) and cluster-wise (\code{cluster_stability}) probabilities of being assigned to the same cluster under random pertubation.
