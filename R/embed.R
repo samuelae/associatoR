@@ -224,7 +224,7 @@ ar_embed_targets <- function(associations,
 #' \code{ar_project} generates a 2D projection of the target embedding.
 #'
 #' @param associations an \code{associatoR} object including targets.
-#' @param method a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.
+#' @param method a \code{character} specifying the type of projection. One of \code{c("pca", "mds", "umap")}. Default is \code{"umap"}.
 #' @param n_dim an \code{integer} specifying the number of projection dimensions. Default is \code{2}.
 #' @param ... additional parguments passed to the projection method.
 #'
@@ -254,7 +254,7 @@ ar_project_embedding <- function(associations,
   # checks
   check_object(associations)
   check_embeddings(associations)
-  chk::chk_subset(method, c("mds","umap"))
+  chk::chk_subset(method, c("pca", "mds", "umap"))
   chk::chk_whole_number(n_dim)
   if(n_dim < 1) stop("Argument n_dim must be larger than 0.")
 
@@ -264,7 +264,7 @@ ar_project_embedding <- function(associations,
     as.matrix()
 
   # mds
-  if(method == "mds"){
+  if(method == "pca"){
 
     # run mds
     embed = stats::princomp(embed, ...)$scores[,1:n_dim]

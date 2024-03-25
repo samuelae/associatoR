@@ -9,7 +9,7 @@ ar_project_embedding(associations, method = "umap", n_dim = 2, ...)
 \arguments{
 \item{associations}{an \code{associatoR} object including targets.}
 
-\item{method}{a \code{character} specifying the type of projection. One of \code{c("mds", "umap")}. Default is \code{"umap"}.}
+\item{method}{a \code{character} specifying the type of projection. One of \code{c("pca", "mds", "umap")}. Default is \code{"umap"}.}
 
 \item{n_dim}{an \code{integer} specifying the number of projection dimensions. Default is \code{2}.}
 
