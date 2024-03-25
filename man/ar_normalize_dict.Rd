@@ -26,9 +26,8 @@ Returns an \code{associatoR} object containing a list of tibbles:
 \code{ar_normalize_dict} offers an interface to normalization responses (and cues) in \code{associatoR} objects based on a dictionary.
 }
 \examples{
-
-dict = tibble(old = c("intelligence", "iq"),
-              new = c("Intelligence", "IQ"))
+dict <- data.frame(old = c("intelligence", "iq"),
+                   new = c("Intelligence", "IQ"))
 
 ar_import(intelligence,
           participant = participant_id,

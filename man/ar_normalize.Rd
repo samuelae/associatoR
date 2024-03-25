@@ -6,7 +6,7 @@
 \usage{
 ar_normalize(
   associations,
-  case = "majority",
+  case = "most_frequent",
   punct = "end",
   punct_replacement = " ",
   whitespace = "squish",
@@ -24,7 +24,7 @@ ar_normalize(
 
 \item{whitespace}{a \code{character} specifying the normalization of white spaces or \code{NULL} to not change whitespace. Must be one of \code{c("squish", "trim")} or \code{NULL}. Setting \code{whitespace = "squish"} removes additional white spaces at the start, the end, and in-between words, whereas setting \code{whitespace = "trim"} removes white space from the start and end.}
 
-\item{process_cues}{a \code{logical} specifying, if cues should be processed as well. Defaults to \code{FALSE}.}
+\item{process_cues}{a \code{logical} specifying, if cues should be processed as well. Defaults to \code{TRUE}.}
 }
 \value{
 Returns an \code{associatoR} object containing a list of tibbles:

@@ -88,9 +88,8 @@ ar_normalize_manual <- function(associations, fun, ..., process_cues = FALSE) {
 #' @references Aeschbach, S., Mata, R., Wulff, D. U. (in progress)
 #'
 #' @examples
-#'
-#' dict = tibble(old = c("intelligence", "iq"),
-#'               new = c("Intelligence", "IQ"))
+#' dict <- data.frame(old = c("intelligence", "iq"),
+#'                    new = c("Intelligence", "IQ"))
 #'
 #' ar_import(intelligence,
 #'           participant = participant_id,
@@ -165,7 +164,7 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
 #' @param punct a \code{character} specifying the normalization of punctuationor \code{NULL} to not change punctuation. Must be one of \code{c("end", "all")} or \code{NULL}. \code{punct = "end"} replaces all punctuation at the end (including following whitespaces) with \code{punct_replacement} (default is a single white space). \code{punct = "all"} replaces all punctuation.
 #' @param punct_replacement a \code{character} used as replacement for punctuation.
 #' @param whitespace a \code{character} specifying the normalization of white spaces or \code{NULL} to not change whitespace. Must be one of \code{c("squish", "trim")} or \code{NULL}. Setting \code{whitespace = "squish"} removes additional white spaces at the start, the end, and in-between words, whereas setting \code{whitespace = "trim"} removes white space from the start and end.
-#' @param process_cues a \code{logical} specifying, if cues should be processed as well. Defaults to \code{FALSE}.
+#' @param process_cues a \code{logical} specifying, if cues should be processed as well. Defaults to \code{TRUE}.
 #'
 #' @return Returns an \code{associatoR} object containing a list of tibbles:
 #' \describe{
@@ -189,7 +188,7 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
 #' @export
 
 ar_normalize <- function(associations,
-                         case = "majority",
+                         case = "most_frequent",
                          punct = "end",
                          punct_replacement = " ",
                          whitespace = "squish",
@@ -255,27 +254,25 @@ ar_normalize <- function(associations,
       associations <- ar_normalize_manual(associations, stringr::str_to_sentence,
                                           process_cues = process_cues)
     }
+
     if (case == "most_frequent") {
-
       # process responses
-      mapping = associations$responses %>%
-        mutate(response_lower = str_to_lower(response)) %>%
-        count(response_lower, response) %>%
-        group_by(response_lower) %>%
-        arrange(response_lower, desc(n)) %>%
-        summarize(correct = response[1],
-                  response = list(response))
+      mapping <- associations$responses %>%
+        dplyr::mutate(response_lower = stringr::str_to_lower(response)) %>%
+        dplyr::count(response_lower, response) %>%
+        dplyr::group_by(response_lower) %>%
+        dplyr::arrange(response_lower, dplyr::desc(n)) %>%
+        dplyr::summarize(correct = response[1],
+                         response = list(response))
 
-      dictionary = tibble(old = unlist(mapping$response),
-                          new = rep(mapping$correct, lengths(mapping$response)))
+      dictionary <- tibble::tibble(old = unlist(mapping$response),
+                                   new = rep(mapping$correct, lengths(mapping$response)))
 
-      associations = ar_normalize_dict(associations, dictionary, process_cues = process_cues)
-
+      associations <- ar_normalize_dict(associations, dictionary,
+                                        process_cues = process_cues)
     }
 
   }
-
-
 
   # out ----
   associations
