@@ -117,7 +117,7 @@ ar_wordlist_export = function(associations,
 ar_wordlist_import = function(associations,
                               file = "wordlist_correction.csv",
                               process_cues = TRUE,
-                              na = c("NA")){
+                              na = c("NA")) {
 
   # checks
   check_object(associations)
@@ -128,8 +128,8 @@ ar_wordlist_import = function(associations,
   if("targets" %in% names(associations)) warning("Spell checking should be performed prior to setting targets.")
 
   # response tab
-  wordlist = read_csv(file, na = na, guess_max = Inf) %>%
-    mutate_all(function(x) {if(all(is.na(x))) x = ""; x})
+  wordlist = readr::read_csv(file, na = na, guess_max = Inf) %>%
+    dplyr::mutate_all(function(x) {if(all(is.na(x))) x = ""; x})
 
   # check
   if(!all(c("response","response_correct") %in% names(wordlist))){
@@ -138,10 +138,10 @@ ar_wordlist_import = function(associations,
 
   # setup dict
   dictionary = wordlist %>%
-    filter(is.na(response_correct) | response_correct != "") %>%
-    rename(old = response,
-           new = response_correct) %>%
-    select(old, new)
+    dplyr::filter(is.na(response_correct) | response_correct != "") %>%
+    dplyr::rename(old = response,
+                  new = response_correct) %>%
+    dplyr::select(old, new)
 
   # correct
   associations = ar_normalize_dict(associations,
@@ -150,5 +150,5 @@ ar_wordlist_import = function(associations,
 
   # out
   associations
-  }
 
+}
