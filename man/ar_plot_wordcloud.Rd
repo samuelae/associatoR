@@ -40,6 +40,8 @@ ar_import(intelligence,
           participant_vars = c(gender, education),
           response_vars = c(response_position, response_level)) \%>\%
   ar_set_targets("cues") \%>\%
-  ar_plot_wordcloud(facet_col = gender, top_n = 10)
+  ar_plot_wordcloud(facet_col = gender,
+                    top_n = 10,
+                    color_by = NULL)
 
 }

@@ -42,7 +42,7 @@ ar_import(intelligence,
   ar_set_targets("cues") \%>\%
   ar_embed_targets() \%>\%
   ar_cluster_targets() \%>\%
-  ar_project_targets() \%>\%
+  ar_project_embedding() \%>\%
   ar_plot_embedding(color_by = cluster,
                     proportion_labels = .5)
 

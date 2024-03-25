@@ -135,7 +135,7 @@ ar_normalize_dict <- function(associations, dictionary, ..., process_cues = FALS
 
     if(any(duplicated(associations$cues$cue))){
       n = sum(duplicated(associations$cues$cue))
-      message(paste0(n, " entries were dropped from cues due to normalizing."))
+      message(paste0(n, " duplicate entries were dropped from cues due to normalizing."))
       associations$cues = associations$cues %>% dplyr::filter(!duplicated(cue))
     }
   }

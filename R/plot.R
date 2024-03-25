@@ -104,7 +104,9 @@ plot.associatoR <- function(associations, facet_by = NULL, top_n = 5, ...) {
 #'           participant_vars = c(gender, education),
 #'           response_vars = c(response_position, response_level)) %>%
 #'   ar_set_targets("cues") %>%
-#'   ar_plot_wordcloud(facet_col = gender, top_n = 10)
+#'   ar_plot_wordcloud(facet_col = gender,
+#'                     top_n = 10,
+#'                     color_by = NULL)
 #'
 #' @export
 
@@ -142,15 +144,15 @@ ar_plot_wordcloud <- function(associations,
     dplyr::select(-dplyr::ends_with("_remove")) %>%
     suppressMessages()
 
-  print(counts)
-
   # plot
   plot = counts %>%
-    ggplot2::ggplot(mapping = aes(label = response, size = n, color = !!color_by)) +
+    ggplot2::ggplot(mapping = ggplot2::aes(label = response,
+                                           size = n,
+                                           color = !!color_by)) +
       ggwordcloud::geom_text_wordcloud(...) +
       ggplot2::theme_void() +
-      ggplot2::facet_grid(cols = vars(!!facet_col),
-                          rows = vars(!!facet_row))
+      ggplot2::facet_grid(cols = dplyr::vars(!!facet_col),
+                          rows = dplyr::vars(!!facet_row))
 
   plot
 
@@ -179,7 +181,7 @@ ar_plot_wordcloud <- function(associations,
 #'   ar_set_targets("cues") %>%
 #'   ar_embed_targets() %>%
 #'   ar_cluster_targets() %>%
-#'   ar_project_targets() %>%
+#'   ar_project_embedding() %>%
 #'   ar_plot_embedding(color_by = cluster,
 #'                     proportion_labels = .5)
 #'
@@ -218,13 +220,13 @@ ar_plot_embedding <- function(associations,
 
   # plot
   plot = emb %>%
-    ggplot2::ggplot(mapping = aes(x = dim_1,
-                                  y = dim_2,
-                                  label = response,
-                                  size = n,
-                                  color = !!color_by)) +
+    ggplot2::ggplot(mapping = ggplot2::aes(x = dim_1,
+                                           y = dim_2,
+                                           label = response,
+                                           size = n,
+                                           color = !!color_by)) +
     ggplot2::geom_point(alpha = alpha) +
-    ggrepel::geom_text_repel(data = emb %>% slice(pos), ...) +
+    ggrepel::geom_text_repel(data = emb %>% dplyr::slice(pos), ...) +
     ggplot2::theme_void() +
     ggplot2::guides(size = "none", color = "none") +
     ggplot2::scale_size(range = c(0, 6))
@@ -232,9 +234,11 @@ ar_plot_embedding <- function(associations,
   if(!rlang::quo_is_null(color_by)){
     color_var = emb %>% dplyr::pull(!!color_by)
     if(is.character(color_var)){
-      plot = plot + scale_color_viridis_d(option = color_set, begin = .2, end = .8)
+      plot = plot + ggplot2::scale_color_viridis_d(option = color_set,
+                                                   begin = .2, end = .8)
       } else {
-      plot = plot + scale_color_viridis_c(option = color_set, begin = .2, end = .8)
+      plot = plot + ggplot2::scale_color_viridis_c(option = color_set,
+                                                   begin = .2, end = .8)
       }
     }
 
