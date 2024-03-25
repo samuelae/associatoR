@@ -97,7 +97,56 @@
 <span class="r-in"><span>  <span class="fu"><a href="ar_normalize_manual.html">ar_normalize_manual</a></span><span class="op">(</span><span class="va">trimws</span>, which <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">ar_wordlist_import</span><span class="op">(</span><span class="va">ar_obj</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in mutate_all(., function(x) {    if (all(is.na(x)))         x = ""    x}):</span> could not find function "mutate_all"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>One or more parsing issues, call `problems()` on your data frame for details,</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> e.g.:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   dat &lt;- vroom(...)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   problems(dat)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">9973</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">6</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Delimiter:</span> ","</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">chr</span> (4): response, spelling_check, acronym_check, acronym_candidate</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (1): response_frequency</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span> (1): response_correct</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">An associatoR object</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">participants</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,000 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id gender education  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 male   high school</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 male   high school</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 male   high school</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 male   high school</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5 male   high school</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 995 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">cues</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 804 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cue          cue_orig    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> intelligence intelligence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Einstein     Einstein    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> books        books       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> IQ tests     IQ tests    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> college      college     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 799 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">responses</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29,882 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id cue          response response_position response_level response_original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 intelligence Einstein                 1              1 Einstein         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     1 intelligence books                    2              1 books            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     1 intelligence IQ tests                 3              1 IQ tests         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     1 intelligence college                  4              1 college          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     1 intelligence smart p…                 5              1 smart people     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 29,877 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: cue_orig &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
