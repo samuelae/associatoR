@@ -29,7 +29,7 @@ ar_import(intelligence,
           participant_vars = c(gender, education),
           response_vars = c(response_position, response_level)) \%>\%
   ar_set_targets("cues") \%>\%
-  plot(facets = "gender", top_n = 10)
+  plot(facet_by = "gender", top_n = 10)
 
 ar_import(intelligence,
           participant = participant_id,
@@ -38,6 +38,6 @@ ar_import(intelligence,
           participant_vars = c(gender, education),
           response_vars = c(response_position, response_level)) \%>\%
   ar_set_targets("cues") \%>\%
-  plot(facets = "education", top_n = 10, gender == "female")
+  plot(facet_by = "education", top_n = 10, gender == "female")
 
 }
