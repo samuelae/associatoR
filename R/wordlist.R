@@ -40,40 +40,40 @@ ar_wordlist_export = function(associations,
   if("targets" %in% names(associations)) warning("Spell checking should be performed prior to setting targets.")
 
   # add csv if necessary
-  if(str_sub(stringr::str_to_lower(file), nchar(file)-3, nchar(file)) != ".csv") file = paste0(file, ".csv")
+  if(stringr::str_sub(stringr::str_to_lower(file), nchar(file)-3, nchar(file)) != ".csv") file = paste0(file, ".csv")
 
   # response tab
   tab = table(associations$responses$response)
 
   # construct tibble
-  out = tibble(response = names(tab),
-               response_correct = rep("", length(tab)),
-               response_frequency = c(tab))
+  out = tibble::tibble(response = names(tab),
+                       response_correct = rep("", length(tab)),
+                       response_frequency = c(tab))
 
   # spelling
-  if(check_spelling){
+  if (check_spelling) {
     pos = spelling::spell_check_text(out$response)$found %>% unlist() %>% unique()
     out$spelling_check = ifelse((1:nrow(out)) %in% pos, "likely misspelled", "")
     }
 
   # acronym
-  if(check_acronym){
+  if (check_acronym) {
 
     acronym_dict = acronyms %>% dplyr::pull(meaning, acronym)
     acronym_dict_lower = acronyms %>%
-      mutate(acronym = stringr::str_to_lower(acronym)) %>%
+      dplyr::mutate(acronym = stringr::str_to_lower(acronym)) %>%
       dplyr::pull(meaning, acronym)
 
 
     out = out %>%
-      dplyr::mutate(acronym_check = case_when(
+      dplyr::mutate(acronym_check = dplyr::case_when(
                     response %in% names(acronym_dict) ~ "likely an acronym",
                     detect_acronym(response) ~ "likely an acronym",
                     response %in% names(acronym_dict_lower) ~ "potentially an acronym",
                     TRUE ~ ""))
 
     out = out %>%
-      dplyr::mutate(acronym_candidate = case_when(
+      dplyr::mutate(acronym_candidate = dplyr::case_when(
         response %in% names(acronym_dict) ~  acronym_dict[out$response],
         response %in% names(acronym_dict_lower) ~  acronym_dict_lower[out$response],
         TRUE ~  "",
@@ -82,7 +82,7 @@ ar_wordlist_export = function(associations,
     }
 
   # write spelling
-  write_csv(out, file)
+  readr::write_csv(out, file)
 
   }
 

@@ -127,7 +127,7 @@ row_sim = function(x,y,method="spearman"){
 
 get_id = function(x, y) ifelse(x<y,paste(x,y,sep="_"),paste(y,x,sep="_"))
 
-detect_acronym = function(x) str_count(x, "[A-Z0-9]")/nchar(x) > .95 & nchar(x) > 1
+detect_acronym = function(x) stringr::str_count(x, "[A-Z0-9]")/nchar(x) > .95 & nchar(x) > 1
 
 
 
