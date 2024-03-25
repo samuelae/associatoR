@@ -101,9 +101,13 @@ ar_compare_embeddings = function(associations, participant_vars, type = "triangl
     dplyr::select(!!p_vars) %>%
     dplyr::distinct()
 
-  # remove originals
-  associations$cues = associations$cues %>% dplyr::select(-cue_original)
-  associations$responses = associations$responses %>% dplyr::select(-cue_original, -response_original)
+  # remove originals, if present
+  if ("cue_original" %in% names(associations$cues)) {
+    associations$cues = associations$cues %>% dplyr::select(-cue_original)
+  }
+  if ("cue_original" %in% names(associations$responses)) {
+    associations$responses = associations$responses %>% dplyr::select(-cue_original, -response_original)
+  }
 
   # recreate data
   part_names = names(associations$participants)
