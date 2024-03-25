@@ -190,6 +190,7 @@ ar_cluster_targets <- function(associations,
 #'   ar_embed_targets() %>%
 #'   ar_cluster_targets(method = "louvain")
 #'
+#' # in productive use, n_boot should be set higher, defaults to 1000
 #' ar_cluster_stability(ar_obj, n_boot = 10)
 #'
 #' @export
