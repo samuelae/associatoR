@@ -70,7 +70,7 @@
 <dd><p>a <code>logical</code> specifying whether to include a column identifying likely mispelled words based on the <a href="https://docs.ropensci.org/spelling/reference/spell_check_files.html" class="external-link">spell_check_text</a>. Note that currently the spell check only works for English associations. Default is <code>TRUE</code>.</p></dd>
 
 
-<dt>check_acronyms</dt>
+<dt>check_acronym</dt>
 <dd><p>a <code>character</code> specifying whether to include columns identifying potential acronyms. Acronyms are identified in two first. First, responses are checked against a Wikipedia list ("https://en.wikipedia.org/wiki/Lists_of_acronyms"). Matching of the original and lower-case responses triggers "likely an acronym" and "potentially an acronym". The matched acronym is spelled out in an additional column named <code>acronym_candidate</code>. Second, the a simple acronym detection based on letter casing also triggers "likely an acronym" but does not produce values in <code>acronym_candidate</code>. Default is <code>TRUE</code>.</p></dd>
 
 </dl></div>
