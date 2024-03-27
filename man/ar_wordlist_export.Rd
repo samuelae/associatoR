@@ -18,7 +18,7 @@ ar_wordlist_export(
 
 \item{check_spelling}{a \code{logical} specifying whether to include a column identifying likely mispelled words based on the \link[spelling]{spell_check_text}. Note that currently the spell check only works for English associations. Default is \code{TRUE}.}
 
-\item{check_acronyms}{a \code{character} specifying whether to include columns identifying potential acronyms. Acronyms are identified in two first. First, responses are checked against a Wikipedia list ("https://en.wikipedia.org/wiki/Lists_of_acronyms"). Matching of the original and lower-case responses triggers "likely an acronym" and "potentially an acronym". The matched acronym is spelled out in an additional column named \code{acronym_candidate}. Second, the a simple acronym detection based on letter casing also triggers "likely an acronym" but does not produce values in \code{acronym_candidate}. Default is \code{TRUE}.}
+\item{check_acronym}{a \code{character} specifying whether to include columns identifying potential acronyms. Acronyms are identified in two first. First, responses are checked against a Wikipedia list ("https://en.wikipedia.org/wiki/Lists_of_acronyms"). Matching of the original and lower-case responses triggers "likely an acronym" and "potentially an acronym". The matched acronym is spelled out in an additional column named \code{acronym_candidate}. Second, the a simple acronym detection based on letter casing also triggers "likely an acronym" but does not produce values in \code{acronym_candidate}. Default is \code{TRUE}.}
 }
 \value{
 Writes a .CSV file containing a list of unique responses plus additional information.
