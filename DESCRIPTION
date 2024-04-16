@@ -12,7 +12,7 @@ Authors@R: c(
     		comment = c(ORCID = "0000-0002-4008-8022")),
     person("Rui", "Mata", role = "ctb",
         email= "rui.mata@unibas.ch",
-        comment = c(ORCID = "0000-0002-7730-9511"))
+        comment = c(ORCID = "0000-0002-1679-906X"))
     )
 Author: Samuel Aeschbach [aut, cre] (<https://orcid.org/0000-0002-6167-4901>),
   Dirk U. Wulff [aut] (<https://orcid.org/0000-0002-4008-8022>),
