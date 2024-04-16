@@ -2,7 +2,7 @@ Package: associatoR
 Type: Package
 Title: Analyzing free associations
 Description: Associations offer a window into the mind, revealing how words, concepts, and topics are represented. They can be used to map how humans and artificial intelligence think about key social and technological issues. associatoR is an R package for analyzing free association data. It covers the entire analysis pipeline, from importing and processing to embedding, clustering, and visualizing the data.
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person(c("Samuel"), "Aeschbach", role= c("aut", "cre"),
             email= "samuel.aeschbach@gmail.com",
