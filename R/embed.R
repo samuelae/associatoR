@@ -5,7 +5,7 @@
 #' @param associations an \code{associatoR} object including targets.
 #' @param method a \code{character} specifying the type of embedding. One of \code{c("counts","ppmi","ppmi-svd","huggingface")}. Default is \code{"ppmi-svd"}.
 #' @param min_count an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{method = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.
-#' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{300}.
+#' @param n_dim an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{100}.
 #' @param model a \code{character} specifying the model label. Must match the name on \href{https://huggingface.co/models}{huggingface.co/models}.
 #' @param token a \code{character} string specifying the access token for the hugging face API. Must be obtained from \href{https://huggingface.co/inference-api}{huggingface.co/inference-api}.
 #' @param context an optional \code{character} string specifying a common lead text that may help the language model interpret the associations. Defaults to \code{"Free association: "}
@@ -39,9 +39,12 @@ ar_embed_targets <- function(associations,
   check_object(associations)
   check_targets(associations)
   chk::chk_subset(method, c("counts", "ppmi", "ppmi-svd", "huggingface"))
-  chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
+
 
   if(method != "huggingface") {
+
+    # check if there are any targets with responses to them
+    chk::chk_true(any(associations$targets$target %in% associations$cues$cue))
 
     # get counts
     counts = associations$responses %>%

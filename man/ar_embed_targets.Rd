@@ -21,7 +21,7 @@ ar_embed_targets(
 
 \item{min_count}{an \code{integer} value specifying the minimum response count for responses to be considered in the embedding for \code{method = c("counts","ppmi","ppmi-svd")}. Default is \code{5}.}
 
-\item{n_dim}{an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{300}.}
+\item{n_dim}{an \code{integer} value specifying the number of dimensions generated in \code{method = "ppmi-svd"}. Default is \code{100}.}
 
 \item{model}{a \code{character} specifying the model label. Must match the name on \href{https://huggingface.co/models}{huggingface.co/models}.}
 
