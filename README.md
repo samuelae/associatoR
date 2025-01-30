@@ -14,11 +14,11 @@ The `associatoR` package is developed by [Samuel Aeschbach](https://github.com/s
 
 Please cite the package as:
 
-Aeschbach, S., Mata, R., & Wulff, D. U. (2024, March 22). Mapping the Mind With Free Associations: A Tutorial Using the R Package associatoR. <https://doi.org/10.31234/osf.io/ra87s>
+Aeschbach, S., Mata, R., & Wulff, D. U. (2025). Mapping Mental Representations With Free Associations: A Tutorial Using the R Package associatoR. Journal of Cognition, 8(1), Article 3. <https://doi.org/10.5334/joc.407>
 
 ## Overview
 
-The figure below provides an overview of core functions and workflows of the `associatoR` package based on the example presented in [Aeschbach, Mata, and Wulff (2024)](https://doi.org/10.31234/osf.io/ra87s).
+The figure below provides an overview of core functions and workflows of the `associatoR` package based on the example presented in [Aeschbach, Mata, and Wulff (2025)](https://doi.org/10.5334/joc.407>).
 
 ![](man/figures/overview.png)
 

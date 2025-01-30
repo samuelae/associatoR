@@ -50,5 +50,5 @@ ar_import(intelligence,
 
 }
 \references{
-Aeschbach, S., Mata, R., Wulff, D. U. (in progress)
+Aeschbach, S., Mata, R., & Wulff, D. U. (2025). Mapping Mental Representations With Free Associations: A Tutorial Using the R Package associatoR. Journal of Cognition, 8(1), Article 3. https://doi.org/10.5334/joc.407
 }
