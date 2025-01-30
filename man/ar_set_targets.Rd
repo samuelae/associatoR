@@ -21,7 +21,7 @@ Returns an \code{associatoR} object containing a list of tibbles:
 }
 }
 \description{
-\code{ar_set_target} defines the analysis targets (cues and/or responses).
+\code{ar_set_target} defines the analysis targets (cues and/or responses). Potential NA (e.g. from NA responses) will be removed from targets.
 }
 \examples{
 
