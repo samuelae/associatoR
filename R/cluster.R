@@ -110,7 +110,7 @@ ar_cluster_targets <- function(associations,
 
   }
 
-  # hclust
+  # kmeans
   if(method == "kmeans"){
 
     # get clusters
@@ -120,7 +120,7 @@ ar_cluster_targets <- function(associations,
 
   }
 
-  # hclust
+  # dbscan
   if(method == "dbscan"){
 
     # reverse sim
@@ -134,7 +134,7 @@ ar_cluster_targets <- function(associations,
     if(is.null(eps)) eps = quantile(c(sim), .01)
 
     # get clusters
-    clusters = dbscan::kmeans(sim, eps = eps, ...)
+    clusters = dbscan::dbscan(sim, eps = eps, ...)
     targets_clusters <- tibble::tibble(target = rownames(emb),
                                        cluster = clusters$cluster)
 
