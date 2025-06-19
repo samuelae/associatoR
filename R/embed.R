@@ -115,7 +115,7 @@ ar_embed_targets <- function(associations,
     targets = associations$targets$target
 
     # set api and token
-    api = glue::glue("https://api-inference.huggingface.co/pipeline/feature-extraction/{model}")
+    api = glue::glue("https://router.huggingface.co/hf-inference/models/{model}/pipeline/feature-extraction")
 
     # split to undercut limit
     if(length(targets) > 500) {
@@ -140,7 +140,7 @@ ar_embed_targets <- function(associations,
       post = httr::POST(url = api,
                         httr::add_headers(Authorization = glue::glue("Bearer {token}"),
                                           "Content-Type" = "application/json"),
-                        body = jsonlite::toJSON(text_processed))
+                        body = jsonlite::toJSON(list(inputs = text_processed)))
 
       # show error
       if(!post$status_code %in% c(200, 503)) stop(paste0("Error:", post$status_code))
@@ -159,7 +159,7 @@ ar_embed_targets <- function(associations,
         post = httr::POST(url = api,
                           httr::add_headers(Authorization = glue::glue("Bearer {token}"),
                                             "Content-Type" = "application/json"),
-                          body = jsonlite::toJSON(text_processed))
+                          body = jsonlite::toJSON(list(inputs = text_processed)))
       }
 
       if(post$status_code == 200) { # OK
